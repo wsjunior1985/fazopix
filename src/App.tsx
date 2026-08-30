@@ -41,6 +41,11 @@ type PreviewPrefs = {
   logoVisible: boolean;
 };
 
+type PersistedState = FormValues & {
+  logoDataUrl?: string | null;
+  logoFileName?: string;
+};
+
 type ThemeMode = 'light' | 'dark';
 
 const defaultValues: FormValues = {
@@ -157,23 +162,32 @@ function MotionPanel({
 }
 
 export default function App() {
-  const [stored, setStored] = useStoredState<FormValues>('fazopix.form', defaultValues);
+  const [stored, setStored] = useStoredState<PersistedState>('fazopix.form', defaultValues);
   const [previewPrefs, setPreviewPrefs] = useStoredState<PreviewPrefs>('fazopix.preview-prefs', {
     logoScale: 1,
     logoVisible: true
   });
   const [themeMode, setThemeMode] = useStoredState<ThemeMode>('fazopix.theme', 'light');
-  const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: stored, mode: 'onChange' });
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: stored,
+    mode: 'onChange'
+  });
   const values = form.watch();
   const { errors } = form.formState;
-  const [logoDataUrl, setLogoDataUrl] = useState<string | null>(null);
-  const [logoFileName, setLogoFileName] = useState('Nenhum arquivo selecionado');
+  const [logoDataUrl, setLogoDataUrl] = useState<string | null>(stored.logoDataUrl ?? null);
+  const [logoFileName, setLogoFileName] = useState(stored.logoFileName ?? 'Nenhum arquivo selecionado');
   const [copied, setCopied] = useState(false);
   const [activeView, setActiveView] = useState<'editor' | 'preview' | 'export'>('editor');
 
   useEffect(() => {
-    if (values.remember) setStored(values);
-  }, [setStored, values]);
+    if (!values.remember) return;
+    setStored({
+      ...values,
+      logoDataUrl,
+      logoFileName
+    });
+  }, [logoDataUrl, logoFileName, setStored, values]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -310,6 +324,18 @@ export default function App() {
     const reader = new FileReader();
     reader.onload = () => setLogoDataUrl(String(reader.result));
     reader.readAsDataURL(file);
+  }
+
+  function clearSavedLogo() {
+    setLogoFileName('Nenhum arquivo selecionado');
+    setLogoDataUrl(null);
+    if (values.remember) {
+      setStored({
+        ...values,
+        logoDataUrl: null,
+        logoFileName: 'Nenhum arquivo selecionado'
+      });
+    }
   }
 
   const amountLabel = amount ? formatMoney(amount) : 'Sem valor fixo';
@@ -480,6 +506,15 @@ export default function App() {
                         <span className="file-action">Escolher arquivo</span>
                         <span className="file-name">{logoFileName}</span>
                       </label>
+                      {logoDataUrl ? (
+                        <button
+                          type="button"
+                          className="mt-2 text-xs font-medium text-slate-500 transition hover:text-slate-700"
+                          onClick={clearSavedLogo}
+                        >
+                          Remover logo salva
+                        </button>
+                      ) : null}
                     </SectionLabel>
                   </div>
 
