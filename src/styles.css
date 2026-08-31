@@ -39,17 +39,11 @@ body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--brand-2) 22%, transparent), transparent 24%),
-    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--brand-3) 14%, transparent), transparent 22%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 45%, #fff 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
 :root[data-theme='dark'] body {
-  background:
-    radial-gradient(circle at 18% 12%, rgba(16, 191, 169, 0.18), transparent 24%),
-    radial-gradient(circle at 82% 18%, rgba(31, 111, 255, 0.16), transparent 22%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 45%, #030712 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
 * {
@@ -114,37 +108,6 @@ button, input, textarea, select {
   box-shadow: var(--shadow);
 }
 
-:root[data-theme='dark'] .noise-overlay {
-  opacity: 0.12;
-}
-
-:root[data-theme='dark'] .ambient-grid {
-  opacity: 0.12;
-}
-
-.noise-overlay {
-  background-image:
-    linear-gradient(rgba(15,23,42,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15,23,42,0.03) 1px, transparent 1px);
-  background-size: 72px 72px;
-  opacity: 0.25;
-  mask-image: linear-gradient(180deg, rgba(0,0,0,0.8), transparent 90%);
-}
-
-.ambient-grid {
-  background:
-    radial-gradient(circle at center, rgba(15,23,42,0.03), transparent 52%);
-  opacity: 0.28;
-}
-
-.ambient-orb-1 {
-  background: radial-gradient(circle, rgba(20,184,166,0.18), transparent 68%);
-}
-
-.ambient-orb-2 {
-  background: radial-gradient(circle, rgba(37,99,235,0.12), transparent 70%);
-}
-
 .brand-mark {
   display: grid;
   place-items: center;
@@ -161,22 +124,22 @@ button, input, textarea, select {
 }
 
 .eyebrow {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.9);
+  color: rgba(148, 163, 184, 0.88);
 }
 
 .nav-chip {
   border-radius: 999px;
   border: 1px solid rgba(15,23,42,0.08);
   background: rgba(255,255,255,0.72);
-  padding: 0.7rem 1rem;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
+  padding: 0.68rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: rgba(94, 108, 124, 0.95);
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
 }
@@ -187,10 +150,8 @@ button, input, textarea, select {
 :root[data-theme='dark'] .file-shell,
 :root[data-theme='dark'] .receipt-preview,
 :root[data-theme='dark'] .receipt-empty-light,
-:root[data-theme='dark'] .receipt-status,
 :root[data-theme='dark'] .input,
 :root[data-theme='dark'] .input-dark,
-:root[data-theme='dark'] .status-chip,
 :root[data-theme='dark'] .theme-toggle {
   background: rgba(12, 18, 32, 0.86);
   border-color: rgba(148, 163, 184, 0.14);
@@ -263,10 +224,10 @@ button, input, textarea, select {
   border: 0;
   background: transparent;
   color: rgba(94, 108, 124, 0.92);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: none;
   padding: 0.9rem 0.5rem;
   min-height: 3.1rem;
   border-radius: 1rem;
@@ -335,9 +296,9 @@ button, input, textarea, select {
 .metric-label,
 .receipt-mini-label,
 .mini-stat-label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(94, 108, 124, 0.9);
 }
@@ -347,8 +308,6 @@ button, input, textarea, select {
 :root[data-theme='dark'] .mini-stat-label,
 :root[data-theme='dark'] .eyebrow,
 :root[data-theme='dark'] .field-label,
-:root[data-theme='dark'] .field-hint-muted,
-:root[data-theme='dark'] .receipt-status,
 :root[data-theme='dark'] .receipt-kicker {
   color: rgba(152, 168, 186, 0.94);
 }
@@ -362,12 +321,10 @@ button, input, textarea, select {
 }
 
 .receipt-preview {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.84)),
-    rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(15,23,42,0.06);
   border-radius: 2rem;
-  box-shadow: var(--shadow);
+  box-shadow: 0 16px 44px rgba(15, 23, 42, 0.06);
   padding: 0.95rem;
 }
 
@@ -395,23 +352,6 @@ button, input, textarea, select {
   color: #edf4fb;
 }
 
-.receipt-status {
-  border-radius: 999px;
-  border: 1px solid rgba(20,184,166,0.16);
-  background: rgba(20,184,166,0.08);
-  color: #0f766e;
-  padding: 0.48rem 0.82rem;
-  font-size: 0.76rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-:root[data-theme='dark'] .receipt-status {
-  background: rgba(16, 191, 169, 0.1);
-  color: #8ef2df;
-  border-color: rgba(16, 191, 169, 0.16);
-}
-
 .receipt-body {
   margin-top: 0.95rem;
 }
@@ -423,8 +363,7 @@ button, input, textarea, select {
   aspect-ratio: 1;
   border-radius: 1.55rem;
   border: 1px solid rgba(148, 163, 184, 0.22);
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,1), #f8fafc 65%);
+  background: #f8fafc;
   padding: 0.6rem;
 }
 
@@ -502,7 +441,7 @@ button, input, textarea, select {
 .receipt-empty-light {
   border-radius: 1.25rem;
   border: 1px dashed rgba(148, 163, 184, 0.34);
-  background: rgba(248, 250, 252, 0.88);
+  background: rgba(248, 250, 252, 0.92);
 }
 
 .input-dark {
@@ -527,18 +466,6 @@ button, input, textarea, select {
   font-weight: 600;
   letter-spacing: 0.03em;
   color: rgba(94, 108, 124, 0.88);
-}
-
-.field-hint-valid {
-  color: rgba(15, 118, 110, 0.88);
-}
-
-.field-hint-error {
-  color: rgba(185, 28, 28, 0.88);
-}
-
-.field-hint-muted {
-  color: rgba(94, 108, 124, 0.78);
 }
 
 .input {
@@ -652,14 +579,6 @@ button, input, textarea, select {
     align-items: flex-start;
   }
 
-  .receipt-status {
-    width: fit-content;
-  }
-
-  .receipt-title {
-    font-size: 0.95rem;
-  }
-
   .compact-receipt {
     padding: 0.72rem;
   }
@@ -725,16 +644,6 @@ button, input, textarea, select {
   border: 1px solid rgba(15,23,42,0.08);
   padding: 0.72rem 0.9rem;
   font-size: 0.9rem;
-}
-
-.status-chip-valid {
-  background: rgba(20,184,166,0.08);
-  color: #0f766e;
-}
-
-.status-chip-neutral {
-  background: rgba(255,255,255,0.78);
-  color: var(--ink);
 }
 
 .step-footer {

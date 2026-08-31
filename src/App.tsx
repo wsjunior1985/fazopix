@@ -267,7 +267,6 @@ export default function App() {
   }, [amount, canGenerate, values]);
 
   const logoScale = clamp(previewPrefs.logoScale, 0.7, 1.3);
-  const logoSizeLabel = `${Math.round(logoScale * 100)}%`;
   const showLogo = Boolean(logoDataUrl) && previewPrefs.logoVisible;
   const qrDataUrl = useQrDataUrl(payload, showLogo);
   const previewBlocker = !values.key
@@ -407,11 +406,6 @@ export default function App() {
   return (
     <main className="min-h-screen overflow-hidden text-slate-900">
       <div className="relative isolate">
-        <div className="noise-overlay pointer-events-none absolute inset-0 -z-10" />
-        <div className="ambient-orb ambient-orb-1 pointer-events-none absolute -left-24 top-4 -z-10 h-72 w-72 rounded-full blur-3xl" />
-        <div className="ambient-orb ambient-orb-2 pointer-events-none absolute right-0 top-24 -z-10 h-96 w-96 rounded-full blur-3xl" />
-        <div className="ambient-grid pointer-events-none absolute inset-0 -z-10" />
-
         <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
           <header className="vault-shell rounded-[2rem] p-5 sm:p-6">
             <div className="flex items-center justify-between gap-4">
@@ -423,11 +417,11 @@ export default function App() {
                   <img src="/brand-icon-transparent.png" alt="" className="h-full w-full object-contain" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-display text-[1.95rem] leading-[0.95] tracking-[-0.07em] text-slate-950 sm:text-[2.15rem]">
+                  <div className="font-display text-[1.85rem] leading-[0.95] tracking-[-0.07em] text-slate-950 sm:text-[2.05rem]">
                     Faz o PIX!
                   </div>
-                  <div className="mt-2 max-w-[19rem] text-[0.9rem] font-medium leading-snug text-slate-500 sm:max-w-[22rem]">
-                    Seu QR Code pronto para receber pagamentos.
+                  <div className="mt-2 max-w-[18rem] text-[0.88rem] font-medium leading-snug text-slate-500 sm:max-w-[20rem]">
+                    Seu QR Code pronto para receber.
                   </div>
                 </div>
               </div>
@@ -440,10 +434,7 @@ export default function App() {
                 <MoonStar className="h-4 w-4" />
               </button>
             </div>
-
-            <div className="mt-4 h-px w-full bg-slate-200/80" />
-
-            <div className="mt-6 hidden flex-wrap gap-2 md:flex">
+            <div className="mt-5 hidden flex-wrap gap-2 md:flex">
               {navigation.map((item) => {
                 const active = activeView === item.id;
                 return (
@@ -462,22 +453,25 @@ export default function App() {
 
           <section className="mt-5 sm:mt-6">
             <MotionPanel className="vault-card rounded-[2rem] p-4 sm:p-6" delay={0.08}>
-              <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-2.5 sm:pb-3">
+              <div className="flex items-end justify-between gap-3 border-b border-slate-200 pb-3">
                 <div>
-                  <h2 className="font-display text-[1.55rem] tracking-[-0.045em] text-slate-950 sm:text-2xl">
-                    {activeView === 'editor' ? 'Insira os dados do seu PIX' : activeView === 'preview' ? 'Pré-visualização' : 'Exportar'}
+                  <h2 className="font-display text-[1.5rem] tracking-[-0.045em] text-slate-950 sm:text-[1.95rem]">
+                    {activeView === 'editor' ? 'Insira os dados' : activeView === 'preview' ? 'Veja o QR' : 'Compartilhe'}
                   </h2>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {activeView === 'editor'
+                      ? 'Preencha só o que muda.'
+                      : activeView === 'preview'
+                        ? 'Ajuste e confira antes de salvar.'
+                        : 'Baixe, compartilhe ou imprima.'}
+                  </p>
                 </div>
               </div>
 
               {activeView === 'editor' ? (
                 <div className="mt-3 sm:mt-4">
                   <div className="grid gap-3.5 sm:gap-4">
-                    <SectionLabel
-                      label="Tipo de chave"
-                      hint={errors.keyType ? 'Inválido' : ''}
-                      hintClassName="field-hint-error"
-                    >
+                    <SectionLabel label="Tipo de chave">
                       <select
                         className={`input input-dark ${errors.keyType ? 'input-error' : ''}`}
                         aria-invalid={errors.keyType ? 'true' : 'false'}
@@ -492,11 +486,7 @@ export default function App() {
                       {errors.keyType ? <p className="field-error">Escolha um tipo de chave válido.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel
-                      label="Chave Pix"
-                      hint={values.key ? (validKey ? 'Formato válido' : 'Formato inválido') : 'Validação de formato'}
-                      hintClassName={values.key ? (validKey ? 'field-hint-valid' : 'field-hint-error') : ''}
-                    >
+                    <SectionLabel label="Chave Pix">
                       <input
                         className={`input input-dark ${errors.key ? 'input-error' : ''}`}
                         aria-invalid={errors.key ? 'true' : 'false'}
@@ -506,15 +496,11 @@ export default function App() {
                       {errors.key ? (
                         <p className="field-error">{errors.key.message || 'Preencha a chave Pix.'}</p>
                       ) : !validKey && values.key ? (
-                        <p className="field-error">A chave informada não combina com o tipo selecionado.</p>
+                        <p className="field-error">A chave não combina com o tipo selecionado.</p>
                       ) : null}
                     </SectionLabel>
 
-                    <SectionLabel
-                      label="Nome do recebedor"
-                      hint={errors.merchantName ? 'Inválido' : 'Até 25 caracteres'}
-                      hintClassName={errors.merchantName ? 'field-hint-error' : 'field-hint-muted'}
-                    >
+                    <SectionLabel label="Nome do recebedor">
                       <input
                         className={`input input-dark ${errors.merchantName ? 'input-error' : ''}`}
                         aria-invalid={errors.merchantName ? 'true' : 'false'}
@@ -525,11 +511,7 @@ export default function App() {
                       {errors.merchantName ? <p className="field-error">Digite o nome do recebedor.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel
-                      label="Cidade"
-                      hint={errors.merchantCity ? 'Inválido' : 'Até 15 caracteres'}
-                      hintClassName={errors.merchantCity ? 'field-hint-error' : 'field-hint-muted'}
-                    >
+                    <SectionLabel label="Cidade">
                       <input
                         className={`input input-dark uppercase ${errors.merchantCity ? 'input-error' : ''}`}
                         aria-invalid={errors.merchantCity ? 'true' : 'false'}
@@ -540,19 +522,19 @@ export default function App() {
                       {errors.merchantCity ? <p className="field-error">Digite a cidade do recebedor.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel label="Valor" hint="Opcional" hintClassName="field-hint-muted">
+                    <SectionLabel label="Valor">
                       <input className="input input-dark" {...form.register('amount')} inputMode="decimal" placeholder="R$ 0,00" />
                     </SectionLabel>
 
-                    <SectionLabel label="Descrição" hint="Curta e discreta" hintClassName="field-hint-muted">
+                    <SectionLabel label="Descrição">
                       <input className="input input-dark" {...form.register('description')} placeholder="Mensagem opcional" />
                     </SectionLabel>
 
-                    <SectionLabel label="Identificador da cobrança (TXID)" hint="Opcional" hintClassName="field-hint-muted">
+                    <SectionLabel label="TXID">
                       <input className="input input-dark uppercase" {...form.register('txid')} placeholder="Ex.: WALDEAPPS" />
                     </SectionLabel>
 
-                    <SectionLabel label="Logo" hint="PNG, JPG ou WebP" hintClassName="field-hint-muted">
+                    <SectionLabel label="Logo">
                       <label className="file-shell">
                         <input
                           type="file"
@@ -613,66 +595,22 @@ export default function App() {
                   <div className="receipt-preview compact-receipt">
                     <div className="receipt-top">
                       <div>
-                        <div className="receipt-title">{payload ? 'QR pronto para receber' : 'Aguardando dados'}</div>
+                        <div className="receipt-title">{payload ? 'QR pronto' : 'Aguardando dados'}</div>
+                        <div className="mt-1 text-sm text-slate-500">{amountLabel}</div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setPreviewPrefs((current) => ({
-                              ...current,
-                              logoVisible: !current.logoVisible
-                            }))
-                          }
-                          className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
-                        >
-                          {previewPrefs.logoVisible ? 'Ocultar logo' : 'Mostrar logo'}
-                        </button>
-                        <div className="receipt-status">{amountLabel}</div>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPreviewPrefs((current) => ({
+                            ...current,
+                            logoVisible: !current.logoVisible
+                          }))
+                        }
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+                      >
+                        {previewPrefs.logoVisible ? 'Logo visível' : 'Logo oculta'}
+                      </button>
                     </div>
-                    {logoDataUrl && previewPrefs.logoVisible ? (
-                      <div className="mt-3 rounded-[1.15rem] border border-slate-200 bg-white/80 p-3.5">
-                        <div className="flex items-start justify-between gap-3">
-                          <div>
-                            <p className="text-sm font-medium text-slate-950">Logo no QR</p>
-                            <p className="text-xs text-slate-500">Ajuste rápido sem perder leitura.</p>
-                          </div>
-                          <div className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[0.7rem] font-medium text-slate-500">
-                            {logoSizeLabel}
-                          </div>
-                        </div>
-                        <div className="mt-3 grid grid-cols-3 gap-2">
-                          {[
-                            { label: 'Pequena', value: 0.8 },
-                            { label: 'Média', value: 1 },
-                            { label: 'Grande', value: 1.2 }
-                          ].map((preset) => {
-                            const active = Math.abs(logoScale - preset.value) < 0.03;
-                            return (
-                              <button
-                                key={preset.label}
-                                type="button"
-                                onClick={() =>
-                                  setPreviewPrefs((current) => ({
-                                    ...current,
-                                    logoScale: preset.value,
-                                    logoVisible: true
-                                  }))
-                                }
-                                className={`rounded-full border px-3 py-2 text-xs font-medium transition ${
-                                  active
-                                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                    : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700'
-                                }`}
-                              >
-                                {preset.label}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ) : null}
                     <div className="receipt-body">
                       <div className="receipt-stage">
                         {qrDataUrl ? (
@@ -696,12 +634,6 @@ export default function App() {
                           </div>
                         )}
                       </div>
-                      <div className="mt-4 text-center">
-                        <p className="text-sm text-slate-500">Escaneie para pagar</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 text-center">
-                      <p className="text-xs text-slate-500">Escaneie para receber</p>
                     </div>
                   </div>
                 </div>
@@ -709,8 +641,6 @@ export default function App() {
 
               {activeView === 'export' ? (
                 <div className="mt-4 grid gap-3">
-                  <div className="status-chip status-chip-valid">{validKey ? 'Chave válida' : 'Chave inválida'}</div>
-                  <div className="status-chip status-chip-neutral">{copied ? 'Copiado' : 'Local'}</div>
                   <div className="grid gap-2 sm:grid-cols-2">
                     <button
                       type="button"
@@ -758,7 +688,7 @@ export default function App() {
                       Imprimir
                     </button>
                   </div>
-                  <div className="rounded-[1.25rem] border border-slate-200 bg-white/80 p-3.5 text-sm text-slate-600">Dados ficam só neste navegador.</div>
+                  <div className="rounded-[1.15rem] border border-slate-200 bg-white/80 p-3.5 text-sm text-slate-600">Tudo fica neste navegador.</div>
                 </div>
               ) : null}
 
