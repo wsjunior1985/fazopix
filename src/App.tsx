@@ -109,6 +109,60 @@ function useQrDataUrl(payload: string, hasLogo: boolean) {
   return dataUrl;
 }
 
+async function loadImage(src: string) {
+  return await new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('Failed to load image'));
+    image.src = src;
+  });
+}
+
+async function composeQrWithLogo(qrDataUrl: string, logoDataUrl: string | null, logoScale: number) {
+  const qrImage = await loadImage(qrDataUrl);
+  const canvas = document.createElement('canvas');
+  canvas.width = qrImage.naturalWidth || 1024;
+  canvas.height = qrImage.naturalHeight || 1024;
+  const context = canvas.getContext('2d');
+  if (!context) {
+    return qrDataUrl;
+  }
+
+  context.drawImage(qrImage, 0, 0, canvas.width, canvas.height);
+
+  if (logoDataUrl) {
+    const logoImage = await loadImage(logoDataUrl);
+    const baseSize = canvas.width * 0.18 * clamp(logoScale, 0.7, 1.3);
+    const size = Math.max(72, Math.round(baseSize));
+    const x = Math.round((canvas.width - size) / 2);
+    const y = Math.round((canvas.height - size) / 2);
+    const radius = Math.round(size * 0.18);
+
+    context.save();
+    context.fillStyle = '#ffffff';
+    context.strokeStyle = 'rgba(255,255,255,0.96)';
+    context.lineWidth = Math.max(4, Math.round(size * 0.05));
+    roundRect(context, x - 12, y - 12, size + 24, size + 24, radius + 10);
+    context.fill();
+    context.stroke();
+    context.drawImage(logoImage, x, y, size, size);
+    context.restore();
+  }
+
+  return canvas.toDataURL('image/png');
+}
+
+function roundRect(context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number) {
+  const r = Math.min(radius, width / 2, height / 2);
+  context.beginPath();
+  context.moveTo(x + r, y);
+  context.arcTo(x + width, y, x + width, y + height, r);
+  context.arcTo(x + width, y + height, x, y + height, r);
+  context.arcTo(x, y + height, x, y, r);
+  context.arcTo(x, y, x + width, y, r);
+  context.closePath();
+}
+
 function escapeHtml(value: string) {
   return value
     .replaceAll('&', '&amp;')
@@ -245,20 +299,22 @@ export default function App() {
 
   async function sharePayload() {
     if (!payload || !navigator.share) return;
-    const response = await fetch(qrDataUrl);
+    const finalQrDataUrl = await composeQrWithLogo(qrDataUrl, showLogo ? logoDataUrl : null, logoScale);
+    const response = await fetch(finalQrDataUrl);
     const blob = await response.blob();
     const file = new File([blob], 'meu-pix-qr.png', { type: 'image/png' });
     await navigator.share({
       title: 'Faz o PIX!',
       text: payload,
-      files: qrDataUrl ? [file] : undefined
+      files: [file]
     });
   }
 
   async function downloadPng() {
     if (!qrDataUrl) return;
+    const finalQrDataUrl = await composeQrWithLogo(qrDataUrl, showLogo ? logoDataUrl : null, logoScale);
     const link = document.createElement('a');
-    link.href = qrDataUrl;
+    link.href = finalQrDataUrl;
     link.download = 'meu-pix-qr.png';
     link.click();
   }
@@ -282,6 +338,7 @@ export default function App() {
 
   async function printCard() {
     if (!payload || !qrDataUrl) return;
+    const finalQrDataUrl = await composeQrWithLogo(qrDataUrl, showLogo ? logoDataUrl : null, logoScale);
     const win = window.open('', '_blank', 'width=900,height=1200');
     if (!win) return;
     win.document.write(`
@@ -301,7 +358,7 @@ export default function App() {
         <body>
           <div class="card">
             <h1>PIX</h1>
-            <img src="${qrDataUrl}" alt="QR Code Pix" />
+            <img src="${finalQrDataUrl}" alt="QR Code Pix" />
             <p><strong>${escapeHtml(values.merchantName || '')}</strong></p>
             <p class="muted">Escaneie para pagar</p>
             ${amount ? `<p><strong>${escapeHtml(formatMoney(amount))}</strong></p>` : ''}
