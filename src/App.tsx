@@ -175,15 +175,17 @@ function SectionLabel({
   label,
   hint,
   hintClassName = '',
+  htmlFor,
   children
 }: {
   label: string;
   hint?: string;
   hintClassName?: string;
+  htmlFor?: string;
   children: ReactNode;
 }) {
   return (
-    <label className="space-y-2">
+    <label className="space-y-2" htmlFor={htmlFor}>
       <div className="field-label">
         <span>{label}</span>
         {hint ? <span className={hintClassName}>{hint}</span> : null}
@@ -291,9 +293,13 @@ export default function App() {
 
   async function copyPayload() {
     if (!payload) return;
-    await navigator.clipboard.writeText(payload);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1600);
+    try {
+      await navigator.clipboard.writeText(payload);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
   }
 
   async function sharePayload() {
@@ -430,6 +436,7 @@ export default function App() {
                 onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
                 className="theme-toggle inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900"
                 aria-label={isDark ? 'Ativar modo claro' : 'Ativar modo escuro'}
+                aria-pressed={isDark}
               >
                 <MoonStar className="h-4 w-4" />
               </button>
@@ -443,6 +450,7 @@ export default function App() {
                     type="button"
                     onClick={() => setActiveView(item.id)}
                     className={`nav-chip ${active ? 'nav-chip-active' : ''}`}
+                    aria-current={active ? 'step' : undefined}
                   >
                     {item.label}
                   </button>
@@ -471,8 +479,9 @@ export default function App() {
               {activeView === 'editor' ? (
                 <div className="mt-3 sm:mt-4">
                   <div className="grid gap-3.5 sm:gap-4">
-                    <SectionLabel label="Tipo de chave">
+                    <SectionLabel label="Tipo de chave" htmlFor="keyType">
                       <select
+                        id="keyType"
                         className={`input input-dark ${errors.keyType ? 'input-error' : ''}`}
                         aria-invalid={errors.keyType ? 'true' : 'false'}
                         {...form.register('keyType')}
@@ -486,22 +495,25 @@ export default function App() {
                       {errors.keyType ? <p className="field-error">Escolha um tipo de chave válido.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel label="Chave Pix">
+                    <SectionLabel label="Chave Pix" htmlFor="key">
                       <input
+                        id="key"
                         className={`input input-dark ${errors.key ? 'input-error' : ''}`}
                         aria-invalid={errors.key ? 'true' : 'false'}
                         {...keyRegistration}
                         placeholder="Digite sua chave Pix"
+                        aria-describedby="key-help"
                       />
                       {errors.key ? (
                         <p className="field-error">{errors.key.message || 'Preencha a chave Pix.'}</p>
                       ) : !validKey && values.key ? (
                         <p className="field-error">A chave não combina com o tipo selecionado.</p>
-                      ) : null}
+                      ) : <p id="key-help" className="field-help">A chave é processada localmente neste navegador.</p>}
                     </SectionLabel>
 
-                    <SectionLabel label="Nome do recebedor">
+                    <SectionLabel label="Nome do recebedor" hint={`${values.merchantName.length}/25`} hintClassName="field-counter" htmlFor="merchantName">
                       <input
+                        id="merchantName"
                         className={`input input-dark ${errors.merchantName ? 'input-error' : ''}`}
                         aria-invalid={errors.merchantName ? 'true' : 'false'}
                         {...form.register('merchantName')}
@@ -511,8 +523,9 @@ export default function App() {
                       {errors.merchantName ? <p className="field-error">Digite o nome do recebedor.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel label="Cidade">
+                    <SectionLabel label="Cidade" hint={`${values.merchantCity.length}/15`} hintClassName="field-counter" htmlFor="merchantCity">
                       <input
+                        id="merchantCity"
                         className={`input input-dark uppercase ${errors.merchantCity ? 'input-error' : ''}`}
                         aria-invalid={errors.merchantCity ? 'true' : 'false'}
                         {...form.register('merchantCity')}
@@ -522,16 +535,16 @@ export default function App() {
                       {errors.merchantCity ? <p className="field-error">Digite a cidade do recebedor.</p> : null}
                     </SectionLabel>
 
-                    <SectionLabel label="Valor">
-                      <input className="input input-dark" {...form.register('amount')} inputMode="decimal" placeholder="R$ 0,00" />
+                    <SectionLabel label="Valor" hint="opcional" htmlFor="amount">
+                      <input id="amount" className="input input-dark" {...form.register('amount')} inputMode="decimal" placeholder="R$ 0,00" />
                     </SectionLabel>
 
-                    <SectionLabel label="Descrição">
-                      <input className="input input-dark" {...form.register('description')} placeholder="Mensagem opcional" />
+                    <SectionLabel label="Descrição" hint="opcional" htmlFor="description">
+                      <input id="description" className="input input-dark" {...form.register('description')} placeholder="Mensagem opcional" />
                     </SectionLabel>
 
-                    <SectionLabel label="TXID">
-                      <input className="input input-dark uppercase" {...form.register('txid')} placeholder="Ex.: WALDEAPPS" />
+                    <SectionLabel label="TXID" hint="opcional" htmlFor="txid">
+                      <input id="txid" className="input input-dark uppercase" {...form.register('txid')} placeholder="Ex.: WALDEAPPS" />
                     </SectionLabel>
 
                     <SectionLabel label="Logo">
@@ -574,7 +587,7 @@ export default function App() {
                     </div>
                   </label>
 
-                  <div className="step-footer flex items-center justify-between gap-3">
+                  <div className="step-footer flex items-center justify-between gap-3" aria-live="polite">
                     <p className="text-sm text-slate-500">
                     {canGenerate ? 'Tudo pronto para gerar o QR.' : previewBlocker}
                     </p>
@@ -606,7 +619,8 @@ export default function App() {
                             logoVisible: !current.logoVisible
                           }))
                         }
-                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+                        className="button-secondary rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+                        aria-pressed={previewPrefs.logoVisible}
                       >
                         {previewPrefs.logoVisible ? 'Logo visível' : 'Logo oculta'}
                       </button>
@@ -688,7 +702,10 @@ export default function App() {
                       Imprimir
                     </button>
                   </div>
-                  <div className="rounded-[1.15rem] border border-slate-200 bg-white/80 p-3.5 text-sm text-slate-600">Tudo fica neste navegador.</div>
+                  <div className="privacy-note rounded-[1.15rem] border border-slate-200 bg-white/80 p-3.5 text-sm text-slate-600">
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                    <span><strong>Privacidade por padrão.</strong> Tudo fica neste navegador.</span>
+                  </div>
                 </div>
               ) : null}
 
@@ -704,6 +721,7 @@ export default function App() {
                           type="button"
                           onClick={() => setActiveView(item.id)}
                           className={`mobile-dock-item ${active ? 'mobile-dock-item-active' : ''}`}
+                          aria-current={active ? 'step' : undefined}
                         >
                           <motion.span
                             className="mobile-dock-icon"
