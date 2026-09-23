@@ -4,6 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   base: './',
+  // Porta fixa e exclusiva deste projeto: é a liberada no redirect do login Google em dev.
+  server: { port: 8110, strictPort: true },
   plugins: [
     react(),
     VitePWA({
