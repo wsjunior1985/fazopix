@@ -24,10 +24,16 @@ export function normalizeTxid(value: string): string {
 }
 
 export function normalizeAmount(value: string): string {
-  const cleaned = value.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.');
-  if (!cleaned) return '';
+  const trimmed = value.trim().replace(/[^\d,.-]/g, '');
+  if (!trimmed) return '';
+  let cleaned: string;
+  if (trimmed.includes(',')) {
+    cleaned = trimmed.replace(/\./g, '').replace(',', '.');
+  } else {
+    cleaned = trimmed;
+  }
   const parsed = Number(cleaned);
-  if (Number.isNaN(parsed)) return '';
+  if (Number.isNaN(parsed) || parsed <= 0) return '';
   return parsed.toFixed(2);
 }
 
