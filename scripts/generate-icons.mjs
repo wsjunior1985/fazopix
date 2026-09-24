@@ -1,52 +1,54 @@
-import { PNG } from 'pngjs';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
+// Renders the app icons from the brand mark: violet field, a pink disc cropping
+// the top-right corner and "PIX!" in lime Archivo (wide, 850) — the same world
+// as the stage. Uses Playwright so the self-hosted variable font renders exactly.
+import { chromium } from 'playwright';
+import { mkdirSync, readFileSync } from 'node:fs';
 
-function ensureDir(path) {
-  mkdirSync(dirname(path), { recursive: true });
-}
+const font = readFileSync(
+  new URL('../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2', import.meta.url)
+).toString('base64');
 
-function drawIcon(size) {
-  const png = new PNG({ width: size, height: size });
-  const center = size / 2;
-  const radius = size * 0.18;
-
-  for (let y = 0; y < size; y += 1) {
-    for (let x = 0; x < size; x += 1) {
-      const idx = (size * y + x) << 2;
-      const dx = x - center;
-      const dy = y - center;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const bg = dist < size * 0.42 ? [15, 118, 110] : [20, 184, 166];
-      png.data[idx] = bg[0];
-      png.data[idx + 1] = bg[1];
-      png.data[idx + 2] = bg[2];
-      png.data[idx + 3] = 255;
+// `scale` shrinks the artwork toward the centre for maskable icons (safe zone).
+function page(scale) {
+  return `<!doctype html><html><head><style>
+    @font-face {
+      font-family: 'Archivo Variable';
+      src: url(data:font/woff2;base64,${font}) format('woff2');
+      font-weight: 100 900;
+      font-stretch: 62% 125%;
     }
-  }
-
-  for (let y = Math.floor(center - radius); y < Math.ceil(center + radius); y += 1) {
-    for (let x = Math.floor(center - radius); x < Math.ceil(center + radius); x += 1) {
-      const idx = (size * y + x) << 2;
-      const dx = x - center;
-      const dy = y - center;
-      if (dx * dx + dy * dy <= radius * radius) {
-        png.data[idx] = 255;
-        png.data[idx + 1] = 255;
-        png.data[idx + 2] = 255;
-        png.data[idx + 3] = 255;
-      }
+    html, body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; background: #6b2bff; }
+    .mark { position: absolute; inset: 0; transform: scale(${scale}); }
+    .disc {
+      position: absolute; width: 78%; height: 78%; border-radius: 50%;
+      background: #ff3d7f; right: -30%; top: -30%;
     }
-  }
-
-  return PNG.sync.write(png);
+    .word {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: 'Archivo Variable'; font-weight: 850; font-stretch: 125%;
+      font-size: 34vw; letter-spacing: -0.04em; line-height: 1; color: #c8ff00;
+      padding-top: 4vw;
+    }
+  </style></head><body><div class="mark"><div class="disc"></div><div class="word">PIX!</div></div></body></html>`;
 }
 
-for (const size of [192, 512]) {
-  const path = `public/icons/icon-${size}.png`;
-  ensureDir(path);
-  writeFileSync(path, drawIcon(size));
-}
+const targets = [
+  { path: 'public/icons/icon-192.png', size: 192, scale: 1 },
+  { path: 'public/icons/icon-512.png', size: 512, scale: 1 },
+  { path: 'public/icons/icon-512-maskable.png', size: 512, scale: 0.78 },
+  { path: 'public/icons/apple-touch-icon.png', size: 180, scale: 1 },
+  { path: 'public/favicon.png', size: 32, scale: 1 }
+];
 
-ensureDir('public/icons/apple-touch-icon.png');
-writeFileSync('public/icons/apple-touch-icon.png', drawIcon(180));
+mkdirSync('public/icons', { recursive: true });
+const browser = await chromium.launch();
+for (const { path, size, scale } of targets) {
+  const context = await browser.newContext({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });
+  const tab = await context.newPage();
+  await tab.setContent(page(scale));
+  await tab.evaluate(() => document.fonts.ready);
+  await tab.screenshot({ path });
+  await context.close();
+  console.log(`wrote ${path}`);
+}
+await browser.close();
