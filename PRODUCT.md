@@ -20,7 +20,7 @@ Simplicidade e velocidade: o app se diferencia de bancos e outros geradores de Q
 
 ## Operating Context
 
-Tela única: a plaquinha de acrílico "Pague com Pix" com o QR (topo no celular, fixa à direita no desktop) e o cartão do formulário, com dock de copiar no celular. Suporta modo claro/escuro, instalação como PWA (offline-first) e uso avulso sem necessidade de conta.
+Tela única: cartão "Cobrar com Pix" com o QR (topo no celular, fixo à direita no desktop) e os dados da cobrança, com valor primeiro e recebedor recolhível quando salvo; dock de copiar no celular. Suporta modo claro/escuro, instalação como PWA (offline-first) e uso avulso sem necessidade de conta.
 
 ## Capabilities and Constraints
 
@@ -32,7 +32,7 @@ Tela única: a plaquinha de acrílico "Pague com Pix" com o QR (topo no celular,
 
 ## Brand Commitments
 
-Nome do produto: "Faz o PIX!". Mundo visual: plaquinha de balcão (parede clara, balcão de madeira, acrílico, adesivo branco), teal Pix `#1f9e92` como marca. Anti-referências: story violeta, comprovante térmico e placa de rodovia verde. Copy em pt-BR, tom direto e coloquial ("Preencha só o que muda.").
+Nome do produto: "Faz o PIX!". Preferência permanente: visual convencional de app de pagamento (padrão da categoria), no nível de Mercado Pago, Nubank e PicPay; verde de marca `#00806b`. Anti-referências: story violeta, comprovante térmico, placa de rodovia, plaquinha de balcão e metáforas decorativas. Copy em pt-BR, tom direto e coloquial ("Preencha só o que muda.").
 
 ## Evidence on Hand
 

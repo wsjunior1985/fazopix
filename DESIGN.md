@@ -1,155 +1,210 @@
 ---
 name: Faz o PIX!
-description: Gerador de QR Code Pix em que você monta a plaquinha de acrílico "Pague com Pix" do balcão e ela fica de pé, pronta para escanear.
+description: Gerador de QR Code Pix no padrão dos apps de pagamento, com fundo neutro, cartões brancos, QR central e um só verde de marca.
 colors:
-  pix: "#1f9e92"
-  pix-deep: "#16786f"
-  wall: "#eef1ef"
-  counter: "#c9b69a"
-  counter-edge: "#b39d7e"
-  acrylic: "rgba(255, 255, 255, 0.5)"
-  acrylic-edge: "rgba(255, 255, 255, 0.95)"
-  acrylic-line: "rgba(14, 21, 18, 0.14)"
-  sticker: "#ffffff"
-  sticker-dash: "#b9c2be"
-  card: "#ffffff"
-  ink: "#0e1512"
-  ink-soft: "#414b47"
-  ink-faint: "#5d6763"
-  rule: "#cfd6d3"
-  chip: "#f1f4f2"
+  brand: "#00806b"
+  brand-press: "#006e5c"
+  brand-ink: "#00745f"
+  brand-soft: "#e6f6f3"
+  on-brand: "#ffffff"
+  page: "#f4f5f6"
+  surface: "#ffffff"
+  field: "#ffffff"
+  ink: "#16181b"
+  ink-soft: "#5b6068"
+  ink-faint: "#6e737b"
+  rule: "#e3e5e8"
+  rule-strong: "#b9bdc4"
+  chip: "#f1f2f4"
+  focus: "#00806b"
+  ok: "#00745f"
   error: "#c4122f"
-  error-soft: "#fbe9ec"
-  night-wall: "#151a18"
-  night-counter: "#5a4a36"
-  night-counter-edge: "#4a3c2b"
-  night-acrylic: "rgba(255, 255, 255, 0.1)"
-  night-acrylic-edge: "rgba(255, 255, 255, 0.5)"
-  night-card: "#1d2320"
-  night-ink: "#f2f5f3"
-  night-ink-soft: "#c5cdc9"
-  night-ink-faint: "#9aa5a0"
-  night-rule: "#36403c"
-  night-chip: "#262d2a"
-  night-focus: "#4fd1c3"
-  night-ok: "#6fdccf"
-  night-error: "#ff7088"
-  night-error-soft: "#3a1a20"
+  error-soft: "#fdecef"
+  qr-paper: "#ffffff"
+  dark-brand: "#19c2a6"
+  dark-brand-press: "#14a78f"
+  dark-brand-ink: "#5fdcc6"
+  dark-brand-soft: "#16302b"
+  dark-on-brand: "#06231e"
+  dark-page: "#0f1113"
+  dark-surface: "#1a1d20"
+  dark-field: "#121416"
+  dark-ink: "#f2f3f5"
+  dark-ink-soft: "#b3b8bf"
+  dark-ink-faint: "#9095a0"
+  dark-rule: "#2a2e33"
+  dark-rule-strong: "#4a5058"
+  dark-chip: "#23272b"
+  dark-focus: "#19c2a6"
+  dark-ok: "#5fdcc6"
+  dark-error: "#ff7088"
+  dark-error-soft: "#3a1a20"
 typography:
   display:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "2rem"
-    fontWeight: 850
-    lineHeight: 1.25
+    fontSize: "2.6rem"
+    fontWeight: 800
     letterSpacing: "-0.02em"
     fontFeature: "tnum"
   headline:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.75rem"
+    fontSize: "1.35rem"
+    fontWeight: 800
+    letterSpacing: "-0.02em"
+  headline-lg:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.7rem"
+    fontWeight: 800
+    letterSpacing: "-0.02em"
+  wordmark:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.35rem"
     fontWeight: 850
-    lineHeight: 1.05
     letterSpacing: "-0.02em"
   title:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.1rem"
-    fontWeight: 850
-    lineHeight: 1.05
-    letterSpacing: "-0.02em"
+    fontSize: "1.15rem"
+    fontWeight: 800
+    letterSpacing: "-0.01em"
   body:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  body-sm:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 400
+    lineHeight: 1.625
+  input:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.05rem"
     fontWeight: 600
-    lineHeight: 1.5
+  button:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 750
   label:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.85rem"
-    fontWeight: 700
-  button:
+    fontWeight: 650
+  caption:
     fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.98rem"
-    fontWeight: 750
+    fontSize: "0.75rem"
+    fontWeight: 600
+    fontFeature: "tnum"
 rounded:
-  qr-slot: "0.5rem"
-  sticker: "0.6rem"
-  field: "0.8rem"
-  button: "0.9rem"
-  acrylic: "1.1rem"
-  dock: "1.2rem"
+  check: "0.4rem"
+  field: "0.85rem"
+  amount: "1rem"
+  qr: "1.1rem"
   card: "1.25rem"
-  full: "999px"
+  charge: "1.5rem"
+  pill: "999px"
 spacing:
-  xs: "0.4rem"
-  sm: "0.75rem"
-  md: "1rem"
+  xs: "0.25rem"
+  sm: "0.5rem"
+  md: "0.75rem"
   lg: "1.25rem"
-  xl: "1.5rem"
+  gutter: "1rem"
+  card: "1.15rem"
+  column-gap: "2.5rem"
 components:
   button-main:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.card}"
+    backgroundColor: "{colors.brand}"
+    textColor: "{colors.on-brand}"
     typography: "{typography.button}"
-    rounded: "{rounded.button}"
-    padding: "0 1.25rem"
-    height: "3.6rem"
+    rounded: "{rounded.pill}"
+    padding: "0 1.4rem"
+    height: "3.4rem"
+  button-main-hover:
+    backgroundColor: "{colors.brand-press}"
+    textColor: "{colors.on-brand}"
+  button-soft:
+    backgroundColor: "{colors.brand-soft}"
+    textColor: "{colors.brand-ink}"
+    typography: "{typography.button}"
+    rounded: "{rounded.pill}"
+    padding: "0 1.4rem"
+    height: "3.25rem"
   button-line:
-    backgroundColor: "{colors.card}"
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
     typography: "{typography.button}"
-    rounded: "{rounded.button}"
-    padding: "0 1.25rem"
+    rounded: "{rounded.pill}"
+    padding: "0 1.4rem"
     height: "3.25rem"
   button-small:
-    rounded: "{rounded.button}"
-    padding: "0 0.75rem"
-    height: "2.75rem"
+    rounded: "{rounded.pill}"
+    padding: "0 1rem"
+    height: "2.5rem"
+  link-action:
+    textColor: "{colors.brand-ink}"
+    padding: "0 0.25rem"
+    height: "2.5rem"
   icon-button:
-    backgroundColor: "{colors.card}"
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.full}"
+    rounded: "{rounded.pill}"
     size: "2.5rem"
   input:
-    backgroundColor: "{colors.card}"
+    backgroundColor: "{colors.field}"
     textColor: "{colors.ink}"
-    typography: "{typography.body}"
+    typography: "{typography.input}"
     rounded: "{rounded.field}"
     padding: "0 1rem"
     height: "3.25rem"
-  input-amount:
-    rounded: "{rounded.field}"
-    padding: "0 1rem 0 3rem"
-    height: "3.75rem"
-  input-invalid:
+  input-error:
     backgroundColor: "{colors.error-soft}"
-  segment-option:
-    textColor: "{colors.ink-soft}"
-    rounded: "{rounded.full}"
-    padding: "0 0.9rem"
-    height: "2.5rem"
-  segment-option-checked:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.card}"
-  quick-chip:
+    textColor: "{colors.ink}"
+  amount-hero:
     backgroundColor: "{colors.chip}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.full}"
-    padding: "0 0.95rem"
-    height: "2.5rem"
-  card:
-    backgroundColor: "{colors.card}"
-    rounded: "{rounded.card}"
-    padding: "1.25rem"
-  acrylic:
-    backgroundColor: "{colors.acrylic}"
-    rounded: "{rounded.acrylic}"
-    padding: "0.75rem"
-  sticker:
-    backgroundColor: "{colors.sticker}"
+    typography: "{typography.display}"
+    rounded: "{rounded.amount}"
+    padding: "0.35rem 1rem"
+  amount-hero-focus:
+    backgroundColor: "{colors.surface}"
+  chip-quick:
+    backgroundColor: "{colors.chip}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.sticker}"
-    padding: "1rem 1rem 1.1rem"
+    rounded: "{rounded.pill}"
+    padding: "0 1rem"
+    height: "2.4rem"
+  chip-quick-hover:
+    backgroundColor: "{colors.brand-soft}"
+    textColor: "{colors.brand-ink}"
+  segmented:
+    backgroundColor: "{colors.chip}"
+    rounded: "{rounded.pill}"
+    padding: "0.25rem"
+  segmented-option:
+    textColor: "{colors.ink-soft}"
+    rounded: "{rounded.pill}"
+    height: "2.35rem"
+  segmented-option-selected:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+  card:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.card}"
+    padding: "1.15rem"
+  charge:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.charge}"
+    padding: "1.35rem 1.25rem 1.25rem"
+  qr-frame:
+    backgroundColor: "{colors.qr-paper}"
+    rounded: "{rounded.qr}"
+    padding: "0.85rem"
+  avatar:
+    backgroundColor: "{colors.brand-soft}"
+    textColor: "{colors.brand-ink}"
+    rounded: "{rounded.pill}"
+    size: "2.6rem"
   dock:
-    backgroundColor: "{colors.card}"
-    rounded: "{rounded.dock}"
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.pill}"
     padding: "0.4rem"
 ---
 
@@ -157,145 +212,165 @@ components:
 
 ## Overview
 
-**Creative North Star: "Plaquinha de Balcão"**
+**Creative North Star: "O Padrão da Categoria, Bem Acabado"**
 
-O app é a plaquinha de acrílico "Pague com Pix" que fica em pé no caixa da padaria. A cena tem quatro materiais: a parede clara no alto, o balcão de madeira clara embaixo, o display de acrílico transparente com borda polida e base, e o adesivo branco impresso dentro dele. A pessoa preenche a etiqueta do balcão (o cartão do formulário) e vê o adesivo se imprimir ao vivo: nome e valor trocam no adesivo e, quando tudo está pronto, o QR desce para dentro do acrílico.
+Faz o PIX! se parece com o que a pessoa já conhece do app do banco: fundo cinza-neutro, cartões brancos de canto generoso com sombra quase imperceptível, o QR no centro de um cartão "Cobrar com Pix", um valor grande editável e ações em pílula. A barra de acabamento são Mercado Pago, Nubank e PicPay. Não há conceito decorativo, cena ou metáfora: a confiança vem de parecer familiar e de cada detalhe estar resolvido (estados de foco, erro, validação, vazio, tema escuro).
 
-É um mundo calmo, de objeto real e de confiança. Os tons são neutros levemente esverdeados, a madeira aquece a metade de baixo da tela e o único sinal de cor é o teal do Pix. As superfícies são quase chapadas: o acrílico se lê pela borda clara e pelo contorno fino, não por vidro fosco nem por sombra. O reflexo polido corre só pela moldura, nunca por cima do QR.
+A densidade é de app de pagamento: uma coluna no celular, com o cartão da cobrança no topo e os dados de quem recebe abaixo; no desktop, dados à esquerda e cartão da cobrança fixo à direita. A cor é quase toda neutra; um único verde de marca aparece só onde há ação, foco, seleção ou confirmação. A tipografia é uma só família, Figtree, com pesos altos nos títulos e no valor e numerais tabulares em tudo que é número.
 
-No modo escuro, a parede e a madeira escurecem, o acrílico fica mais translúcido e a tinta vira quase branca. O adesivo não muda: continua branco com tinta quase preta, como um adesivo impresso de verdade.
+O mundo anterior, "Plaquinha de Balcão" (plaquinha de acrílico sobre balcão de madeira, adesivo "Pague com Pix"), foi rejeitado pelo usuário por ser genérico, pouco profissional e atrasar o fluxo. Ele sobrevive aqui apenas como anti-referência, junto com story violeta, placa de rodovia, comprovante térmico, maquininha e passe de carteira.
 
 **Key Characteristics:**
-- Cena dividida em parede clara (em cima) e balcão de madeira com friso de 4px (embaixo).
-- Plaquinha de acrílico com borda polida de 1.5px, contorno fino externo, brilho só no canto superior esquerdo e base mais larga que a placa.
-- Adesivo branco invariável com losango teal, "Pague com Pix", QR, nome e valor.
-- Figtree Variable pesada (850) no adesivo e nos títulos, e média (600 a 750) nos campos e botões.
-- Cantos generosos e macios (0.6 a 1.25rem) e chips em pílula.
-- Ação principal em tinta quase preta; o teal fica reservado ao sinal do Pix.
+- Fundo neutro frio, cartões brancos, sombra ambiente leve.
+- Um verde de marca, reservado a ação, foco, seleção e estado válido.
+- Todo controle de ação em pílula; campos com canto médio; contêineres com canto de 20–24px.
+- Figtree em pesos 600–850, numerais tabulares em valores e contadores.
+- QR sempre em papel branco, nos dois temas.
+- Tema escuro completo, com profundidade por camadas tonais.
 
 ## Colors
 
-É uma paleta de caixa de loja: parede cinza-esverdeada, madeira clara, acrílico transparente, adesivo branco e um único teal do Pix.
+Paleta neutra e fria com um único acento verde-petróleo; o escuro espelha cada papel com um par próprio, sem inverter hierarquias.
 
 ### Primary
-- **Teal Pix** (pix): o losango da marca no adesivo, o anel de foco, o cursor de texto e a seleção (a 30%). No hover da ação principal, entra em 14% na mistura com a tinta.
-- **Teal Pix Fundo** (pix-deep): o estado "ok" (nota "Chave válida", o "PIX!" da marca no cabeçalho) e a caixa de seleção marcada. No escuro, o estado ok passa para **Teal Noturno** (night-ok) e o foco para **Teal Claro** (night-focus).
+- **Verde de Marca** (`brand`): preenchimento do botão principal ("Copiar código Pix"), caixa de seleção marcada, cursor de texto, borda de hover em áreas de soltar arquivo e a palavra "PIX!" no logotipo. No escuro vira o verde claro `dark-brand`, com texto `dark-on-brand` quase preto sobre ele.
+- **Verde Pressionado** (`brand-press`): hover do botão principal.
+- **Verde Texto** (`brand-ink`): verde legível como texto sobre branco: links de ação (PNG, SVG, Imprimir), rótulos de botões suaves, inicial do avatar, "Chave válida" (`ok`).
+- **Verde Névoa** (`brand-soft`): fundo das ações secundárias (Compartilhar, Editar, Concluir, Escolher imagem), do avatar e do hover dos chips de valor rápido.
+- **Foco** (`focus`): igual ao verde de marca; contorno de foco a 55% de opacidade, halo de 4px a 16% nos campos, anel sólido de 2px no valor.
 
 ### Neutral
-- **Parede Clara** (wall): o fundo da página e a `theme-color` do PWA.
-- **Madeira de Balcão** (counter) com **Friso de Madeira** (counter-edge): o tampo do balcão, onde ficam as ações e, no celular, o formulário. O friso é a borda superior de 4px e também a cor da barra de rolagem.
-- **Acrílico** (acrylic), **Borda Polida** (acrylic-edge) e **Contorno do Acrílico** (acrylic-line): o corpo translúcido, a borda clara de 1.5px e o contorno externo de 1px da plaquinha e da base.
-- **Adesivo** (sticker): o branco impresso dentro do acrílico. Nunca muda de tema.
-- **Tracejado do Adesivo** (sticker-dash): a borda tracejada da área de espera do QR.
-- **Etiqueta** (card): o cartão do formulário, os botões de contorno e o dock. Sobre o balcão claro, o cartão ganha 8% da madeira para não brilhar demais.
-- **Tinta** (ink): texto, a ação principal, o segmento selecionado e as bordas no hover.
-- **Grafite** (ink-soft) e **Grafite Claro** (ink-faint): rótulos, textos de apoio, contadores e placeholders. Sobre a madeira no celular, os dois escurecem um passo para manter o contraste.
-- **Filete** (rule): bordas de campos, segmentos, botões de contorno e separadores.
-- **Chip** (chip): o fundo dos atalhos de valor.
-- **Vermelho Erro** (error) sobre **Rosa Erro** (error-soft): campo inválido, sua nota e a remoção do logo.
-- **Noite** (night-*): os mesmos papéis no tema escuro.
+- **Cinza Fundo de App** (`page`): fundo de página; também é a `theme-color` do PWA.
+- **Branco Cartão** (`surface`) e **Campo** (`field`): cartões, botão de ícone, dock, opção selecionada do segmentado; no escuro o campo (`dark-field`) fica mais fundo que o cartão.
+- **Grafite** (`ink`): texto principal e títulos.
+- **Grafite Médio** (`ink-soft`): subtítulos, rótulos de campo, resumo do recebedor, opções não selecionadas.
+- **Cinza Apoio** (`ink-faint`): placeholders, contadores (16/25), o "R$" do valor e subtítulo de "Mais opções".
+- **Linha Fina** (`rule`) e **Linha Firme** (`rule-strong`): borda de campo em repouso e em hover; tracejado de áreas vazias e de soltar arquivo.
+- **Cinza Chip** (`chip`): fundo do valor, dos chips de valor rápido, do trilho do segmentado e do botão de limpar.
+- **Papel do QR** (`qr-paper`): o branco fixo da moldura do QR.
+
+### Estado
+- **Vermelho Erro** (`error`) sobre **Rosa Erro** (`error-soft`): borda e fundo de campo inválido, nota de erro com ícone, ação "Remover".
 
 ### Named Rules
-**The One Signal Rule.** O teal é o sinal do Pix: marca, foco e confirmação de que algo está válido ou pronto. Ele nunca é fundo de botão, de cartão ou de faixa.
+**A Regra do Verde Único.** O verde de marca aparece só em ação, foco, seleção, confirmação e na palavra "PIX!" do logotipo. Há um único preenchimento verde sólido por tela (o botão principal, ou sua cópia no dock); ações secundárias usam o Verde Névoa.
 
-**The Printed Sticker Rule.** O adesivo é branco (#ffffff) com tinta quase preta nos dois temas, e o QR sempre fica sobre ele. Os tons de apoio dentro do adesivo são fixos, não seguem o tema.
-
-**The Ink Action Rule.** A ação principal ("Copiar código Pix") é tinta cheia: quase preta no claro e quase branca no escuro.
+**A Regra do QR Sempre Branco.** O QR fica em papel branco (`qr-paper`) com borda fina de 1px na cor da Linha Fina clara, também no tema escuro. Um QR é lido por câmera e o escuro não pode tocá-lo.
 
 ## Typography
 
 **Display Font:** Figtree Variable (com ui-sans-serif, system-ui, sans-serif)
 **Body Font:** Figtree Variable (mesma família)
 
-**Character:** Uma família só, geométrica e simpática. Pesada e apertada quando é o texto impresso no adesivo, média e legível quando é campo de formulário.
+**Character:** Uma geométrica humanista, amigável e firme, usada em pesos altos para parecer app de banco moderno sem frieza corporativa.
 
 ### Hierarchy
-- **Display** (850, 2rem, algarismos tabulares): o valor em reais no adesivo. Troca de valor deslizando 0.4em com fade em 200ms.
-- **Headline** (850, 1.75rem até 2.1rem, lh 1.05, −0.02em, `text-wrap: balance`): o título do formulário. O nome da marca no cabeçalho usa o mesmo peso em 1.45rem.
-- **Title** (850, 1.08 a 1.1rem): "Pague com Pix" e o nome de quem recebe no adesivo.
-- **Body** (600, 1.05rem): o texto digitado nos campos. O parágrafo de introdução usa 500 em 1.02rem, e o valor digitado sobe para 800 em 1.6rem, tabular.
-- **Label** (700, 0.85rem): rótulos de campo e botões de texto. As notas usam 650 em 0.82rem, e os contadores 600 em 0.75rem, tabular.
-- **Button** (750, 0.98rem): botões, sem caixa alta. A ação principal usa 1.02rem, e os botões pequenos 0.85rem.
+- **Display** (800, 2.6rem, -0.02em, tabular): o valor editável dentro do cartão da cobrança. É o maior texto da tela.
+- **Headline** (800, 1.35rem, 1.7rem a partir de 1024px, -0.02em): "Cobrar com Pix".
+- **Wordmark** (850, 1.35rem, -0.02em): "Faz o PIX!" no topo, com "PIX!" em verde.
+- **Title** (800, 1.15rem, -0.01em): títulos de seção fora dos cartões ("Quem recebe"); títulos internos de linha usam 700 no corpo.
+- **Body** (400, 1rem) e **Body pequeno** (400, 0.875rem, entrelinha 1.625): subtítulos, textos de apoio e a nota de privacidade.
+- **Input** (600, 1.05rem): texto digitado nos campos.
+- **Button** (750, 1rem; 0.88rem no botão pequeno): rótulos de botões.
+- **Label** (650, 0.85rem): rótulos de campo em Grafite Médio, em caixa normal.
+- **Caption** (600, 0.75rem, tabular): contadores e dicas de campo à direita do rótulo.
 
 ### Named Rules
-**The Printed Voice Rule.** Tudo que está impresso no adesivo, além dos títulos, usa 850 com −0.02em e entrelinha de 1.05. Campo e botão ficam entre 600 e 800.
+**A Regra do Numeral Tabular.** Valor, chips de valor rápido e contadores usam `tabular-nums`; números não dançam enquanto a pessoa digita.
 
-**The Tabular Money Rule.** Todo valor em reais, contador e atalho de valor usa algarismos tabulares.
+**A Regra da Família Única.** Figtree para tudo, inclusive o cartão impresso. Hierarquia vem de peso e tamanho, nunca de uma segunda fonte.
 
 ## Layout
 
-É mobile-first. No celular, a ordem é: cabeçalho, a plaquinha centralizada na parede (largura máxima de 19.5rem), o balcão de madeira começando logo abaixo da base com as ações ("Copiar código Pix" e, abaixo, Enviar, PNG, SVG e Imprimir em grade de 3), e depois o formulário, que continua sobre a madeira. O cartão do formulário usa gap de 1.5rem entre os campos, e cada campo usa 0.5rem entre o rótulo e o controle.
+Celular primeiro, em uma coluna com gutter de 1rem (cabeçalho em 1.25rem): cabeçalho com logotipo e botão de tema, cartão da cobrança, título "Quem recebe", cartão do recebedor, cartão "Mais opções" e a nota de privacidade. O formulário respeita `max-width: 36rem` e reserva 7rem no fim para o dock.
 
-A partir de 1024px, a página vira uma grade de duas colunas dentro de 80rem (a da direita com até 28rem, gap de 3rem): o formulário fica à esquerda, na parede, e a cena da plaquinha fica fixa à direita com a altura da viewport. A plaquinha fica apoiada no balcão, que sangra até a borda direita da janela. No desktop, a área de espera do QR vira um quadrado.
+A partir de 1024px vira grade de duas colunas dentro de `max-width: 72rem`: dados à esquerda (`minmax(0,1fr)`), cartão da cobrança à direita (`minmax(0,28rem)`), fixo com `position: sticky`, e 2.5rem entre colunas. A frase "Tudo gerado no seu aparelho" sobe para o cabeçalho e a nota de privacidade do rodapé some.
 
-No celular, depois que o QR fica pronto, um dock fixo no rodapé (0.75rem das bordas, com `safe-area-inset-bottom`) mantém "Copiar" e "Ver o QR Code" à mão. Ele entra por baixo com mola e some a partir de 1024px.
+Ritmo: 0.5rem entre ações empilhadas, 0.75rem entre cartões, 1.25rem entre campos dentro de um cartão, 0.5rem entre rótulo, campo e nota. A partir de 640px, Nome e Cidade dividem uma linha (1.5fr / 1fr). Abaixo de 640px o segmentado aperta a fonte para 0.78rem e zera o espaço entre opções para caber numa linha.
+
+O dock móvel é fixo a 0.75rem das bordas, acima da safe area inferior, e aparece só quando as ações do cartão saem da tela.
 
 ## Elevation & Depth
 
-A profundidade vem da cena, não de sombras empilhadas. O que separa os planos é a mudança de material (parede, madeira, acrílico, adesivo), o friso de 4px do balcão e as bordas claras do acrílico. Há só três sombras, cada uma com papel físico.
+Híbrido discreto: no claro, cartões brancos se separam do fundo cinza por uma sombra ambiente dupla quase invisível; no escuro, a profundidade vem de camadas tonais (fundo `dark-page`, cartão `dark-surface`, campo `dark-field` mais fundo) e a sombra vira um fio de 1–2px.
 
 ### Shadow Vocabulary
-- **Adesivo colado** (`box-shadow: 0 1px 2px rgba(14, 21, 18, 0.12)`): a espessura mínima do adesivo sobre o acrílico.
-- **Dock flutuante** (`box-shadow: 0 8px 24px rgba(14, 21, 18, 0.16)`): o único elemento que flutua sobre o conteúdo.
-- **Anel de foco do campo** (`box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent)`): um halo teal junto da borda teal.
+- **Ambiente** (`box-shadow: 0 1px 2px rgba(22,24,27,0.04), 0 4px 16px rgba(22,24,27,0.05)`; escuro `0 1px 2px rgba(0,0,0,0.3)`): cartões, cartão da cobrança e botão de ícone.
+- **Opção selecionada** (`box-shadow: 0 1px 3px rgba(22,24,27,0.12)`): opção ativa do segmentado, que sobe do trilho cinza.
+- **Flutuante** (`box-shadow: 0 8px 28px rgba(22,24,27,0.18)`): só o dock móvel.
+- **Contorno interno** (`box-shadow: inset 0 0 0 1.5px`): borda do botão de linha e hover do valor, sem mudar o tamanho da caixa.
 
 ### Named Rules
-**The Frame-Only Gloss Rule.** O brilho polido (traço branco de 2px a 55%, só em cima e à esquerda) fica na moldura do acrílico, a 0.2rem da borda. Nada de reflexo, gradiente ou vidro fosco por cima do adesivo ou do QR.
+**A Regra da Sombra Ambiente.** Superfícies em repouso usam só a sombra ambiente. Sombra forte é exclusiva do que flutua sobre o conteúdo (o dock).
 
 ## Shapes
 
-Os cantos são macios e em camadas concêntricas: o acrílico tem 1.1rem de raio, o brilho interno 0.95rem, o adesivo 0.6rem e a área de espera do QR 0.5rem. A base do display é mais larga que a placa (−0.6rem de cada lado), não tem borda em cima e arredonda só embaixo (0.7rem). Os cartões do formulário usam 1.25rem, o dock 1.2rem, os botões 0.9rem e os campos 0.8rem. Segmentos, atalhos de valor e o botão de ícone são pílulas. As bordas são finas e uniformes, de 1.5px. O tracejado indica espera ou área de soltar: 2px na espera do QR e 1.5px no seletor de logo. A marca do Pix é um quadrado de cantos 0.2em girado 45°.
+Três famílias de canto. Tudo que é ação clicável é pílula (999px): botões, chips, segmentado, botão de ícone, avatar e dock. Campos e áreas de arquivo têm canto médio (0.85rem). Contêineres têm canto generoso: cartões 1.25rem, cartão da cobrança 1.5rem, moldura do QR 1.1rem, valor 1rem. A caixa de seleção usa 0.4rem.
+
+Bordas são finas e em cinza: 1.5px nos campos e na caixa de seleção, 1px na moldura do QR; tracejado de 1.5px só em áreas vazias ou de soltar (QR ainda não gerado, escolher logo).
+
+### Named Rules
+**A Regra da Pílula.** Se é ação, é pílula. Se recebe texto, tem canto médio. Se agrupa, tem canto de cartão.
 
 ## Components
 
 ### Buttons
-Os botões são sólidos e discretos, com peso de objeto de balcão.
-- **Shape:** raio de 0.9rem, altura mínima de 3.25rem e ícone Lucide à esquerda, com gap de 0.55rem.
-- **Principal:** tinta cheia, 3.6rem de altura e 1.02rem. No hover, a tinta recebe 14% de teal.
-- **Contorno:** fundo de etiqueta, filete de 1.5px e tinta. No hover, o filete vira tinta.
-- **Pequeno:** 2.75rem de altura, 0.85rem e padding de 0.75rem. É usado em Enviar, PNG, SVG e Imprimir.
-- **Press:** `scale(0.97)` em 140ms com `cubic-bezier(0.2, 0.9, 0.3, 1)`. Desabilitado fica com 40% de opacidade.
-- **Focus:** outline teal de 3px com afastamento de 3px em todo controle.
-- **Ícone:** círculo de 2.5rem com filete. É usado na troca de tema.
-- **Texto:** sublinhado de 1.5px com afastamento de 0.25em, 700 e 0.85rem.
+- **Shape:** pílula (999px), altura mínima 3.25rem (3.4rem no principal; 2.5rem no pequeno), ícone de 20px à esquerda do rótulo.
+- **Principal:** Verde de Marca com texto branco. Um por contexto: "Copiar código Pix" (vira "Código copiado" com ✓ por instantes).
+- **Suave:** Verde Névoa com Verde Texto: Compartilhar, Editar, Concluir.
+- **Linha:** branco com contorno interno de 1.5px em Linha Fina; usado no botão "QR" do dock.
+- **Hover / Active:** principal escurece para Verde Pressionado; suave mistura 20% de verde; todos encolhem para `scale(0.98)` ao pressionar (140ms, `cubic-bezier(0.2,0.9,0.3,1)`). Desabilitado a 45% de opacidade.
+- **Link de ação:** texto Verde Texto 0.9rem/700 com ícone de 16px, sublinhado no hover (PNG, SVG, Imprimir). Botão de texto sublinhado em 0.88rem/700 para ações pequenas dentro de campos.
+- **Botão de ícone:** círculo branco de 2.5rem com sombra ambiente (alternar tema).
 
 ### Chips
-- **Tipo de chave:** pílula com filete de 1.5px, 2.5rem de altura, 700 e 0.88rem, em grafite. A selecionada fica com tinta cheia.
-- **Atalho de valor (+10, +20…):** pílula em fundo chip, sem borda, 750 tabular. No hover ganha uma borda de tinta. "Zerar" é um botão de texto.
+- **Valor rápido:** pílula Cinza Chip, 2.4rem, 0.9rem/700 tabular ("+10", "+20", "+50", "+100"). Hover passa para Verde Névoa e Verde Texto.
+- **Segmentado (tipo de chave):** trilho pílula Cinza Chip com cinco opções iguais; a selecionada vira pílula branca com sombra de seleção e texto Grafite. É `role="radiogroup"`.
 
 ### Cards / Containers
-- **Corner Style:** 1.25rem.
-- **Background:** etiqueta (branca, com 8% de madeira sobre o balcão claro).
-- **Shadow Strategy:** nenhuma. O cartão se destaca pela cor sobre a madeira ou a parede.
-- **Border:** nenhuma. Divisões internas usam o filete.
-- **Internal Padding:** 1.25rem. A seção recolhível "Mais opções" usa padding vertical de 0.25rem e um cabeçalho de 3.5rem.
+- **Corner Style:** 1.25rem (cartão) e 1.5rem (cartão da cobrança).
+- **Background:** Branco Cartão.
+- **Shadow Strategy:** sombra ambiente (ver Elevation & Depth).
+- **Border:** nenhuma; divisória interna de 1px Linha Fina quando uma seção se abre.
+- **Internal Padding:** 1.15rem no cartão; 1.35rem / 1.25rem no cartão da cobrança.
 
 ### Inputs / Fields
-- **Style:** fundo de etiqueta, filete de 1.5px, raio de 0.8rem, 3.25rem de altura, texto 600 em 1.05rem. No hover, a borda mistura 45% de tinta.
-- **Focus:** borda teal com halo teal de 4px a 18%, sem outline.
-- **Error:** borda vermelha sobre fundo rosa, com nota vermelha e ícone de alerta. A nota de validade é teal fundo com check.
-- **Valor:** 3.75rem de altura, 800 em 1.6rem tabular, com o prefixo "R$" em grafite claro.
-- **Seletor de logo:** área tracejada de 1.5px com um botão interno de tinta cheia (raio de 0.6rem).
-- **Caixa de seleção:** quadrado de 1.4rem com raio de 0.4rem e borda de tinta. Marcada, fica em teal fundo com check branco.
+- **Style:** fundo Campo, borda 1.5px Linha Fina, canto 0.85rem, altura 3.25rem, texto 1.05rem/600. Rótulo acima à esquerda, contador ou dica à direita.
+- **Hover / Focus:** borda passa a Linha Firme no hover; no foco, borda verde e halo de 4px com 16% de verde, sem outline.
+- **Error:** borda e nota em Vermelho Erro, fundo Rosa Erro, ícone de alerta de 16px e `role="alert"`. Estado válido mostra "Chave válida" com ✓ em Verde Texto.
+- **Caixa de seleção:** 1.4rem, canto 0.4rem, borda Linha Firme; marcada vira verde cheio com ✓ branco.
+- **Arquivo:** faixa tracejada com pílula Verde Névoa "Escolher imagem" e nome do arquivo em Grafite Médio.
 
 ### Navigation
-Não há navegação: é uma tela única. O cabeçalho tem a marca à esquerda e, à direita, o selo "Fica no seu aparelho" (só no desktop) e o botão de tema. No celular, o dock cumpre o papel de barra inferior.
+Tela única, sem navegação entre rotas. O cabeçalho carrega apenas o logotipo e o botão de tema (e, no desktop, a frase de privacidade com escudo). No celular, a navegação de apoio é o dock.
 
-### Plaquinha de acrílico (assinatura)
-Um display com três camadas: o acrílico (padding de 0.75rem, borda polida e contorno externo), o adesivo branco centralizado e a base. O adesivo traz o losango teal com "Pague com Pix", o QR (ou a área tracejada "Falta …" com "O QR aparece aqui.", que leva ao campo que falta), o nome, o valor e uma linha de instrução. O QR entra descendo 14px com mola (rigidez 300, amortecimento 28). O logo opcional fica num quadrado branco no centro do QR. Com movimento reduzido, tudo aparece sem animação. A impressão e a arte exportada repetem o mesmo adesivo.
+### Valor em Destaque
+O valor é editado dentro do próprio cartão da cobrança: caixa Cinza Chip de canto 1rem com "R$" em Cinza Apoio (1.35rem/750) e o número em Display. Hover desenha contorno interno de 1.5px em Linha Firme; em foco a caixa vira branca com anel verde de 2px. Um botão circular de 2rem limpa o valor. A troca de valor desliza na vertical (0.4em, 200ms, `cubic-bezier(0.16,1,0.3,1)`).
+
+### Cartão da Cobrança e QR
+Título "Cobrar com Pix", subtítulo em Grafite Médio, QR central em moldura branca (máx. 15.5rem no celular, 18.5rem no desktop), valor, chips, linha do recebedor e ações. Sem dados suficientes, o lugar do QR vira um botão tracejado com ícone de QR, "Falta …" e "Preencher agora" em Verde Texto, que leva ao campo faltante. O QR entra com escala de 0.96 para 1 em mola (rigidez 300, amortecimento 28).
+
+### Resumo do Recebedor
+Com dados válidos e salvos, o cartão do recebedor recolhe para uma linha: avatar redondo Verde Névoa com a inicial, nome em 700, chave mascarada e cidade em Grafite Médio, e o botão pequeno "Editar".
+
+### Dock Móvel
+Pílula branca fixa na base com sombra flutuante: "Copiar código" (principal, flex) e "QR" (linha) que rola de volta ao cartão. Entra de baixo em mola; some no desktop.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** monte a cena com os materiais do balcão: parede, madeira com friso de 4px, acrílico com borda polida e adesivo branco.
-- **Do** mantenha o adesivo branco (#ffffff) com tinta quase preta e o QR sobre ele em qualquer tema.
-- **Do** reserve o teal para a marca, o foco e os estados de validade ou prontidão.
-- **Do** use tinta cheia para a ação principal e filete de 1.5px para as ações secundárias.
-- **Do** use algarismos tabulares em todo valor e contador.
-- **Do** respeite movimento reduzido: mola e deslize viram troca instantânea.
+- **Do** manter o fundo `page` (#f4f5f6) com cartões brancos de canto 1.25–1.5rem e a sombra ambiente.
+- **Do** reservar o preenchimento verde sólido para uma única ação principal por contexto; secundárias em Verde Névoa.
+- **Do** usar pílula para toda ação, canto 0.85rem para campos e numerais tabulares para valores e contadores.
+- **Do** manter o QR em papel branco com borda fina nos dois temas.
+- **Do** dar a todo estado um desenho: foco verde com halo, erro em vermelho com fundo rosado e ícone, válido com ✓ verde, vazio com tracejado e atalho para o campo.
+- **Do** definir cada novo token de cor nos dois temas, `:root` e `:root[data-theme='dark']`.
+- **Do** respeitar `prefers-reduced-motion`: transições caem para 1ms e as molas viram corte seco.
 
 ### Don't:
-- **Don't** coloque reflexo, gradiente ou vidro fosco sobre o adesivo ou o QR. O brilho fica só na moldura.
-- **Don't** use o teal como fundo de botão, cartão ou faixa.
-- **Don't** traga de volta o palco violeta, limão e rosa do story, o comprovante térmico nem a placa verde de rodovia com contornos grossos e amarelo de advertência.
-- **Don't** empilhe sombras para criar elevação. Fora o adesivo, o dock e o halo de foco, os planos se separam por material.
+- **Don't** trazer de volta a "Plaquinha de Balcão": nada de plaquinha de acrílico, balcão de madeira, adesivo "Pague com Pix", losango inclinado como marca ou paleta verde-acinzentada daquele mundo.
+- **Don't** usar story violeta, placa de rodovia, comprovante térmico, maquininha, passe de carteira ou qualquer cena ou metáfora decorativa.
+- **Don't** pintar cartões, fundos ou títulos grandes de verde; o verde não é cor de superfície.
+- **Don't** usar sombras duras deslocadas, bordas grossas escuras ou sombra forte em superfícies em repouso.
+- **Don't** introduzir uma segunda família tipográfica.
+- **Don't** colocar sobretítulos (kickers) em caixa alta acima dos títulos; o título fala sozinho.

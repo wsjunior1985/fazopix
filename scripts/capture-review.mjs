@@ -35,6 +35,13 @@ async function capture(browser, name, viewport) {
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${OUT}/${name}-dock.png` });
   }
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.click('[aria-label="Usar tema claro"]');
+  await page.click('#remember-data');
+  await page.waitForTimeout(300);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  await page.screenshot({ path: `${OUT}/${name}-saved.png` });
   await context.close();
 }
 

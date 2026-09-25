@@ -4,6 +4,8 @@ import App from './App';
 import '@fontsource-variable/figtree';
 import './styles.css';
 
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {});

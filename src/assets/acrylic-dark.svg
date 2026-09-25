@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
-  <!-- Moldura de acrílico em 9 fatias: espessura na direita/base, brilho polido no canto superior esquerdo. O centro fica vazio para o adesivo. -->
-  <rect x="3" y="3" width="92" height="92" rx="20" fill="rgba(0,0,0,0.55)"/>
-  <rect x="0.75" y="0.75" width="91.5" height="91.5" rx="19" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
-  <rect x="2.5" y="2.5" width="88" height="88" rx="17.5" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5"/>
-  <path d="M6 42 V22 A16 16 0 0 1 22 6 H42" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M10 30 V24 A14 14 0 0 1 24 10 H30" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-</svg>

@@ -14,10 +14,12 @@ import {
   Image as ImageIcon,
   MoonStar,
   Printer,
+  QrCode,
   Share2,
   ShieldCheck,
   Sun,
-  Trash2
+  Trash2,
+  X
 } from 'lucide-react';
 import QRCode from 'qrcode';
 import { buildPixPayload, validatePixKey } from './lib/pix/payload';
@@ -244,6 +246,9 @@ export default function App() {
   const [showMore, setShowMore] = useState(false);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState<'share' | null>(null);
+  const [editReceiver, setEditReceiver] = useState(
+    () => !(stored.remember && stored.key && stored.merchantName && stored.merchantCity)
+  );
   const [canShare, setCanShare] = useState(false);
   const [stageActionsVisible, setStageActionsVisible] = useState(true);
   const reduceMotion = useReducedMotion();
@@ -253,7 +258,7 @@ export default function App() {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: stored,
+    defaultValues: { ...stored, amount: '', description: '', txid: '' },
     mode: 'onChange'
   });
 
@@ -268,8 +273,12 @@ export default function App() {
 
   useEffect(() => {
     if (!values.remember) return;
+    // "Meus dados" is the receiver only: the amount and notes belong to one sale.
     setStored({
       ...values,
+      amount: '',
+      description: '',
+      txid: '',
       logoDataUrl,
       logoFileName
     });
@@ -279,6 +288,8 @@ export default function App() {
     const root = document.documentElement;
     root.dataset.theme = themeMode;
     root.style.colorScheme = themeMode;
+    // Keep the phone status bar in step with the page ground of each theme.
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeMode === 'dark' ? '#0f1113' : '#f4f5f6');
   }, [themeMode]);
 
   useEffect(() => {
@@ -297,6 +308,7 @@ export default function App() {
   const name = values.merchantName.trim();
   const city = values.merchantCity.trim();
   const canGenerate = validKey && name.length > 0 && city.length > 0;
+  const receiverCollapsed = !editReceiver && canGenerate;
 
   const missing = [
     !validKey ? 'chave' : null,
@@ -335,6 +347,7 @@ export default function App() {
   }
 
   function focusMissing() {
+    setEditReceiver(true);
     const id = !validKey ? 'pix-key-input' : !name ? 'merchant-name-input' : 'merchant-city-input';
     const el = document.getElementById(id);
     el?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
@@ -424,22 +437,22 @@ export default function App() {
               print-color-adjust: exact;
             }
             .sheet { max-width: 420px; margin: 0 auto; }
-            .sticker { border: 2px solid #0e1512; border-radius: 18px; padding: 28px 28px 24px; text-align: center; }
-            .head { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 850; font-size: 22px; }
-            .mark { width: 16px; height: 16px; background: #1f9e92; border-radius: 3px; transform: rotate(45deg); }
-            .qr { margin: 18px 0 0; }
+            .sticker { border: 1px solid #e3e5e8; border-radius: 24px; padding: 28px 28px 24px; text-align: center; }
+            .head { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+            .head b { color: #00806b; }
+            .qr { margin: 18px auto 0; max-width: 300px; }
             .qr img { display: block; width: 100%; height: auto; }
-            .name { margin: 14px 0 0; font-weight: 800; font-size: 22px; }
-            .amount { margin: 2px 0 0; font-weight: 850; font-size: 40px; letter-spacing: -0.02em; }
-            .hint { margin: 8px 0 0; font-weight: 600; font-size: 14px; color: #414b47; }
-            .meta { text-align: center; font-size: 13px; font-weight: 600; color: #414b47; margin: 14px 0 0; }
-            .code { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid #cfd6d3; font-size: 10px; line-height: 1.5; word-break: break-all; color: #414b47; }
+            .name { margin: 14px 0 0; font-weight: 700; font-size: 18px; color: #5b6068; }
+            .amount { margin: 4px 0 0; font-weight: 800; font-size: 40px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+            .hint { margin: 8px 0 0; font-weight: 600; font-size: 14px; color: #5b6068; }
+            .meta { text-align: center; font-size: 13px; font-weight: 600; color: #5b6068; margin: 14px 0 0; }
+            .code { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid #e3e5e8; font-size: 10px; line-height: 1.5; word-break: break-all; color: #5b6068; }
           </style>
         </head>
         <body>
           <div class="sheet">
             <div class="sticker">
-              <div class="head"><i class="mark"></i>Pague com Pix</div>
+              <div class="head">Pague com <b>Pix</b></div>
               <div class="qr"><img src="${qr}" alt="QR Code Pix" /></div>
               <p class="name">${escapeHtml(name)}</p>
               <p class="amount">${escapeHtml(amount ? formatMoney(amount) : 'Valor livre')}</p>
@@ -490,265 +503,105 @@ export default function App() {
         transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const }
       };
 
+  const maskedKey = keyValue.length > 6 ? `•••${keyValue.slice(-6)}` : keyValue;
+
   return (
-    <div className="min-h-dvh lg:mx-auto lg:grid lg:max-w-[80rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:px-10">
-        <header className="flex items-center justify-between gap-3 px-5 pb-2 pt-5 lg:col-span-2 lg:px-0 lg:pb-0 lg:pt-7">
-          <h1 className="heavy whitespace-nowrap text-[1.45rem]">
-            Faz o <span className="text-[var(--ok)]">PIX!</span>
-          </h1>
-          <div className="flex items-center gap-3">
-            <span className="hidden items-center gap-1.5 text-[0.85rem] font-semibold text-[var(--ink-soft)] lg:inline-flex">
-              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-              Fica no seu aparelho
-            </span>
-            <button
-              type="button"
-              onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
-              className="icon-button"
-              aria-label={isDark ? 'Usar tema claro' : 'Usar tema escuro'}
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}
-            </button>
-          </div>
-        </header>
-      {/* ── Cena: a plaquinha em pé no balcão ────────────────────── */}
-      <section ref={stageRef} className="lg:sticky lg:top-0 lg:order-2 lg:flex lg:h-dvh lg:flex-col lg:pt-6" aria-labelledby="stand-title">
-
-        <div className="relative z-10 px-9 pt-4 lg:flex lg:flex-1 lg:flex-col lg:justify-end lg:px-10">
-          <div className="stand">
-            <div className="acrylic">
-              <div className="sticker">
-                <p className="heavy inline-flex items-center gap-2 text-[1.08rem]">
-                  <i className="pix-mark" aria-hidden="true" />
-                  Pague com Pix
-                </p>
-
-                <div className="mt-3">
-                  <AnimatePresence mode="wait" initial={false}>
-                    {ready ? (
-                      <motion.div
-                        key="qr"
-                        className="relative"
-                        initial={reduceMotion ? false : { y: -14, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={reduceMotion ? undefined : { opacity: 0 }}
-                        transition={spring}
-                      >
-                        <img src={qrDataUrl} alt={`QR Code Pix para ${name}`} className="block aspect-square w-full" />
-                        {showLogo ? (
-                          <div
-                            className="pointer-events-none absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white p-1"
-                            style={{ width: `${3.2 * logoScale}rem`, height: `${3.2 * logoScale}rem` }}
-                          >
-                            <img src={logoDataUrl ?? ''} alt="" className="h-full w-full rounded-md object-contain" />
-                          </div>
-                        ) : null}
-                      </motion.div>
-                    ) : (
-                      <motion.button
-                        type="button"
-                        key="slot"
-                        onClick={focusMissing}
-                        className="qr-slot w-full"
-                        initial={reduceMotion ? false : { opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={reduceMotion ? undefined : { opacity: 0 }}
-                      >
-                        <p className="text-[0.95rem] font-semibold leading-snug">
-                          Falta {missing.join(', ')}.
-                          <span className="mt-1 block font-medium text-[#5d6763]">O QR aparece aqui.</span>
-                        </p>
-                      </motion.button>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <h2 id="stand-title" className="heavy mt-3 break-words text-[1.1rem]">
-                  {name || <span className="text-[#5d6763]">Seu nome aqui</span>}
-                </h2>
-                <p className="heavy tabular mt-0.5 overflow-hidden whitespace-nowrap text-[2rem] leading-tight" aria-live="polite">
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    <motion.span key={amount || 'livre'} className="inline-block" {...slide}>
-                      {amount ? formatMoney(amount) : 'Valor livre'}
-                    </motion.span>
-                  </AnimatePresence>
-                </p>
-                <p className="mt-1 text-[0.8rem] font-semibold text-[#414b47]">
-                  {amount ? 'Escaneie no app do seu banco' : 'Quem paga digita o valor no banco'}
-                </p>
-              </div>
-            </div>
-            <div className="stand-foot" aria-hidden="true" />
-          </div>
-          <p className="sr-only" aria-live="polite">
-            {ready ? 'QR Code pronto.' : `Falta preencher: ${missing.join(', ')}.`}
-          </p>
-        </div>
-
-        <div className="counter -mt-3 px-5 pb-3 pt-6 lg:-mr-10 lg:mb-0 lg:pb-8 lg:pl-6 lg:pr-16 lg:pt-7 xl:-mr-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))]">
-        <div ref={stageActionsRef} className="flex flex-col gap-2">
+    <div className="min-h-dvh lg:mx-auto lg:grid lg:max-w-[72rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:px-10">
+      <header className="flex items-center justify-between gap-3 px-5 pb-1 pt-5 lg:col-span-2 lg:px-0 lg:pt-7">
+        <h1 className="brand whitespace-nowrap text-[1.35rem]">
+          Faz o <span className="text-[var(--brand)]">PIX!</span>
+        </h1>
+        <div className="flex items-center gap-3">
+          <span className="hidden items-center gap-1.5 text-[0.85rem] font-semibold text-[var(--ink-soft)] lg:inline-flex">
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            Tudo gerado no seu aparelho
+          </span>
           <button
             type="button"
-            onClick={copyPayload}
-            disabled={!ready}
-            className={`btn btn-main w-full ${ready ? '' : 'hidden'}`}
+            onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
+            className="icon-button"
+            aria-label={isDark ? 'Usar tema claro' : 'Usar tema escuro'}
           >
-            {copied ? <Check className="h-5 w-5" strokeWidth={3} /> : <Copy className="h-5 w-5" />}
-            {copied ? 'Código copiado' : 'Copiar código Pix'}
+            {isDark ? <Sun className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}
           </button>
-          {ready ? (
-            <div className="grid grid-cols-3 gap-2">
-              {canShare ? (
-                <button type="button" onClick={shareQr} disabled={busy === 'share'} className="btn btn-line btn-small col-span-3">
-                  <Share2 className="h-4 w-4" />
-                  {busy === 'share' ? 'Abrindo…' : 'Enviar QR'}
-                </button>
-              ) : null}
-              <button type="button" onClick={downloadPng} className="btn btn-line btn-small">
-                <ImageIcon className="h-4 w-4" />
-                PNG
-              </button>
-              <button type="button" onClick={downloadSvg} className="btn btn-line btn-small">
-                <FileCode2 className="h-4 w-4" />
-                SVG
-              </button>
-              <button type="button" onClick={printCard} className="btn btn-line btn-small">
-                <Printer className="h-4 w-4" />
-                Imprimir
-              </button>
-            </div>
-          ) : null}
         </div>
-        </div>
-      </section>
+      </header>
 
-      {/* ── Cartão do formulário ─────────────────────────────────── */}
-      <form
-        className="counter-mobile flex w-full flex-col gap-3 px-3 pb-28 pt-2 lg:order-1 lg:px-0 lg:pb-10 lg:pt-6"
-        onSubmit={(event) => event.preventDefault()}
-        noValidate
-        aria-labelledby="form-title"
+      {/* ── Cobrança: QR, valor e ações ──────────────────────────── */}
+      <section
+        ref={stageRef}
+        className="px-4 pt-3 lg:sticky lg:top-0 lg:order-2 lg:self-start lg:px-0 lg:pt-4"
+        aria-labelledby="charge-title"
       >
-        <div className="px-2 pb-1 pt-1">
-          <h2 id="form-title" className="heavy text-[1.75rem] sm:text-[2.1rem]">Monte sua plaquinha</h2>
-          <p className="mt-1.5 text-[1.02rem] font-medium text-[var(--ink-soft)]">
-            Preencha só o que muda. Chave, nome e cidade bastam; o resto é opcional.
+        <div className="charge">
+          <h2 id="charge-title" className="text-[1.35rem] font-extrabold tracking-[-0.02em] lg:text-[1.7rem]">
+            Cobrar com Pix
+          </h2>
+          <p className="mt-0.5 text-[0.92rem] text-[var(--ink-soft)]">
+            {ready ? 'Mostre o QR ou envie o código.' : 'Preencha os dados e o QR aparece aqui.'}
           </p>
-        </div>
 
-        <div className="card flex flex-col gap-6">
-          <div className="space-y-2">
-            <p className="field-label" id="key-type-label">
-              Tipo de chave
-            </p>
-            <div className="segment grid grid-cols-6 sm:flex" role="radiogroup" aria-labelledby="key-type-label">
-              {KEY_TYPES.map((type) => {
-                const selected = values.keyType === type.id;
-                return (
-                  <button
-                    key={type.id}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    onClick={() => form.setValue('keyType', type.id, { shouldValidate: true })}
-                    className={`segment-option ${KEY_TYPES.indexOf(type) < 3 ? 'col-span-2' : 'col-span-3'}`}
-                  >
-                    {type.label}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mx-auto mt-4 w-full max-w-[15.5rem] lg:max-w-[18.5rem]">
+            <AnimatePresence mode="wait" initial={false}>
+              {ready ? (
+                <motion.div
+                  key="qr"
+                  className="qr-frame"
+                  initial={reduceMotion ? false : { scale: 0.96, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                  transition={spring}
+                >
+                  <div className="relative">
+                    <img src={qrDataUrl} alt={`QR Code Pix para ${name}`} className="block aspect-square w-full" />
+                    {showLogo ? (
+                      <div
+                        className="pointer-events-none absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white p-1"
+                        style={{ width: `${3 * logoScale}rem`, height: `${3 * logoScale}rem` }}
+                      >
+                        <img src={logoDataUrl ?? ''} alt="" className="h-full w-full rounded-md object-contain" />
+                      </div>
+                    ) : null}
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.button
+                  type="button"
+                  key="slot"
+                  onClick={focusMissing}
+                  className="qr-slot w-full"
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                >
+                  <QrCode className="h-8 w-8" aria-hidden="true" />
+                  <span className="mt-2 block text-[0.9rem] font-semibold">Falta {missing.join(', ')}</span>
+                  <span className="mt-0.5 block text-[0.8rem] font-semibold text-[var(--brand-ink)]">Preencher agora</span>
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
 
-          <Field
-            label={`Chave Pix (${activeKeyMeta.label})`}
-            htmlFor="pix-key-input"
-            note={
-              keyInvalid ? (
-                <ErrorNote id="pix-key-error">
-                  {errors.key?.message && !keyValue
-                    ? errors.key.message
-                    : `Isso não parece ${activeKeyMeta.id === 'email' ? 'um e-mail' : `uma chave ${activeKeyMeta.label}`}. Confira ou troque o tipo de chave.`}
-                </ErrorNote>
-              ) : validKey ? (
-                <p className="field-note field-note--ok">
-                  <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
-                  Chave válida
-                </p>
-              ) : null
-            }
-          >
-            <input
-              id="pix-key-input"
-              className="input"
-              placeholder={activeKeyMeta.placeholder}
-              inputMode={activeKeyMeta.inputMode}
-              autoComplete="off"
-              spellCheck={false}
-              aria-invalid={keyInvalid}
-              aria-describedby={keyInvalid ? 'pix-key-error' : undefined}
-              {...form.register('key', {
-                validate: (value) =>
-                  validatePixKey(values.keyType as PixKeyType, value ?? '') || 'Chave inválida para o tipo escolhido.'
-              })}
-            />
-          </Field>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1.5fr_1fr] sm:gap-3">
-            <Field
-              label="Nome de quem recebe"
-              meta={`${values.merchantName?.length || 0}/25`}
-              htmlFor="merchant-name-input"
-              note={errors.merchantName ? <ErrorNote id="merchant-name-error">{errors.merchantName.message}</ErrorNote> : null}
-            >
-              <input
-                id="merchant-name-input"
-                className="input"
-                placeholder="Maria Silva"
-                maxLength={25}
-                autoComplete="name"
-                aria-invalid={Boolean(errors.merchantName)}
-                aria-describedby={errors.merchantName ? 'merchant-name-error' : undefined}
-                {...form.register('merchantName')}
-              />
-            </Field>
-            <Field
-              label="Cidade"
-              meta={`${values.merchantCity?.length || 0}/15`}
-              htmlFor="merchant-city-input"
-              note={errors.merchantCity ? <ErrorNote id="merchant-city-error">{errors.merchantCity.message}</ErrorNote> : null}
-            >
-              <input
-                id="merchant-city-input"
-                className="input uppercase"
-                placeholder="São Paulo"
-                maxLength={15}
-                autoComplete="address-level2"
-                aria-invalid={Boolean(errors.merchantCity)}
-                aria-describedby={errors.merchantCity ? 'merchant-city-error' : undefined}
-                {...form.register('merchantCity')}
-              />
-            </Field>
-          </div>
-
-          <Field label="Valor" meta="Opcional" htmlFor="amount-input">
-            <div className="relative">
-              <span
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-[var(--ink-faint)]"
-                aria-hidden="true"
-              >
-                R$
-              </span>
+          <div className="mt-4">
+            <label htmlFor="amount-input" className="sr-only">
+              Valor em reais (opcional)
+            </label>
+            <div className="amount-hero">
+              <span aria-hidden="true">R$</span>
               <input
                 id="amount-input"
-                className="input input-amount"
                 placeholder="0,00"
                 inputMode="decimal"
                 autoComplete="off"
                 {...form.register('amount')}
               />
+              {values.amount ? (
+                <button type="button" onClick={clearAmount} className="amount-clear" aria-label="Limpar valor">
+                  <X className="h-4 w-4" strokeWidth={2.5} />
+                </button>
+              ) : null}
             </div>
-            <div className="flex flex-wrap items-center gap-2 pt-1">
+            <div className="mt-2 flex justify-center gap-2">
               {QUICK_AMOUNTS.map((quick) => (
                 <button
                   key={quick}
@@ -760,13 +613,194 @@ export default function App() {
                   +{quick}
                 </button>
               ))}
-              {values.amount ? (
-                <button type="button" onClick={clearAmount} className="text-button px-1 text-[var(--ink-soft)]">
-                  Zerar
+            </div>
+          </div>
+          <p className="mt-3 text-center text-[0.9rem] font-semibold text-[var(--ink-soft)]">
+            {amount ? (name ? `${name}${city ? ` · ${city}` : ''}` : 'Quem recebe?') : 'Sem valor: quem paga digita no banco'}
+          </p>
+          <p className="sr-only" aria-live="polite">
+            {ready ? 'QR Code pronto.' : `Falta preencher: ${missing.join(', ')}.`}
+          </p>
+
+          <div ref={stageActionsRef} className="mt-5 flex flex-col gap-2">
+            {ready ? (
+              <>
+                <button type="button" onClick={copyPayload} className="btn btn-main w-full">
+                  {copied ? <Check className="h-5 w-5" strokeWidth={3} /> : <Copy className="h-5 w-5" />}
+                  {copied ? 'Código copiado' : 'Copiar código Pix'}
+                </button>
+                {canShare ? (
+                  <button type="button" onClick={shareQr} disabled={busy === 'share'} className="btn btn-soft w-full">
+                    <Share2 className="h-5 w-5" />
+                    {busy === 'share' ? 'Abrindo…' : 'Compartilhar'}
+                  </button>
+                ) : null}
+                <div className="mt-1 flex items-center justify-center gap-5">
+                  <button type="button" onClick={downloadPng} className="link-action">
+                    <ImageIcon className="h-4 w-4" aria-hidden="true" />
+                    PNG
+                  </button>
+                  <button type="button" onClick={downloadSvg} className="link-action">
+                    <FileCode2 className="h-4 w-4" aria-hidden="true" />
+                    SVG
+                  </button>
+                  <button type="button" onClick={printCard} className="link-action">
+                    <Printer className="h-4 w-4" aria-hidden="true" />
+                    Imprimir
+                  </button>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Dados da cobrança ────────────────────────────────────── */}
+      <form
+        className="mx-auto flex w-full max-w-xl flex-col gap-3 px-4 pb-28 pt-6 lg:order-1 lg:max-w-none lg:px-0 lg:pb-10"
+        onSubmit={(event) => event.preventDefault()}
+        noValidate
+        aria-labelledby="form-title"
+      >
+        <h2 id="form-title" className="text-[1.15rem] font-extrabold tracking-[-0.01em]">
+          Quem recebe
+        </h2>
+
+        <div className="card">
+          {receiverCollapsed ? (
+            <div className="flex items-center gap-3">
+              <span className="avatar" aria-hidden="true">
+                {name.slice(0, 1).toUpperCase()}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-bold">{name}</p>
+                <p className="truncate text-[0.85rem] text-[var(--ink-soft)]">
+                  {activeKeyMeta.label} {maskedKey} · {city}
+                </p>
+              </div>
+              <button type="button" onClick={() => setEditReceiver(true)} className="btn btn-soft btn-small">
+                Editar
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-5">
+              <div className="space-y-2">
+                <p className="field-label" id="key-type-label">
+                  Tipo de chave
+                </p>
+                <div className="segmented" role="radiogroup" aria-labelledby="key-type-label">
+                  {KEY_TYPES.map((type) => {
+                    const selected = values.keyType === type.id;
+                    return (
+                      <button
+                        key={type.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        onClick={() => form.setValue('keyType', type.id, { shouldValidate: true })}
+                        className="segmented-option"
+                      >
+                        {type.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <Field
+                label={`Chave Pix (${activeKeyMeta.label})`}
+                htmlFor="pix-key-input"
+                note={
+                  keyInvalid ? (
+                    <ErrorNote id="pix-key-error">
+                      {errors.key?.message && !keyValue
+                        ? errors.key.message
+                        : `Isso não parece ${activeKeyMeta.id === 'email' ? 'um e-mail' : `uma chave ${activeKeyMeta.label}`}. Confira ou troque o tipo de chave.`}
+                    </ErrorNote>
+                  ) : validKey ? (
+                    <p className="field-note field-note--ok">
+                      <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
+                      Chave válida
+                    </p>
+                  ) : null
+                }
+              >
+                <input
+                  id="pix-key-input"
+                  className="input"
+                  placeholder={activeKeyMeta.placeholder}
+                  inputMode={activeKeyMeta.inputMode}
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-invalid={keyInvalid}
+                  aria-describedby={keyInvalid ? 'pix-key-error' : undefined}
+                  {...form.register('key', {
+                    validate: (value) =>
+                      validatePixKey(values.keyType as PixKeyType, value ?? '') || 'Chave inválida para o tipo escolhido.'
+                  })}
+                />
+              </Field>
+
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-[1.5fr_1fr] sm:gap-3">
+                <Field
+                  label="Nome de quem recebe"
+                  meta={`${values.merchantName?.length || 0}/25`}
+                  htmlFor="merchant-name-input"
+                  note={errors.merchantName ? <ErrorNote id="merchant-name-error">{errors.merchantName.message}</ErrorNote> : null}
+                >
+                  <input
+                    id="merchant-name-input"
+                    className="input"
+                    placeholder="Maria Silva"
+                    maxLength={25}
+                    autoComplete="name"
+                    aria-invalid={Boolean(errors.merchantName)}
+                    aria-describedby={errors.merchantName ? 'merchant-name-error' : undefined}
+                    {...form.register('merchantName')}
+                  />
+                </Field>
+                <Field
+                  label="Cidade"
+                  meta={`${values.merchantCity?.length || 0}/15`}
+                  htmlFor="merchant-city-input"
+                  note={errors.merchantCity ? <ErrorNote id="merchant-city-error">{errors.merchantCity.message}</ErrorNote> : null}
+                >
+                  <input
+                    id="merchant-city-input"
+                    className="input uppercase"
+                    placeholder="São Paulo"
+                    maxLength={15}
+                    autoComplete="address-level2"
+                    aria-invalid={Boolean(errors.merchantCity)}
+                    aria-describedby={errors.merchantCity ? 'merchant-city-error' : undefined}
+                    {...form.register('merchantCity')}
+                  />
+                </Field>
+              </div>
+                <div className="flex items-start gap-3">
+                  <Checkbox.Root
+                    id="remember-data"
+                    checked={values.remember ?? false}
+                    onCheckedChange={(checked) => form.setValue('remember', checked === true, { shouldDirty: true })}
+                    className="check-box mt-0.5"
+                  >
+                    <Checkbox.Indicator>
+                      <Check className="h-3.5 w-3.5" strokeWidth={3.5} />
+                    </Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <label htmlFor="remember-data" className="cursor-pointer select-none text-sm leading-relaxed">
+                    <span className="block font-bold">Lembrar meus dados neste aparelho</span>
+                    <span className="text-[var(--ink-soft)]">Ficam salvos só neste navegador, para a próxima cobrança.</span>
+                  </label>
+                </div>
+              {canGenerate ? (
+                <button type="button" onClick={() => setEditReceiver(false)} className="btn btn-soft btn-small self-start">
+                  <Check className="h-4 w-4" strokeWidth={3} />
+                  Concluir
                 </button>
               ) : null}
             </div>
-          </Field>
+          )}
         </div>
 
         <div className="card !py-1">
@@ -861,24 +895,7 @@ export default function App() {
           </AnimatePresence>
         </div>
 
-        <div className="flex items-start gap-3 px-2 pt-3">
-          <Checkbox.Root
-            id="remember-data"
-            checked={values.remember ?? false}
-            onCheckedChange={(checked) => form.setValue('remember', checked === true, { shouldDirty: true })}
-            className="check-box mt-0.5"
-          >
-            <Checkbox.Indicator>
-              <Check className="h-3.5 w-3.5" strokeWidth={3.5} />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
-          <label htmlFor="remember-data" className="cursor-pointer select-none text-sm leading-relaxed">
-            <span className="block font-bold">Lembrar meus dados neste aparelho</span>
-            <span className="text-[var(--ink-soft)]">Ficam salvos só neste navegador, para a próxima cobrança.</span>
-          </label>
-        </div>
-
-        <p className="flex items-start gap-2.5 p-5 px-2 text-sm leading-relaxed text-[var(--ink-soft)]">
+        <p className="flex items-start gap-2.5 px-1 pt-2 text-sm lg:hidden leading-relaxed text-[var(--ink-soft)]">
           <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ink)]" aria-hidden="true" />
           <span>
             <strong className="font-bold text-[var(--ink)]">Nada sai do seu aparelho.</strong> O código Pix e o QR são

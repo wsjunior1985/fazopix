@@ -13,20 +13,20 @@ related_targets: []
 - **Audience**: Pessoas físicas e autônomos que precisam cobrar via Pix na hora, sem cadastro.
 - **Job to be Done**: Chave, nome e cidade (valor opcional) e sair com QR pronto para copiar, compartilhar, baixar ou imprimir.
 - **Constraints**: 100% client-side, PWA/offline, acessível, responsivo, claro e escuro.
-- **User answers (2026-09-24)**: o story violeta era barulhento, não passava confiança, fluxo confuso e cansou. Foco: QR pronto rápido. Preservar apenas o nome "Faz o PIX!" e o tom coloquial. Story 1080×1920, dock e modo escuro deixam de ser obrigatórios. Anti-referências: story violeta/limão/rosa, comprovante térmico, e a Placa de Rodovia (construída em 2026-09-24 e rejeitada pelo usuário).
+- **User answers (2026-09-25)**: rejeitou story violeta, placa de rodovia, plaquinha de balcão (genérica, cena atrapalha, pouco profissional, fluxo lento), maquininha e passe de carteira. Pediu algo mais profissional e escolheu o padrão da categoria na rodada segura. Preservar o nome "Faz o PIX!" e o tom coloquial.
 
 ## Direction contract
 
-THESIS: O app é a plaquinha de acrílico "Pague com Pix" do caixa: você monta e ela fica de pé, pronta para o cliente escanear. Recusa o palco barulhento e as placas de estrada.
+THESIS: O padrão da categoria executado com acabamento de primeira: a cobrança Pix como Mercado Pago, Nubank e PicPay a fazem, sem conceito decorativo. Recusa cenas, metáforas e cor barulhenta.
 
-OWN-WORLD: Parede clara (#eef1ef) sobre balcão de madeira clara (#c9b69a); display de acrílico transparente com borda polida e base, contendo um adesivo branco impresso; losango teal Pix (#1f9e92) só como marca do adesivo e foco; tinta quase preta (#0e1512) no botão principal. Figtree pesada no adesivo, normal nos campos. Reflexo do acrílico só na moldura, nunca sobre o QR.
+OWN-WORLD: Fundo neutro #f4f5f6, cartões brancos com canto 20–24px e sombra leve, um verde de marca (#00806b; #19c2a6 no escuro) só na ação principal, foco e seleção; botões em pílula; Figtree. QR em moldura branca com borda fina.
 
-STORY: A pessoa preenche chave, nome e cidade na etiqueta do balcão e vê a plaquinha se imprimir; com o QR pronto, copia o código ou baixa/compartilha a arte da plaquinha.
+STORY: A pessoa digita o valor (primeiro campo), confere o recebedor (resumo de uma linha quando salvo, com Editar) e copia o código ou compartilha; o QR fica sempre à vista.
 
-FIRST VIEWPORT: Celular: marca no topo, a plaquinha em pé no centro com "Pague com Pix", o QR, nome e valor, apoiada no balcão; abaixo, o cartão do formulário e "Copiar código Pix" em preto. Desktop: formulário à esquerda, cena da plaquinha fixa à direita.
+FIRST VIEWPORT: Celular: marca e tema; cartão "Cobrar com Pix" com QR central, valor grande, recebedor, "Copiar código Pix" em pílula verde, "Compartilhar" em pílula suave e PNG/SVG/Imprimir como links. Desktop: dados à esquerda, cartão da cobrança fixo à direita.
 
-SIGNATURE INTERACTION: O adesivo é "impresso" ao vivo: nome e valor trocam no adesivo; quando fica pronto, o QR desce para dentro do acrílico.
+SIGNATURE INTERACTION: Recebedor recolhe para um resumo com avatar e "Editar" quando válido e salvo; o valor troca com deslize vertical e o QR entra com leve escala.
 
-FORM: Plaquinha de Balcão, posição 1 da lista fundamentada (IMPECCABLE’S PICK), chave de seed 72c75d0a.
+FORM: Padrão da categoria (canon), chave de seed 3c841b63, reroll 1 no registro safer, --kind canon registrado; pares de acabamento: Mercado Pago, Nubank, PicPay.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

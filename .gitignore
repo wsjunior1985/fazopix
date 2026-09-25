@@ -5,3 +5,11 @@ tsconfig.tsbuildinfo
 .env
 .env.*
 .claude/launch.json
+
+# Impeccable design-process drafts (not shipped)
+public/mockups/
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/decision_payload*.json
+.impeccable/surface_brief.obsolete*.md
