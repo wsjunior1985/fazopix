@@ -171,23 +171,13 @@ html {
 
 .acrylic {
   position: relative;
-  padding: 0.75rem;
-  border-radius: 1.1rem;
-  background: var(--acrylic);
-  border: 1.5px solid var(--acrylic-edge);
-  outline: 1px solid var(--acrylic-line);
+  padding: 0;
+  border: 0.8rem solid transparent;
+  border-image: url('./assets/acrylic-light.svg') 28 fill / 1.6rem / 0.2rem stretch;
 }
 
-/* Brilho polido só na borda do acrílico, fora da área do adesivo. */
-.acrylic::before {
-  content: '';
-  position: absolute;
-  inset: 0.2rem;
-  border-radius: 0.95rem;
-  border: 2px solid rgba(255, 255, 255, 0.55);
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  pointer-events: none;
+:root[data-theme='dark'] .acrylic {
+  border-image-source: url('./assets/acrylic-dark.svg');
 }
 
 .sticker {
@@ -201,13 +191,14 @@ html {
 }
 
 .stand-foot {
+  position: relative;
   height: 1.35rem;
-  margin: 0 -0.6rem;
-  border: 1.5px solid var(--acrylic-edge);
-  border-top: 0;
+  margin: -0.35rem -0.6rem 0;
   border-radius: 0 0 0.7rem 0.7rem;
   background: var(--acrylic);
-  outline: 1px solid var(--acrylic-line);
+  border: 1.5px solid var(--acrylic-edge);
+  border-top: 0;
+  box-shadow: inset 0 -4px 0 var(--acrylic-line), 0 6px 10px -4px var(--counter-shadow);
 }
 
 .qr-slot {
