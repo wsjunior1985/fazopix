@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/figtree';
 import './styles.css';
 
 if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {

@@ -1,0 +1,722 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-24T19:52:16.026Z",
+  "title": "Design System: Faz o PIX!",
+  "extensions": {
+    "colorMeta": {
+      "pix": {
+        "role": "primary",
+        "displayName": "Teal Pix",
+        "canonical": "#1f9e92",
+        "tonalRamp": [
+          "#001611",
+          "#00322b",
+          "#005047",
+          "#007065",
+          "#059488",
+          "#46baad",
+          "#71e1d3",
+          "#97fff8"
+        ]
+      },
+      "pix-deep": {
+        "role": "primary",
+        "displayName": "Teal Pix Fundo",
+        "canonical": "#16786f",
+        "tonalRamp": [
+          "#001410",
+          "#00302a",
+          "#004e46",
+          "#006d64",
+          "#389187",
+          "#60b6ac",
+          "#87ddd2",
+          "#abfff6"
+        ]
+      },
+      "wall": {
+        "role": "neutral",
+        "displayName": "Parede Clara",
+        "canonical": "#eef1ef",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#222523",
+          "#3e403f",
+          "#5c5e5d",
+          "#7e817f",
+          "#a2a5a3",
+          "#c8cbc9",
+          "#ecefed"
+        ]
+      },
+      "counter": {
+        "role": "neutral",
+        "displayName": "Madeira de Balcão",
+        "canonical": "#c9b69a",
+        "tonalRamp": [
+          "#150800",
+          "#302108",
+          "#4d3d24",
+          "#6c5b41",
+          "#8f7d63",
+          "#b4a286",
+          "#dbc8ab",
+          "#ffebce"
+        ]
+      },
+      "counter-edge": {
+        "role": "neutral",
+        "displayName": "Friso de Madeira",
+        "canonical": "#b39d7e",
+        "tonalRamp": [
+          "#170700",
+          "#322003",
+          "#4f3c20",
+          "#6e5a3d",
+          "#927d5f",
+          "#b7a182",
+          "#dec7a7",
+          "#ffebca"
+        ]
+      },
+      "acrylic": {
+        "role": "neutral",
+        "displayName": "Acrílico",
+        "canonical": "rgba(255, 255, 255, 0.5)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "acrylic-edge": {
+        "role": "neutral",
+        "displayName": "Borda Polida",
+        "canonical": "rgba(255, 255, 255, 0.95)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "acrylic-line": {
+        "role": "neutral",
+        "displayName": "Contorno do Acrílico",
+        "canonical": "rgba(14, 21, 18, 0.14)",
+        "tonalRamp": [
+          "#070d0a",
+          "#1f2623",
+          "#3a423e",
+          "#57605c",
+          "#7a837f",
+          "#9ea7a3",
+          "#c3cdc9",
+          "#e7f1ed"
+        ]
+      },
+      "sticker": {
+        "role": "neutral",
+        "displayName": "Adesivo",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "sticker-dash": {
+        "role": "neutral",
+        "displayName": "Tracejado do Adesivo",
+        "canonical": "#b9c2be",
+        "tonalRamp": [
+          "#070d0a",
+          "#1f2623",
+          "#3a423e",
+          "#58605c",
+          "#7a827f",
+          "#9ea7a3",
+          "#c4cdc9",
+          "#e8f1ed"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Etiqueta",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#0e1512",
+        "tonalRamp": [
+          "#070d0a",
+          "#1f2623",
+          "#3a423e",
+          "#57605c",
+          "#7a837f",
+          "#9ea7a3",
+          "#c3cdc9",
+          "#e7f1ed"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Grafite",
+        "canonical": "#414b47",
+        "tonalRamp": [
+          "#060d0a",
+          "#1d2623",
+          "#38423e",
+          "#56605c",
+          "#78837f",
+          "#9ca8a3",
+          "#c2cec9",
+          "#e6f2ed"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Grafite Claro",
+        "canonical": "#5d6763",
+        "tonalRamp": [
+          "#060d0a",
+          "#1e2623",
+          "#39423f",
+          "#56605c",
+          "#79837f",
+          "#9da7a3",
+          "#c2cec9",
+          "#e6f2ed"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "#cfd6d3",
+        "tonalRamp": [
+          "#080c0a",
+          "#202523",
+          "#3c413f",
+          "#595f5d",
+          "#7b827f",
+          "#a0a6a3",
+          "#c5ccc9",
+          "#e9f0ed"
+        ]
+      },
+      "chip": {
+        "role": "neutral",
+        "displayName": "Chip",
+        "canonical": "#f1f4f2",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#222523",
+          "#3e403f",
+          "#5c5e5d",
+          "#7e817f",
+          "#a2a5a3",
+          "#c8cbc9",
+          "#ecefed"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Vermelho Erro",
+        "canonical": "#c4122f",
+        "tonalRamp": [
+          "#330000",
+          "#5e0000",
+          "#8b0000",
+          "#b40022",
+          "#e03845",
+          "#ff656a",
+          "#ff9998",
+          "#ffc6c3"
+        ]
+      },
+      "error-soft": {
+        "role": "error",
+        "displayName": "Rosa Erro",
+        "canonical": "#fbe9ec",
+        "tonalRamp": [
+          "#12080a",
+          "#2d2022",
+          "#493c3e",
+          "#68595c",
+          "#8b7c7e",
+          "#b0a0a3",
+          "#d7c5c8",
+          "#fbe9ec"
+        ]
+      },
+      "night-wall": {
+        "role": "neutral",
+        "displayName": "Parede Noturna",
+        "canonical": "#151a18",
+        "tonalRamp": [
+          "#080c0b",
+          "#202523",
+          "#3c413f",
+          "#595f5d",
+          "#7c827f",
+          "#a0a6a4",
+          "#c5ccc9",
+          "#e9f0ed"
+        ]
+      },
+      "night-counter": {
+        "role": "neutral",
+        "displayName": "Madeira Noturna",
+        "canonical": "#5a4a36",
+        "tonalRamp": [
+          "#150800",
+          "#2f210e",
+          "#4c3d29",
+          "#6b5b46",
+          "#8f7d68",
+          "#b4a18b",
+          "#dac7b0",
+          "#ffebd3"
+        ]
+      },
+      "night-counter-edge": {
+        "role": "neutral",
+        "displayName": "Friso Noturno",
+        "canonical": "#4a3c2b",
+        "tonalRamp": [
+          "#140800",
+          "#2e2111",
+          "#4b3d2c",
+          "#6a5b49",
+          "#8d7d6b",
+          "#b2a28e",
+          "#d9c7b3",
+          "#fdebd7"
+        ]
+      },
+      "night-acrylic": {
+        "role": "neutral",
+        "displayName": "Acrílico Noturno",
+        "canonical": "rgba(255, 255, 255, 0.1)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "night-acrylic-edge": {
+        "role": "neutral",
+        "displayName": "Borda Polida Noturna",
+        "canonical": "rgba(255, 255, 255, 0.5)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "night-card": {
+        "role": "neutral",
+        "displayName": "Etiqueta Noturna",
+        "canonical": "#1d2320",
+        "tonalRamp": [
+          "#070d0a",
+          "#202623",
+          "#3b423e",
+          "#59605c",
+          "#7b827e",
+          "#9fa7a3",
+          "#c5cdc9",
+          "#e9f1ed"
+        ]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Tinta Noturna",
+        "canonical": "#f2f5f3",
+        "tonalRamp": [
+          "#0a0c0a",
+          "#222523",
+          "#3e403f",
+          "#5c5e5d",
+          "#7e817f",
+          "#a2a5a3",
+          "#c8cbc9",
+          "#ecefed"
+        ]
+      },
+      "night-ink-soft": {
+        "role": "neutral",
+        "displayName": "Grafite Noturno",
+        "canonical": "#c5cdc9",
+        "tonalRamp": [
+          "#070d0a",
+          "#202623",
+          "#3b423e",
+          "#59605c",
+          "#7b827f",
+          "#9fa7a3",
+          "#c5cdc9",
+          "#e9f1ed"
+        ]
+      },
+      "night-ink-faint": {
+        "role": "neutral",
+        "displayName": "Grafite Claro Noturno",
+        "canonical": "#9aa5a0",
+        "tonalRamp": [
+          "#060d0a",
+          "#1e2622",
+          "#39423e",
+          "#56605c",
+          "#79837e",
+          "#9da8a3",
+          "#c2cec8",
+          "#e6f2ec"
+        ]
+      },
+      "night-rule": {
+        "role": "neutral",
+        "displayName": "Filete Noturno",
+        "canonical": "#36403c",
+        "tonalRamp": [
+          "#050d0a",
+          "#1d2623",
+          "#38423e",
+          "#56605c",
+          "#78837f",
+          "#9ca8a3",
+          "#c2cec9",
+          "#e5f2ed"
+        ]
+      },
+      "night-chip": {
+        "role": "neutral",
+        "displayName": "Chip Noturno",
+        "canonical": "#262d2a",
+        "tonalRamp": [
+          "#070d0a",
+          "#1f2623",
+          "#3a423e",
+          "#58605c",
+          "#7a827f",
+          "#9ea7a3",
+          "#c4cdc9",
+          "#e8f1ed"
+        ]
+      },
+      "night-focus": {
+        "role": "primary",
+        "displayName": "Teal Claro",
+        "canonical": "#4fd1c3",
+        "tonalRamp": [
+          "#001612",
+          "#00332b",
+          "#005148",
+          "#007166",
+          "#009689",
+          "#33bcae",
+          "#64e3d4",
+          "#8bfff9"
+        ]
+      },
+      "night-ok": {
+        "role": "primary",
+        "displayName": "Teal Noturno",
+        "canonical": "#6fdccf",
+        "tonalRamp": [
+          "#001511",
+          "#00322b",
+          "#005047",
+          "#007065",
+          "#119488",
+          "#49b9ad",
+          "#74e1d3",
+          "#99fff8"
+        ]
+      },
+      "night-error": {
+        "role": "error",
+        "displayName": "Vermelho Erro Noturno",
+        "canonical": "#ff7088",
+        "tonalRamp": [
+          "#320000",
+          "#5c000b",
+          "#830026",
+          "#a91b42",
+          "#d34864",
+          "#fd6f87",
+          "#ff97ac",
+          "#ffc5d4"
+        ]
+      },
+      "night-error-soft": {
+        "role": "error",
+        "displayName": "Rosa Erro Noturno",
+        "canonical": "#3a1a20",
+        "tonalRamp": [
+          "#1b0207",
+          "#38191f",
+          "#57343a",
+          "#775257",
+          "#9c747a",
+          "#c2989e",
+          "#e9bdc3",
+          "#ffe1e7"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "O valor em reais no adesivo, tabular."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título do formulário (\"Monte sua plaquinha\") e marca no cabeçalho."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "\"Pague com Pix\" e o nome de quem recebe no adesivo."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto digitado nos campos."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Rótulos de campo e botões de texto."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Rótulos de botão, sem caixa alta."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sticker-contact",
+        "value": "0 1px 2px rgba(14, 21, 18, 0.12)",
+        "purpose": "Espessura mínima do adesivo colado no acrílico."
+      },
+      {
+        "name": "dock-float",
+        "value": "0 8px 24px rgba(14, 21, 18, 0.16)",
+        "purpose": "Único elemento flutuante: o dock móvel."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent)",
+        "purpose": "Halo teal do campo em foco, junto da borda teal."
+      },
+      {
+        "name": "frame-gloss",
+        "value": "inset 0.2rem; border: 2px solid rgba(255, 255, 255, 0.55) (só topo e esquerda)",
+        "purpose": "Brilho polido do acrílico, só na moldura."
+      }
+    ],
+    "motion": [
+      {
+        "name": "press",
+        "value": "transform 140ms cubic-bezier(0.2, 0.9, 0.3, 1); scale(0.97)",
+        "purpose": "Aperto de botão."
+      },
+      {
+        "name": "state",
+        "value": "160ms ease-out",
+        "purpose": "Troca de borda, fundo e cor em hover e foco."
+      },
+      {
+        "name": "spring-drop",
+        "value": "spring stiffness 300, damping 28",
+        "purpose": "QR descendo 14px para dentro do acrílico e dock entrando por baixo (90px)."
+      },
+      {
+        "name": "value-swap",
+        "value": "200ms cubic-bezier(0.16, 1, 0.3, 1), y 0.4em",
+        "purpose": "Troca do valor no adesivo."
+      },
+      {
+        "name": "disclosure",
+        "value": "260ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Abrir e fechar \"Mais opções\"."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "1ms",
+        "purpose": "Com prefers-reduced-motion, transições e animações viram instantâneas."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão principal",
+      "kind": "button",
+      "refersTo": "button-main",
+      "description": "\"Copiar código Pix\": tinta cheia, uma por tela (e repetida no dock).",
+      "html": "<button class=\"ds-btn ds-btn-main\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>Copiar código Pix</button>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3.25rem;padding:0 1.25rem;border-radius:.9rem;font:inherit;font-weight:750;font-size:.98rem;border:1.5px solid transparent;cursor:pointer;transition:transform 140ms cubic-bezier(.2,.9,.3,1),background-color 160ms ease-out,border-color 160ms ease-out;}.ds-btn:active{transform:scale(.97);}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px;}.ds-btn-main{min-height:3.6rem;background:var(--btn);color:var(--on-btn);font-size:1.02rem;}.ds-btn-main:hover{background:color-mix(in srgb,var(--btn) 86%,var(--pix));}"
+    },
+    {
+      "name": "Botão de contorno",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Ações secundárias (Enviar, PNG, SVG, Imprimir) na versão pequena.",
+      "html": "<button class=\"ds-btn ds-btn-line ds-btn-small\">PNG</button>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3.25rem;padding:0 1.25rem;border-radius:.9rem;font:inherit;font-weight:750;font-size:.98rem;border:1.5px solid transparent;cursor:pointer;transition:transform 140ms cubic-bezier(.2,.9,.3,1),background-color 160ms ease-out,border-color 160ms ease-out;}.ds-btn:active{transform:scale(.97);}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px;}.ds-btn-line{background:var(--card);border-color:var(--rule);color:var(--ink);}.ds-btn-line:hover{border-color:var(--rule-strong);}.ds-btn-small{min-height:2.75rem;padding:0 .75rem;font-size:.85rem;}"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo de texto com halo teal no foco.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Nome de quem recebe <span class=\"ds-meta\">16/25</span></span><input class=\"ds-input\" value=\"Padaria São José\"/></label>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-field{display:grid;gap:.5rem;}.ds-label{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;color:var(--ink-soft);}.ds-meta{font-size:.75rem;font-weight:600;color:var(--ink-faint);font-variant-numeric:tabular-nums;}.ds-input{width:100%;min-height:3.25rem;padding:0 1rem;border-radius:.8rem;border:1.5px solid var(--rule);background:var(--field);color:var(--ink);font:inherit;font-size:1.05rem;font-weight:600;transition:box-shadow 160ms ease-out,border-color 160ms ease-out;}.ds-input:hover{border-color:color-mix(in srgb,var(--rule-strong) 45%,var(--rule));}.ds-input:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 4px color-mix(in srgb,var(--focus) 18%,transparent);}"
+    },
+    {
+      "name": "Segmento de tipo de chave",
+      "kind": "chip",
+      "refersTo": "segment-option",
+      "description": "Pílulas de escolha única; a selecionada em tinta cheia.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\"><button class=\"ds-seg-opt\" aria-checked=\"true\">CPF</button><button class=\"ds-seg-opt\" aria-checked=\"false\">CNPJ</button><button class=\"ds-seg-opt\" aria-checked=\"false\">Celular</button></div>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-seg{display:flex;flex-wrap:wrap;gap:.4rem;}.ds-seg-opt{min-height:2.5rem;padding:0 .9rem;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--ink-soft);font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:background-color 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out;}.ds-seg-opt:hover{border-color:var(--rule-strong);color:var(--ink);}.ds-seg-opt[aria-checked=\"true\"]{background:var(--btn);border-color:var(--btn);color:var(--on-btn);}.ds-seg-opt:focus-visible{outline:3px solid var(--focus);outline-offset:3px;}"
+    },
+    {
+      "name": "Atalho de valor",
+      "kind": "chip",
+      "refersTo": "quick-chip",
+      "description": "Soma valores fixos ao campo de valor.",
+      "html": "<div style=\"display:flex;gap:.5rem\"><button class=\"ds-chip\">+10</button><button class=\"ds-chip\">+20</button><button class=\"ds-chip\">+50</button></div>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-chip{min-height:2.5rem;padding:0 .95rem;border-radius:999px;background:var(--chip);color:var(--ink);font:inherit;font-size:.88rem;font-weight:750;font-variant-numeric:tabular-nums;border:1.5px solid transparent;cursor:pointer;transition:border-color 160ms ease-out;}.ds-chip:hover{border-color:var(--rule-strong);}.ds-chip:focus-visible{outline:3px solid var(--focus);outline-offset:3px;}"
+    },
+    {
+      "name": "Cartão sobre o balcão",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A etiqueta do formulário apoiada na madeira.",
+      "html": "<div class=\"ds-counter\"><div class=\"ds-card\"><strong>Mais opções</strong><span>Descrição, identificador e logo no QR</span></div></div>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-counter{background:var(--counter);border-top:4px solid var(--counter-edge);padding:1.5rem 1rem;}.ds-card{--card:color-mix(in srgb,#fff 92%,var(--counter));background:var(--card);border-radius:1.25rem;padding:1.25rem;display:grid;gap:.25rem;color:var(--ink);}.ds-card span{font-size:.875rem;font-weight:500;color:var(--ink-faint);}"
+    },
+    {
+      "name": "Plaquinha de acrílico",
+      "kind": "custom",
+      "refersTo": "acrylic",
+      "description": "Assinatura: acrílico com brilho só na moldura, adesivo branco e base.",
+      "html": "<div class=\"ds-scene\"><div class=\"ds-stand\"><div class=\"ds-acrylic\"><div class=\"ds-sticker\"><p class=\"ds-head\"><i class=\"ds-mark\"></i>Pague com Pix</p><div class=\"ds-qr\">QR</div><p class=\"ds-name\">Padaria São José</p><p class=\"ds-amount\">R$ 54,90</p><p class=\"ds-hint\">Escaneie no app do seu banco</p></div></div><div class=\"ds-foot\"></div></div></div>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-scene{background:linear-gradient(var(--wall) 82%,var(--counter-edge) 82% calc(82% + 4px),var(--counter) 0);padding:1.5rem 2rem 1rem;}.ds-stand{max-width:14rem;margin:0 auto;}.ds-acrylic{position:relative;padding:.75rem;border-radius:1.1rem;background:var(--acrylic);border:1.5px solid var(--acrylic-edge);outline:1px solid var(--acrylic-line);}.ds-acrylic::before{content:'';position:absolute;inset:.2rem;border-radius:.95rem;border:2px solid rgba(255,255,255,.55);border-right-color:transparent;border-bottom-color:transparent;pointer-events:none;}.ds-sticker{position:relative;background:var(--sticker);color:#0e1512;border-radius:.6rem;padding:1rem 1rem 1.1rem;text-align:center;box-shadow:0 1px 2px rgba(14,21,18,.12);}.ds-head{display:inline-flex;align-items:center;gap:.5rem;margin:0;font-weight:850;letter-spacing:-.02em;font-size:1.08rem;}.ds-mark{display:inline-block;width:.8em;height:.8em;background:var(--pix);border-radius:.2em;rotate:45deg;}.ds-qr{margin-top:.75rem;aspect-ratio:1;display:grid;place-items:center;border:2px dashed #b9c2be;border-radius:.5rem;color:#414b47;font-weight:600;}.ds-name{margin:.75rem 0 0;font-weight:850;letter-spacing:-.02em;font-size:1.1rem;}.ds-amount{margin:.125rem 0 0;font-weight:850;letter-spacing:-.02em;font-size:2rem;line-height:1.25;font-variant-numeric:tabular-nums;}.ds-hint{margin:.25rem 0 0;font-size:.8rem;font-weight:600;color:#414b47;}.ds-foot{height:1.35rem;margin:0 -.6rem;border:1.5px solid var(--acrylic-edge);border-top:0;border-radius:0 0 .7rem .7rem;background:var(--acrylic);outline:1px solid var(--acrylic-line);}"
+    },
+    {
+      "name": "Dock móvel",
+      "kind": "nav",
+      "refersTo": "dock",
+      "description": "Barra fixa no rodapé do celular com a ação principal e \"Ver o QR Code\".",
+      "html": "<div class=\"ds-dock\"><button class=\"ds-btn ds-btn-main\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>Copiar código Pix</button><button class=\"ds-btn ds-btn-line\" aria-label=\"Ver o QR Code\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg></button></div>",
+      "css": ":host{--wall:#eef1ef;--counter:#c9b69a;--counter-edge:#b39d7e;--acrylic:rgba(255,255,255,.5);--acrylic-edge:rgba(255,255,255,.95);--acrylic-line:rgba(14,21,18,.14);--sticker:#fff;--pix:#1f9e92;--pix-deep:#16786f;--card:#fff;--field:#fff;--ink:#0e1512;--ink-soft:#414b47;--ink-faint:#5d6763;--rule:#cfd6d3;--rule-strong:#0e1512;--chip:#f1f4f2;--focus:#1f9e92;--error:#c4122f;--error-soft:#fbe9ec;--btn:#0e1512;--on-btn:#fff;font-family:'Figtree Variable',ui-sans-serif,system-ui,sans-serif;}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3.25rem;padding:0 1.25rem;border-radius:.9rem;font:inherit;font-weight:750;font-size:.98rem;border:1.5px solid transparent;cursor:pointer;transition:transform 140ms cubic-bezier(.2,.9,.3,1),background-color 160ms ease-out,border-color 160ms ease-out;}.ds-btn:active{transform:scale(.97);}.ds-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px;}.ds-dock{display:flex;gap:.4rem;padding:.4rem;border-radius:1.2rem;background:var(--card);border:1.5px solid var(--rule);box-shadow:0 8px 24px rgba(14,21,18,.16);}.ds-dock .ds-btn{min-height:3rem;}.ds-btn-main{flex:1;background:var(--btn);color:var(--on-btn);font-size:1.02rem;}.ds-btn-main:hover{background:color-mix(in srgb,var(--btn) 86%,var(--pix));}.ds-btn-line{background:var(--card);border-color:var(--rule);color:var(--ink);}.ds-btn-line:hover{border-color:var(--rule-strong);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Plaquinha de Balcão",
+    "overview": "O app é a plaquinha de acrílico \"Pague com Pix\" que fica em pé no caixa da padaria. A cena tem quatro materiais: a parede clara no alto, o balcão de madeira clara embaixo, o display de acrílico transparente com borda polida e base, e o adesivo branco impresso dentro dele. A pessoa preenche a etiqueta do balcão (o cartão do formulário) e vê o adesivo se imprimir ao vivo: nome e valor trocam no adesivo e, quando tudo está pronto, o QR desce para dentro do acrílico.\n\nÉ um mundo calmo, de objeto real e de confiança. Os tons são neutros levemente esverdeados, a madeira aquece a metade de baixo da tela e o único sinal de cor é o teal do Pix. As superfícies são quase chapadas: o acrílico se lê pela borda clara e pelo contorno fino, não por vidro fosco nem por sombra. O reflexo polido corre só pela moldura, nunca por cima do QR.\n\nNo modo escuro, a parede e a madeira escurecem, o acrílico fica mais translúcido e a tinta vira quase branca. O adesivo não muda: continua branco com tinta quase preta, como um adesivo impresso de verdade.",
+    "keyCharacteristics": [
+      "Cena dividida em parede clara (em cima) e balcão de madeira com friso de 4px (embaixo).",
+      "Plaquinha de acrílico com borda polida de 1.5px, contorno fino externo, brilho só no canto superior esquerdo e base mais larga que a placa.",
+      "Adesivo branco invariável com losango teal, \"Pague com Pix\", QR, nome e valor.",
+      "Figtree Variable pesada (850) no adesivo e nos títulos, e média (600 a 750) nos campos e botões.",
+      "Cantos generosos e macios (0.6 a 1.25rem) e chips em pílula.",
+      "Ação principal em tinta quase preta; o teal fica reservado ao sinal do Pix."
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "O teal é o sinal do Pix: marca, foco e confirmação de que algo está válido ou pronto. Ele nunca é fundo de botão, de cartão ou de faixa.",
+        "section": "colors"
+      },
+      {
+        "name": "The Printed Sticker Rule",
+        "body": "O adesivo é branco (#ffffff) com tinta quase preta nos dois temas, e o QR sempre fica sobre ele. Os tons de apoio dentro do adesivo são fixos, não seguem o tema.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Action Rule",
+        "body": "A ação principal (\"Copiar código Pix\") é tinta cheia: quase preta no claro e quase branca no escuro.",
+        "section": "colors"
+      },
+      {
+        "name": "The Printed Voice Rule",
+        "body": "Tudo que está impresso no adesivo, além dos títulos, usa 850 com −0.02em e entrelinha de 1.05. Campo e botão ficam entre 600 e 800.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Money Rule",
+        "body": "Todo valor em reais, contador e atalho de valor usa algarismos tabulares.",
+        "section": "typography"
+      },
+      {
+        "name": "The Frame-Only Gloss Rule",
+        "body": "O brilho polido (traço branco de 2px a 55%, só em cima e à esquerda) fica na moldura do acrílico, a 0.2rem da borda. Nada de reflexo, gradiente ou vidro fosco por cima do adesivo ou do QR.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do monte a cena com os materiais do balcão: parede, madeira com friso de 4px, acrílico com borda polida e adesivo branco.",
+      "Do mantenha o adesivo branco (#ffffff) com tinta quase preta e o QR sobre ele em qualquer tema.",
+      "Do reserve o teal para a marca, o foco e os estados de validade ou prontidão.",
+      "Do use tinta cheia para a ação principal e filete de 1.5px para as ações secundárias.",
+      "Do use algarismos tabulares em todo valor e contador.",
+      "Do respeite movimento reduzido: mola e deslize viram troca instantânea."
+    ],
+    "donts": [
+      "Don't coloque reflexo, gradiente ou vidro fosco sobre o adesivo ou o QR. O brilho fica só na moldura.",
+      "Don't use o teal como fundo de botão, cartão ou faixa.",
+      "Don't traga de volta o palco violeta, limão e rosa do story, o comprovante térmico nem a placa verde de rodovia com contornos grossos e amarelo de advertência.",
+      "Don't empilhe sombras para criar elevação. Fora o adesivo, o dock e o halo de foco, os planos se separam por material."
+    ]
+  }
+}

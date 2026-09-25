@@ -11,7 +11,7 @@ describe('Tailwind CSS pipeline', () => {
     const result = await postcss([tailwindcss()]).process(source, { from: cssPath });
 
     expect(result.css).toContain('.p-5');
-    expect(result.css).toContain('.gap-6');
-    expect(result.css).toContain('.sm\\:grid-cols-2');
+    expect(result.css).toContain('.gap-3');
+    expect(result.css).toContain('.lg\\:order-2');
   });
 });

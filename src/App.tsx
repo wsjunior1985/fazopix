@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   AlertCircle,
-  ArrowDownToLine,
   ArrowUp,
   Check,
   ChevronDown,
@@ -14,11 +13,9 @@ import {
   FileCode2,
   Image as ImageIcon,
   MoonStar,
-  PenLine,
   Printer,
   Share2,
   ShieldCheck,
-  Smartphone,
   Sun,
   Trash2
 } from 'lucide-react';
@@ -26,8 +23,7 @@ import QRCode from 'qrcode';
 import { buildPixPayload, validatePixKey } from './lib/pix/payload';
 import { formatMoney, normalizeAmount } from './lib/pix/normalizers';
 import { PixKeyType } from './lib/pix/validators';
-import { renderStory } from './lib/story';
-import archivoFontUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import figtreeFontUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 
 const schema = z.object({
   keyType: z.enum(['cpf', 'cnpj', 'phone', 'email', 'random']),
@@ -238,19 +234,6 @@ const KEY_TYPES: { id: FormValues['keyType']; label: string; placeholder: string
 
 const QUICK_AMOUNTS = [10, 20, 50, 100];
 
-// The amount is the largest thing on the stage; long values step down so they never clip.
-function amountSize(length: number) {
-  if (length <= 8) return 'clamp(3.1rem, 15vw, 6rem)';
-  if (length <= 10) return 'clamp(2.6rem, 12vw, 5rem)';
-  return 'clamp(2.1rem, 9.5vw, 4.2rem)';
-}
-
-function nameSize(length: number) {
-  if (length <= 10) return 'clamp(2.1rem, 8vw, 3.3rem)';
-  if (length <= 18) return 'clamp(1.8rem, 6.4vw, 2.75rem)';
-  return 'clamp(1.6rem, 5.4vw, 2.35rem)';
-}
-
 export default function App() {
   const [stored, setStored] = useStoredState<PersistedState>('fazopix.form', defaultValues);
   const [previewPrefs, setPreviewPrefs] = useStoredState<PreviewPrefs>('fazopix.preview-prefs', {
@@ -260,14 +243,13 @@ export default function App() {
   const [themeMode, setThemeMode] = useStoredState<ThemeMode>('fazopix.theme', 'light');
   const [showMore, setShowMore] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [busy, setBusy] = useState<'story' | 'share' | null>(null);
+  const [busy, setBusy] = useState<'share' | null>(null);
   const [canShare, setCanShare] = useState(false);
   const [stageActionsVisible, setStageActionsVisible] = useState(true);
   const reduceMotion = useReducedMotion();
 
   const stageRef = useRef<HTMLElement>(null);
   const stageActionsRef = useRef<HTMLDivElement>(null);
-  const drawerRef = useRef<HTMLElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -352,9 +334,11 @@ export default function App() {
     form.setValue('amount', '', { shouldDirty: true, shouldValidate: true });
   }
 
-  function goToForm() {
-    drawerRef.current?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    window.setTimeout(() => document.getElementById('pix-key-input')?.focus({ preventScroll: true }), 350);
+  function focusMissing() {
+    const id = !validKey ? 'pix-key-input' : !name ? 'merchant-name-input' : 'merchant-city-input';
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    window.setTimeout(() => el?.focus({ preventScroll: true }), 300);
   }
 
   function goToStage() {
@@ -363,15 +347,6 @@ export default function App() {
 
   async function finalQr() {
     return await composeQrWithLogo(qrDataUrl, showLogo ? logoDataUrl : null, logoScale);
-  }
-
-  async function storyImage() {
-    return await renderStory({
-      merchantName: name,
-      amountLabel: amount ? formatMoney(amount) : null,
-      city,
-      qrDataUrl: await finalQr()
-    });
   }
 
   async function copyPayload() {
@@ -385,11 +360,11 @@ export default function App() {
     }
   }
 
-  async function shareStory() {
+  async function shareQr() {
     if (!payload || !navigator.share) return;
     setBusy('share');
     try {
-      const response = await fetch(await storyImage());
+      const response = await fetch(await finalQr());
       const blob = await response.blob();
       const file = new File([blob], `pix-${slug(name)}.png`, { type: 'image/png' });
       const text = `Pix para ${name}${amount ? ` de ${formatMoney(amount)}` : ''}. Código copia e cola:\n${payload}`;
@@ -398,16 +373,6 @@ export default function App() {
         : { title: 'Faz o PIX!', text };
       await navigator.share(data);
     } catch {
-    } finally {
-      setBusy(null);
-    }
-  }
-
-  async function downloadStory() {
-    if (!ready) return;
-    setBusy('story');
-    try {
-      downloadDataUrl(await storyImage(), `pix-${slug(name)}-story.png`);
     } finally {
       setBusy(null);
     }
@@ -445,70 +410,41 @@ export default function App() {
           <style>
             @page { margin: 14mm; }
             @font-face {
-              font-family: 'Archivo Variable';
-              src: url('${new URL(archivoFontUrl, window.location.href).href}') format('woff2');
+              font-family: 'Figtree Variable';
+              src: url('${new URL(figtreeFontUrl, window.location.href).href}') format('woff2');
               font-weight: 100 900;
-              font-stretch: 62% 125%;
             }
             * { box-sizing: border-box; }
             body {
               margin: 0;
-              font-family: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
-              color: #0b0b0b;
+              font-family: 'Figtree Variable', 'Helvetica Neue', Arial, sans-serif;
+              color: #111411;
               background: #fff;
               -webkit-print-color-adjust: exact;
               print-color-adjust: exact;
             }
-            .sheet { max-width: 520px; margin: 0 auto; }
-            .band {
-              background: #6b2bff;
-              color: #fff;
-              border-radius: 28px;
-              padding: 28px 28px 32px;
-            }
-            .mark { font-weight: 850; font-stretch: 125%; font-size: 20px; letter-spacing: -0.03em; }
-            .to { margin: 28px 0 0; font-size: 18px; font-weight: 600; color: #e4d9ff; }
-            .name {
-              margin: 4px 0 0;
-              font-weight: 850;
-              font-stretch: 125%;
-              font-size: 44px;
-              line-height: 0.95;
-              letter-spacing: -0.035em;
-            }
-            .amount {
-              margin: 14px 0 0;
-              font-weight: 850;
-              font-stretch: 125%;
-              font-size: 40px;
-              letter-spacing: -0.03em;
-              color: #c8ff00;
-            }
-            .qr { margin: 24px auto 0; width: 300px; }
+            .sheet { max-width: 420px; margin: 0 auto; }
+            .sticker { border: 2px solid #0e1512; border-radius: 18px; padding: 28px 28px 24px; text-align: center; }
+            .head { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 850; font-size: 22px; }
+            .mark { width: 16px; height: 16px; background: #1f9e92; border-radius: 3px; transform: rotate(45deg); }
+            .qr { margin: 18px 0 0; }
             .qr img { display: block; width: 100%; height: auto; }
-            .hint { text-align: center; font-weight: 700; font-size: 16px; margin: 12px 0 0; }
-            .meta { text-align: center; font-size: 13px; color: #4a4458; margin: 6px 0 0; }
-            .code {
-              margin: 24px 0 0;
-              padding-top: 14px;
-              border-top: 2px solid #0b0b0b;
-              font-size: 10px;
-              line-height: 1.5;
-              word-break: break-all;
-              color: #4a4458;
-            }
+            .name { margin: 14px 0 0; font-weight: 800; font-size: 22px; }
+            .amount { margin: 2px 0 0; font-weight: 850; font-size: 40px; letter-spacing: -0.02em; }
+            .hint { margin: 8px 0 0; font-weight: 600; font-size: 14px; color: #414b47; }
+            .meta { text-align: center; font-size: 13px; font-weight: 600; color: #414b47; margin: 14px 0 0; }
+            .code { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid #cfd6d3; font-size: 10px; line-height: 1.5; word-break: break-all; color: #414b47; }
           </style>
         </head>
         <body>
           <div class="sheet">
-            <div class="band">
-              <div class="mark">Faz o PIX!</div>
-              <p class="to">Pix para</p>
+            <div class="sticker">
+              <div class="head"><i class="mark"></i>Pague com Pix</div>
+              <div class="qr"><img src="${qr}" alt="QR Code Pix" /></div>
               <p class="name">${escapeHtml(name)}</p>
               <p class="amount">${escapeHtml(amount ? formatMoney(amount) : 'Valor livre')}</p>
+              <p class="hint">Escaneie no app do seu banco</p>
             </div>
-            <div class="qr"><img src="${qr}" alt="QR Code Pix" /></div>
-            <p class="hint">Escaneie no app do seu banco</p>
             <p class="meta">${escapeHtml(city.toUpperCase())}${values.description ? ` · ${escapeHtml(values.description)}` : ''}</p>
             <p class="code">Pix copia e cola: ${escapeHtml(payload)}</p>
           </div>
@@ -544,224 +480,168 @@ export default function App() {
   }
 
   const isDark = themeMode === 'dark';
-  const spring = reduceMotion ? { duration: 0 } : { type: 'spring' as const, stiffness: 320, damping: 22 };
+  const spring = reduceMotion ? { duration: 0 } : { type: 'spring' as const, stiffness: 300, damping: 28 };
   const slide = reduceMotion
     ? {}
     : {
-        initial: { y: '0.45em', opacity: 0 },
+        initial: { y: '0.4em', opacity: 0 },
         animate: { y: 0, opacity: 1 },
-        exit: { y: '-0.45em', opacity: 0 },
-        transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] as const }
+        exit: { y: '-0.4em', opacity: 0 },
+        transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const }
       };
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)]">
-      {/* ── Stage: the story being assembled ─────────────────────── */}
-      <section
-        ref={stageRef}
-        className="stage lg:sticky lg:top-0 lg:h-dvh lg:overflow-y-auto"
-        aria-labelledby="story-title"
-      >
-        <div className="stage-shape stage-shape--disc" aria-hidden="true" />
-        <div className="stage-shape stage-shape--bolt" aria-hidden="true" />
-        <div className="stage-shape stage-shape--wedge" aria-hidden="true" />
+    <div className="min-h-dvh lg:mx-auto lg:grid lg:max-w-[80rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:px-10">
+        <header className="flex items-center justify-between gap-3 px-5 pb-2 pt-5 lg:col-span-2 lg:px-0 lg:pb-0 lg:pt-7">
+          <h1 className="heavy whitespace-nowrap text-[1.45rem]">
+            Faz o <span className="text-[var(--ok)]">PIX!</span>
+          </h1>
+          <div className="flex items-center gap-3">
+            <span className="hidden items-center gap-1.5 text-[0.85rem] font-semibold text-[var(--ink-soft)] lg:inline-flex">
+              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              Fica no seu aparelho
+            </span>
+            <button
+              type="button"
+              onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
+              className="icon-button"
+              aria-label={isDark ? 'Usar tema claro' : 'Usar tema escuro'}
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}
+            </button>
+          </div>
+        </header>
+      {/* ── Cena: a plaquinha em pé no balcão ────────────────────── */}
+      <section ref={stageRef} className="lg:sticky lg:top-0 lg:order-2 lg:flex lg:h-dvh lg:flex-col lg:pt-6" aria-labelledby="stand-title">
 
-        <div className="relative flex h-full flex-col px-5 pb-14 pt-5 sm:px-8 lg:px-12 lg:pb-10 lg:pt-8">
-          <header className="flex items-center justify-between gap-4">
-            <h1 className="display whitespace-nowrap text-[1.5rem] leading-none sm:text-[1.9rem]">
-              Faz o <span className="text-[var(--lime)]">PIX!</span>
-            </h1>
-            <div className="flex items-center gap-2">
-              <span className="privacy-chip hidden sm:inline-flex">
-                <Smartphone className="h-3.5 w-3.5" aria-hidden="true" />
-                Tudo no seu aparelho
-              </span>
-              <button
-                type="button"
-                onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
-                className="stage-icon-button"
-                aria-label={isDark ? 'Usar tema claro' : 'Usar tema escuro'}
-              >
-                {isDark ? <Sun className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}
-              </button>
-            </div>
-          </header>
-
-          <div className="mt-9 flex flex-1 flex-col gap-7 lg:mt-8 lg:justify-center">
-            <div className="relative pr-[5.5rem] sm:pr-36 lg:pr-44">
-              {/* The sticker states progress in words; it never sits on the QR. */}
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={ready ? 'ready' : missing.join('-')}
-                  className={`sticker absolute -top-8 right-0 h-[6.4rem] w-[6.4rem] p-3.5 text-[0.68rem] sm:-top-1 sm:h-[7.5rem] sm:w-[7.5rem] sm:p-[1.1rem] sm:text-[0.74rem] ${
-                    ready ? 'sticker--ready' : 'sticker--waiting'
-                  }`}
-                  initial={reduceMotion ? false : { scale: 0.3, rotate: -40 }}
-                  animate={{ scale: 1, rotate: 12 }}
-                  exit={reduceMotion ? undefined : { scale: 0.3, rotate: 40, opacity: 0 }}
-                  transition={spring}
-                  aria-hidden="true"
-                >
-                  {ready ? (
-                    <span className="flex flex-col items-center gap-1">
-                      <Check className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={3} />
-                      Pix pronto
-                    </span>
-                  ) : (
-                    <span>
-                      Falta
-                      <br />
-                      {missing.join(', ')}
-                    </span>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              <p className="sr-only" aria-live="polite">
-                {ready ? 'QR Code pronto.' : `Falta preencher: ${missing.join(', ')}.`}
-              </p>
-
-              <h2 id="story-title" className="display min-h-[4.6rem] sm:min-h-[6.6rem]" style={{ fontSize: nameSize(name.length || 12) }}>
-                <span className="mr-[0.3em] align-baseline text-[0.42em] font-semibold tracking-normal text-[var(--on-stage-soft)] [font-stretch:100%]">
-                  Pix para
-                </span>
-                <span className={name ? '' : 'text-[var(--on-stage-soft)]'}>{name || 'Seu nome aqui'}</span>
-              </h2>
-
-              <p
-                className="display amount-line tabular -mr-[5.5rem] mt-3 overflow-hidden whitespace-nowrap sm:-mr-36 lg:-mr-44"
-                style={{ fontSize: amount ? amountSize(formatMoney(amount).length) : 'clamp(1.9rem, 6vw, 2.75rem)' }}
-                aria-live="polite"
-              >
-                <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.span key={amount || 'livre'} className="inline-block" {...slide}>
-                    {amount ? formatMoney(amount) : 'Valor livre'}
-                  </motion.span>
-                </AnimatePresence>
-              </p>
-              {!amount ? (
-                <p className="mt-2 text-sm font-medium text-[var(--on-stage-soft)]">
-                  Quem paga digita o valor no banco.
+        <div className="relative z-10 px-9 pt-4 lg:flex lg:flex-1 lg:flex-col lg:justify-end lg:px-10">
+          <div className="stand">
+            <div className="acrylic">
+              <div className="sticker">
+                <p className="heavy inline-flex items-center gap-2 text-[1.08rem]">
+                  <i className="pix-mark" aria-hidden="true" />
+                  Pague com Pix
                 </p>
-              ) : null}
-            </div>
 
-            <div className="flex flex-col items-center gap-5 lg:items-start">
-              <div className="relative w-full max-w-[19rem] lg:max-w-[16.5rem]">
-                <AnimatePresence mode="wait" initial={false}>
-                  {ready ? (
-                    <motion.div
-                      key="qr"
-                      className="qr-card"
-                      initial={reduceMotion ? false : { scale: 0.7, rotate: -9, opacity: 0 }}
-                      animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                      exit={reduceMotion ? undefined : { scale: 0.9, opacity: 0 }}
-                      transition={spring}
-                    >
-                      <div className="relative">
+                <div className="mt-3">
+                  <AnimatePresence mode="wait" initial={false}>
+                    {ready ? (
+                      <motion.div
+                        key="qr"
+                        className="relative"
+                        initial={reduceMotion ? false : { y: -14, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={reduceMotion ? undefined : { opacity: 0 }}
+                        transition={spring}
+                      >
                         <img src={qrDataUrl} alt={`QR Code Pix para ${name}`} className="block aspect-square w-full" />
                         {showLogo ? (
                           <div
-                            className="pointer-events-none absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl bg-white p-1"
-                            style={{ width: `${3.4 * logoScale}rem`, height: `${3.4 * logoScale}rem` }}
+                            className="pointer-events-none absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white p-1"
+                            style={{ width: `${3.2 * logoScale}rem`, height: `${3.2 * logoScale}rem` }}
                           >
-                            <img src={logoDataUrl ?? ''} alt="" className="h-full w-full rounded-lg object-contain" />
+                            <img src={logoDataUrl ?? ''} alt="" className="h-full w-full rounded-md object-contain" />
                           </div>
                         ) : null}
-                      </div>
-                      <p className="pb-1 pt-3 text-center text-sm font-bold">Escaneie no app do seu banco</p>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="slot"
-                      className="qr-slot p-8"
-                      initial={reduceMotion ? false : { opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={reduceMotion ? undefined : { opacity: 0 }}
-                    >
-                      <p className="max-w-[12rem] text-base font-semibold leading-snug">
-                        O QR aparece aqui assim que chave, nome e cidade estiverem certos.
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-              </div>
-
-              <div ref={stageActionsRef} className="flex w-full max-w-[19rem] flex-col gap-2.5 lg:max-w-[16.5rem]">
-                {ready ? (
-                  <>
-                    <button type="button" onClick={copyPayload} className="btn btn-lime w-full">
-                      {copied ? <Check className="h-5 w-5" strokeWidth={3} /> : <Copy className="h-5 w-5" />}
-                      {copied ? 'Código copiado' : 'Copiar código Pix'}
-                    </button>
-                    {canShare ? (
-                      <button
+                      </motion.div>
+                    ) : (
+                      <motion.button
                         type="button"
-                        onClick={shareStory}
-                        disabled={busy === 'share'}
-                        className="btn btn-ghost-stage w-full"
+                        key="slot"
+                        onClick={focusMissing}
+                        className="qr-slot w-full"
+                        initial={reduceMotion ? false : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={reduceMotion ? undefined : { opacity: 0 }}
                       >
-                        <Share2 className="h-5 w-5" />
-                        {busy === 'share' ? 'Preparando…' : 'Compartilhar story'}
-                      </button>
-                    ) : null}
-                    <button
-                      type="button"
-                      onClick={downloadStory}
-                      disabled={busy === 'story'}
-                      className="btn btn-ghost-stage w-full"
-                    >
-                      <ArrowDownToLine className="h-5 w-5" />
-                      {busy === 'story' ? 'Gerando imagem…' : 'Baixar story'}
-                    </button>
-                    <div className="grid grid-cols-[1fr_1fr_1.45fr] gap-2">
-                      <button type="button" onClick={downloadPng} className="btn btn-ghost-stage btn-small !px-2">
-                        <ImageIcon className="h-4 w-4" />
-                        PNG
-                      </button>
-                      <button type="button" onClick={downloadSvg} className="btn btn-ghost-stage btn-small !px-2">
-                        <FileCode2 className="h-4 w-4" />
-                        SVG
-                      </button>
-                      <button type="button" onClick={printCard} className="btn btn-ghost-stage btn-small !px-2">
-                        <Printer className="h-4 w-4" />
-                        Imprimir
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <button type="button" onClick={goToForm} className="btn btn-ghost-stage w-full lg:hidden">
-                    <PenLine className="h-5 w-5" />
-                    Preencher dados
-                  </button>
-                )}
+                        <p className="text-[0.95rem] font-semibold leading-snug">
+                          Falta {missing.join(', ')}.
+                          <span className="mt-1 block font-medium text-[#5d6763]">O QR aparece aqui.</span>
+                        </p>
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <h2 id="stand-title" className="heavy mt-3 break-words text-[1.1rem]">
+                  {name || <span className="text-[#5d6763]">Seu nome aqui</span>}
+                </h2>
+                <p className="heavy tabular mt-0.5 overflow-hidden whitespace-nowrap text-[2rem] leading-tight" aria-live="polite">
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.span key={amount || 'livre'} className="inline-block" {...slide}>
+                      {amount ? formatMoney(amount) : 'Valor livre'}
+                    </motion.span>
+                  </AnimatePresence>
+                </p>
+                <p className="mt-1 text-[0.8rem] font-semibold text-[#414b47]">
+                  {amount ? 'Escaneie no app do seu banco' : 'Quem paga digita o valor no banco'}
+                </p>
               </div>
             </div>
+            <div className="stand-foot" aria-hidden="true" />
           </div>
+          <p className="sr-only" aria-live="polite">
+            {ready ? 'QR Code pronto.' : `Falta preencher: ${missing.join(', ')}.`}
+          </p>
+        </div>
+
+        <div className="counter -mt-3 px-5 pb-3 pt-6 lg:-mr-10 lg:mb-0 lg:pb-8 lg:pl-6 lg:pr-16 lg:pt-7 xl:-mr-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))]">
+        <div ref={stageActionsRef} className="flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={copyPayload}
+            disabled={!ready}
+            className={`btn btn-main w-full ${ready ? '' : 'hidden'}`}
+          >
+            {copied ? <Check className="h-5 w-5" strokeWidth={3} /> : <Copy className="h-5 w-5" />}
+            {copied ? 'Código copiado' : 'Copiar código Pix'}
+          </button>
+          {ready ? (
+            <div className="grid grid-cols-3 gap-2">
+              {canShare ? (
+                <button type="button" onClick={shareQr} disabled={busy === 'share'} className="btn btn-line btn-small col-span-3">
+                  <Share2 className="h-4 w-4" />
+                  {busy === 'share' ? 'Abrindo…' : 'Enviar QR'}
+                </button>
+              ) : null}
+              <button type="button" onClick={downloadPng} className="btn btn-line btn-small">
+                <ImageIcon className="h-4 w-4" />
+                PNG
+              </button>
+              <button type="button" onClick={downloadSvg} className="btn btn-line btn-small">
+                <FileCode2 className="h-4 w-4" />
+                SVG
+              </button>
+              <button type="button" onClick={printCard} className="btn btn-line btn-small">
+                <Printer className="h-4 w-4" />
+                Imprimir
+              </button>
+            </div>
+          ) : null}
+        </div>
         </div>
       </section>
 
-      {/* ── Drawer: the form that builds the story ───────────────── */}
-      <section ref={drawerRef} className="drawer scroll-mt-0" aria-labelledby="form-title">
-        <form
-          className="mx-auto flex max-w-xl flex-col gap-6 px-5 pb-28 pt-10 sm:px-8 lg:py-14"
-          onSubmit={(event) => event.preventDefault()}
-          noValidate
-        >
-          <div>
-            <h2 id="form-title" className="display display-tight text-[1.9rem] sm:text-[2.2rem]">
-              Monte sua cobrança
-            </h2>
-            <p className="mt-2 text-[0.95rem] text-[var(--ink-soft)]">
-              Chave, nome e cidade bastam. Valor e o resto são opcionais.
-            </p>
-          </div>
+      {/* ── Cartão do formulário ─────────────────────────────────── */}
+      <form
+        className="counter-mobile flex w-full flex-col gap-3 px-3 pb-28 pt-2 lg:order-1 lg:px-0 lg:pb-10 lg:pt-6"
+        onSubmit={(event) => event.preventDefault()}
+        noValidate
+        aria-labelledby="form-title"
+      >
+        <div className="px-2 pb-1 pt-1">
+          <h2 id="form-title" className="heavy text-[1.75rem] sm:text-[2.1rem]">Monte sua plaquinha</h2>
+          <p className="mt-1.5 text-[1.02rem] font-medium text-[var(--ink-soft)]">
+            Preencha só o que muda. Chave, nome e cidade bastam; o resto é opcional.
+          </p>
+        </div>
 
+        <div className="card flex flex-col gap-6">
           <div className="space-y-2">
             <p className="field-label" id="key-type-label">
               Tipo de chave
             </p>
-            <div className="segment" role="radiogroup" aria-labelledby="key-type-label">
+            <div className="segment grid grid-cols-6 sm:flex" role="radiogroup" aria-labelledby="key-type-label">
               {KEY_TYPES.map((type) => {
                 const selected = values.keyType === type.id;
                 return (
@@ -771,7 +651,7 @@ export default function App() {
                     role="radio"
                     aria-checked={selected}
                     onClick={() => form.setValue('keyType', type.id, { shouldValidate: true })}
-                    className="segment-option"
+                    className={`segment-option ${KEY_TYPES.indexOf(type) < 3 ? 'col-span-2' : 'col-span-3'}`}
                   >
                     {type.label}
                   </button>
@@ -814,7 +694,7 @@ export default function App() {
             />
           </Field>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1.5fr_1fr] sm:gap-3">
             <Field
               label="Nome de quem recebe"
               meta={`${values.merchantName?.length || 0}/25`}
@@ -832,7 +712,6 @@ export default function App() {
                 {...form.register('merchantName')}
               />
             </Field>
-
             <Field
               label="Cidade"
               meta={`${values.merchantCity?.length || 0}/15`}
@@ -855,7 +734,7 @@ export default function App() {
           <Field label="Valor" meta="Opcional" htmlFor="amount-input">
             <div className="relative">
               <span
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg font-extrabold text-[var(--ink-faint)]"
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-[var(--ink-faint)]"
                 aria-hidden="true"
               >
                 R$
@@ -882,140 +761,133 @@ export default function App() {
                 </button>
               ))}
               {values.amount ? (
-                <button type="button" onClick={clearAmount} className="quick-chip quick-chip--reset">
+                <button type="button" onClick={clearAmount} className="text-button px-1 text-[var(--ink-soft)]">
                   Zerar
                 </button>
               ) : null}
             </div>
           </Field>
+        </div>
 
-          <div className="disclosure">
-            <button
-              type="button"
-              onClick={() => setShowMore((open) => !open)}
-              className="disclosure-button"
-              aria-expanded={showMore}
-              aria-controls="more-options"
-            >
-              <span>
-                Mais opções
-                <span className="block text-sm font-medium text-[var(--ink-faint)]">
-                  Descrição, identificador e logo no centro do QR
-                </span>
-              </span>
-              <ChevronDown
-                className={`h-5 w-5 shrink-0 transition-transform duration-200 ${showMore ? 'rotate-180' : ''}`}
-                aria-hidden="true"
-              />
-            </button>
+        <div className="card !py-1">
+          <button
+            type="button"
+            onClick={() => setShowMore((open) => !open)}
+            className="disclosure-button"
+            aria-expanded={showMore}
+            aria-controls="more-options"
+          >
+            <span>
+              <span className="block font-bold">Mais opções</span>
+              <span className="block text-sm font-medium text-[var(--ink-faint)]">Descrição, identificador e logo no QR</span>
+            </span>
+            <ChevronDown
+              className={`h-5 w-5 shrink-0 transition-transform duration-200 ${showMore ? 'rotate-180' : ''}`}
+              aria-hidden="true"
+            />
+          </button>
 
-            <AnimatePresence initial={false}>
-              {showMore ? (
-                <motion.div
-                  id="more-options"
-                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="space-y-5 pb-6 pt-2">
-                    <Field label="Descrição" meta="Opcional" htmlFor="desc-input">
+          <AnimatePresence initial={false}>
+            {showMore ? (
+              <motion.div
+                id="more-options"
+                initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-5 border-t border-[var(--rule)] pb-5 pt-4">
+                  <Field label="Descrição" meta="Opcional" htmlFor="desc-input">
+                    <input id="desc-input" className="input" placeholder="Almoço de domingo" {...form.register('description')} />
+                  </Field>
+
+                  <Field label="Identificador (TXID)" meta="Letras e números" htmlFor="txid-input">
+                    <input
+                      id="txid-input"
+                      className="input uppercase"
+                      placeholder="PEDIDO123"
+                      autoComplete="off"
+                      spellCheck={false}
+                      {...form.register('txid')}
+                    />
+                  </Field>
+
+                  <Field label="Logo no centro do QR" meta="PNG, JPG, WEBP ou SVG">
+                    <label className="file-pick">
                       <input
-                        id="desc-input"
-                        className="input"
-                        placeholder="Almoço de domingo"
-                        {...form.register('description')}
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                        className="sr-only"
+                        onChange={(e) => onLogoUpload(e.target.files?.[0])}
                       />
-                    </Field>
+                      <span className="file-pick-action">
+                        <ImageIcon className="h-4 w-4" aria-hidden="true" />
+                        Escolher imagem
+                      </span>
+                      <span className="min-w-0 truncate text-sm text-[var(--ink-soft)]">{logoFileName}</span>
+                    </label>
 
-                    <Field label="Identificador (TXID)" meta="Letras e números" htmlFor="txid-input">
-                      <input
-                        id="txid-input"
-                        className="input uppercase"
-                        placeholder="PEDIDO123"
-                        autoComplete="off"
-                        spellCheck={false}
-                        {...form.register('txid')}
-                      />
-                    </Field>
-
-                    <Field label="Logo no centro do QR" meta="PNG, JPG, WEBP ou SVG">
-                      <label className="file-pick">
-                        <input
-                          type="file"
-                          accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                          className="sr-only"
-                          onChange={(e) => onLogoUpload(e.target.files?.[0])}
-                        />
-                        <span className="file-pick-action">
-                          <ImageIcon className="h-4 w-4" aria-hidden="true" />
-                          Escolher imagem
-                        </span>
-                        <span className="min-w-0 truncate text-sm text-[var(--ink-soft)]">{logoFileName}</span>
-                      </label>
-
-                      {logoDataUrl ? (
-                        <div className="flex items-center justify-between gap-4 pt-1">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={logoDataUrl}
-                              alt="Logo escolhida"
-                              className="h-9 w-9 rounded-lg border-2 border-[var(--rule-soft)] object-contain"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setPreviewPrefs((c) => ({ ...c, logoVisible: !c.logoVisible }))}
-                              className="text-button"
-                            >
-                              {previewPrefs.logoVisible ? 'Tirar do QR' : 'Mostrar no QR'}
-                            </button>
-                          </div>
+                    {logoDataUrl ? (
+                      <div className="flex items-center justify-between gap-4 pt-1">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={logoDataUrl}
+                            alt="Logo escolhida"
+                            className="h-9 w-9 rounded-md border border-[var(--rule)] object-contain"
+                          />
                           <button
                             type="button"
-                            onClick={clearSavedLogo}
-                            className="text-button inline-flex items-center gap-1 text-[var(--error)]"
+                            onClick={() => setPreviewPrefs((c) => ({ ...c, logoVisible: !c.logoVisible }))}
+                            className="text-button"
                           >
-                            <Trash2 className="h-4 w-4" aria-hidden="true" />
-                            Remover
+                            {previewPrefs.logoVisible ? 'Tirar do QR' : 'Mostrar no QR'}
                           </button>
                         </div>
-                      ) : null}
-                    </Field>
-                  </div>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
-          </div>
+                        <button
+                          type="button"
+                          onClick={clearSavedLogo}
+                          className="text-button inline-flex items-center gap-1 text-[var(--error)]"
+                        >
+                          <Trash2 className="h-4 w-4" aria-hidden="true" />
+                          Remover
+                        </button>
+                      </div>
+                    ) : null}
+                  </Field>
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </div>
 
-          <div className="flex items-start gap-3">
-            <Checkbox.Root
-              id="remember-data"
-              checked={values.remember ?? false}
-              onCheckedChange={(checked) => form.setValue('remember', checked === true, { shouldDirty: true })}
-              className="check-box mt-0.5"
-            >
-              <Checkbox.Indicator>
-                <Check className="h-3.5 w-3.5" strokeWidth={3.5} />
-              </Checkbox.Indicator>
-            </Checkbox.Root>
-            <label htmlFor="remember-data" className="cursor-pointer select-none text-sm leading-relaxed">
-              <span className="block font-bold">Lembrar meus dados neste aparelho</span>
-              <span className="text-[var(--ink-soft)]">Ficam salvos só neste navegador, para a próxima cobrança.</span>
-            </label>
-          </div>
+        <div className="flex items-start gap-3 px-2 pt-3">
+          <Checkbox.Root
+            id="remember-data"
+            checked={values.remember ?? false}
+            onCheckedChange={(checked) => form.setValue('remember', checked === true, { shouldDirty: true })}
+            className="check-box mt-0.5"
+          >
+            <Checkbox.Indicator>
+              <Check className="h-3.5 w-3.5" strokeWidth={3.5} />
+            </Checkbox.Indicator>
+          </Checkbox.Root>
+          <label htmlFor="remember-data" className="cursor-pointer select-none text-sm leading-relaxed">
+            <span className="block font-bold">Lembrar meus dados neste aparelho</span>
+            <span className="text-[var(--ink-soft)]">Ficam salvos só neste navegador, para a próxima cobrança.</span>
+          </label>
+        </div>
 
-          <p className="flex items-start gap-2.5 rounded-2xl bg-[var(--chip)] p-5 text-sm leading-relaxed text-[var(--ink-soft)]">
-            <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ink)]" aria-hidden="true" />
-            <span>
-              <strong className="font-bold text-[var(--ink)]">Nada sai do seu aparelho.</strong> O código Pix e o QR são
-              gerados aqui mesmo, sem servidor e sem cadastro.
-            </span>
-          </p>
-        </form>
-      </section>
+        <p className="flex items-start gap-2.5 p-5 px-2 text-sm leading-relaxed text-[var(--ink-soft)]">
+          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ink)]" aria-hidden="true" />
+          <span>
+            <strong className="font-bold text-[var(--ink)]">Nada sai do seu aparelho.</strong> O código Pix e o QR são
+            gerados aqui mesmo, sem servidor e sem cadastro.
+          </span>
+        </p>
+      </form>
 
-      {/* ── Mobile dock: copy without scrolling back up ──────────── */}
+      {/* ── Dock móvel: copiar sem voltar ao topo ─────────────────── */}
       <AnimatePresence>
         {ready && !stageActionsVisible ? (
           <motion.div
@@ -1025,18 +897,13 @@ export default function App() {
             exit={reduceMotion ? undefined : { y: 90, opacity: 0 }}
             transition={spring}
           >
-            <button type="button" onClick={copyPayload} className="btn btn-lime min-h-[2.9rem] flex-1">
+            <button type="button" onClick={copyPayload} className="btn btn-main min-h-[3rem] flex-1">
               {copied ? <Check className="h-5 w-5" strokeWidth={3} /> : <Copy className="h-5 w-5" />}
               {copied ? 'Copiado' : 'Copiar código'}
             </button>
-            <button
-              type="button"
-              onClick={goToStage}
-              className="btn min-h-[2.9rem] border-white/40 px-4 text-white"
-              aria-label="Ver o QR Code"
-            >
+            <button type="button" onClick={goToStage} className="btn btn-line min-h-[3rem]" aria-label="Ver o QR Code">
               <ArrowUp className="h-5 w-5" />
-              Ver QR
+              QR
             </button>
           </motion.div>
         ) : null}

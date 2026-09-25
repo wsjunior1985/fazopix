@@ -1,338 +1,301 @@
 ---
 name: Faz o PIX!
-description: Gerador de QR Code Pix em que a cobrança é um story pronto para compartilhar.
+description: Gerador de QR Code Pix em que você monta a plaquinha de acrílico "Pague com Pix" do balcão e ela fica de pé, pronta para escanear.
 colors:
-  stage-violet: "#6b2bff"
-  stage-violet-deep: "#5620d9"
-  shape-pink: "#ff3d7f"
-  acid-lime: "#c8ff00"
-  acid-lime-press: "#b4e600"
-  stage-white: "#ffffff"
-  stage-lavender: "#e4d9ff"
-  ink-black: "#0b0b0b"
-  ink-soft: "#4a4458"
-  ink-faint: "#6d6780"
-  field-hover: "#f6f3ff"
-  rule-soft: "#ddd6ee"
-  chip-lilac: "#f1edfa"
-  ok-green: "#0f7a3d"
-  error-red: "#d6124a"
-  error-soft: "#fde8ee"
-  dark-field: "#16151a"
-  dark-field-hover: "#1e1c24"
-  dark-ink-soft: "#c9c4d6"
-  dark-ink-faint: "#9d97ad"
-  dark-rule-soft: "#2c2935"
-  dark-chip: "#1c1a22"
-  dark-ok: "#7ee2a0"
-  dark-error: "#ff6b93"
-  dark-error-soft: "#2a1119"
+  pix: "#1f9e92"
+  pix-deep: "#16786f"
+  wall: "#eef1ef"
+  counter: "#c9b69a"
+  counter-edge: "#b39d7e"
+  acrylic: "rgba(255, 255, 255, 0.5)"
+  acrylic-edge: "rgba(255, 255, 255, 0.95)"
+  acrylic-line: "rgba(14, 21, 18, 0.14)"
+  sticker: "#ffffff"
+  sticker-dash: "#b9c2be"
+  card: "#ffffff"
+  ink: "#0e1512"
+  ink-soft: "#414b47"
+  ink-faint: "#5d6763"
+  rule: "#cfd6d3"
+  chip: "#f1f4f2"
+  error: "#c4122f"
+  error-soft: "#fbe9ec"
+  night-wall: "#151a18"
+  night-counter: "#5a4a36"
+  night-counter-edge: "#4a3c2b"
+  night-acrylic: "rgba(255, 255, 255, 0.1)"
+  night-acrylic-edge: "rgba(255, 255, 255, 0.5)"
+  night-card: "#1d2320"
+  night-ink: "#f2f5f3"
+  night-ink-soft: "#c5cdc9"
+  night-ink-faint: "#9aa5a0"
+  night-rule: "#36403c"
+  night-chip: "#262d2a"
+  night-focus: "#4fd1c3"
+  night-ok: "#6fdccf"
+  night-error: "#ff7088"
+  night-error-soft: "#3a1a20"
 typography:
   display:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.1rem, 8vw, 3.3rem)"
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "2rem"
     fontWeight: 850
-    lineHeight: 0.92
-    letterSpacing: "-0.035em"
-    fontVariation: "'wdth' 125"
-  amount:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(3.1rem, 15vw, 6rem)"
-    fontWeight: 850
-    lineHeight: 0.92
-    letterSpacing: "-0.035em"
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
     fontFeature: "tnum"
-    fontVariation: "'wdth' 125"
   headline:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.9rem"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "-0.03em"
-    fontVariation: "'wdth' 112"
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 850
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
   title:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.95rem"
-    fontWeight: 750
-    lineHeight: 1.3
-    letterSpacing: "-0.005em"
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.1rem"
+    fontWeight: 850
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
   body:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 550
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.05rem"
+    fontWeight: 600
     lineHeight: 1.5
   label:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.85rem"
     fontWeight: 700
-    lineHeight: 1.3
-  meta:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    lineHeight: 1.3
-    fontFeature: "tnum"
-  sticker:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.72rem"
-    fontWeight: 800
-    lineHeight: 1.05
-    letterSpacing: "0.01em"
-    fontVariation: "'wdth' 112"
+  button:
+    fontFamily: "Figtree Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.98rem"
+    fontWeight: 750
 rounded:
-  pill: "999px"
-  sheet: "32px"
-  qr-card: "28px"
-  qr-slot: "20px"
-  field: "16px"
-  tool: "12px"
-  check: "7px"
+  qr-slot: "0.5rem"
+  sticker: "0.6rem"
+  field: "0.8rem"
+  button: "0.9rem"
+  acrylic: "1.1rem"
+  dock: "1.2rem"
+  card: "1.25rem"
+  full: "999px"
 spacing:
-  xs: "8px"
-  sm: "10px"
-  md: "16px"
-  lg: "24px"
-  xl: "32px"
-  stage-gutter-mobile: "20px"
-  stage-gutter-desktop: "48px"
+  xs: "0.4rem"
+  sm: "0.75rem"
+  md: "1rem"
+  lg: "1.25rem"
+  xl: "1.5rem"
 components:
-  button-primary:
-    backgroundColor: "{colors.acid-lime}"
-    textColor: "{colors.ink-black}"
-    typography: "{typography.title}"
-    rounded: "{rounded.pill}"
-    padding: "0 22px"
-    height: "52px"
-  button-primary-hover:
-    backgroundColor: "{colors.acid-lime-press}"
-    textColor: "{colors.ink-black}"
-  button-ghost-stage:
-    backgroundColor: "transparent"
-    textColor: "{colors.stage-white}"
-    typography: "{typography.title}"
-    rounded: "{rounded.pill}"
-    padding: "0 22px"
-    height: "52px"
-  button-ghost-stage-hover:
-    backgroundColor: "{colors.stage-white}"
-    textColor: "{colors.stage-violet}"
+  button-main:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+    typography: "{typography.button}"
+    rounded: "{rounded.button}"
+    padding: "0 1.25rem"
+    height: "3.6rem"
+  button-line:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    typography: "{typography.button}"
+    rounded: "{rounded.button}"
+    padding: "0 1.25rem"
+    height: "3.25rem"
   button-small:
-    rounded: "{rounded.pill}"
-    padding: "0 16px"
-    height: "42px"
+    rounded: "{rounded.button}"
+    padding: "0 0.75rem"
+    height: "2.75rem"
+  icon-button:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.full}"
+    size: "2.5rem"
   input:
-    backgroundColor: "{colors.stage-white}"
-    textColor: "{colors.ink-black}"
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
     typography: "{typography.body}"
     rounded: "{rounded.field}"
-    padding: "0 18px"
-    height: "56px"
+    padding: "0 1rem"
+    height: "3.25rem"
   input-amount:
     rounded: "{rounded.field}"
-    padding: "0 18px 0 54px"
-    height: "68px"
+    padding: "0 1rem 0 3rem"
+    height: "3.75rem"
+  input-invalid:
+    backgroundColor: "{colors.error-soft}"
   segment-option:
-    backgroundColor: "transparent"
     textColor: "{colors.ink-soft}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "0 16px"
-    height: "42px"
-  segment-option-selected:
-    backgroundColor: "{colors.ink-black}"
-    textColor: "{colors.stage-white}"
+    rounded: "{rounded.full}"
+    padding: "0 0.9rem"
+    height: "2.5rem"
+  segment-option-checked:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
   quick-chip:
-    backgroundColor: "{colors.chip-lilac}"
-    textColor: "{colors.ink-black}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "0 15px"
-    height: "40px"
-  qr-card:
-    backgroundColor: "{colors.stage-white}"
-    textColor: "{colors.ink-black}"
-    rounded: "{rounded.qr-card}"
-    padding: "14px"
-  sticker-waiting:
-    backgroundColor: "{colors.stage-white}"
-    textColor: "{colors.stage-violet}"
-    typography: "{typography.sticker}"
-    size: "120px"
-  sticker-ready:
-    backgroundColor: "{colors.acid-lime}"
-    textColor: "{colors.ink-black}"
-    typography: "{typography.sticker}"
-    size: "120px"
-  privacy-chip:
-    backgroundColor: "{colors.stage-violet}"
-    textColor: "{colors.stage-white}"
-    rounded: "{rounded.pill}"
-    padding: "6px 12px"
+    backgroundColor: "{colors.chip}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.full}"
+    padding: "0 0.95rem"
+    height: "2.5rem"
+  card:
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.card}"
+    padding: "1.25rem"
+  acrylic:
+    backgroundColor: "{colors.acrylic}"
+    rounded: "{rounded.acrylic}"
+    padding: "0.75rem"
+  sticker:
+    backgroundColor: "{colors.sticker}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.sticker}"
+    padding: "1rem 1rem 1.1rem"
   dock:
-    backgroundColor: "{colors.ink-black}"
-    rounded: "{rounded.pill}"
-    padding: "8px"
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.dock}"
+    padding: "0.4rem"
 ---
 
 # Design System: Faz o PIX!
 
 ## Overview
 
-**Creative North Star: "Cobrança em Stories"**
+**Creative North Star: "Plaquinha de Balcão"**
 
-A cobrança é uma peça de story, não um formulário. A tela se divide em dois papéis: o **palco**, um plano violeta elétrico chapado onde a peça se monta ao vivo (nome em display largo, valor gigante em limão, cartão branco do QR e um adesivo de estado), e a **gaveta**, a superfície neutra que carrega os campos. No celular a gaveta sobe por cima da base do palco como uma folha arredondada; no desktop o palco ocupa a coluna esquerda fixa (11fr) e a gaveta a direita (9fr). A mesma peça é exportada em canvas 1080×1920 com as mesmas cores, formas e tipografia.
+O app é a plaquinha de acrílico "Pague com Pix" que fica em pé no caixa da padaria. A cena tem quatro materiais: a parede clara no alto, o balcão de madeira clara embaixo, o display de acrílico transparente com borda polida e base, e o adesivo branco impresso dentro dele. A pessoa preenche a etiqueta do balcão (o cartão do formulário) e vê o adesivo se imprimir ao vivo: nome e valor trocam no adesivo e, quando tudo está pronto, o QR desce para dentro do acrílico.
 
-O mundo é gráfico e chapado: cor plena, formas geométricas rosa-choque de vértice duro cortando as bordas do palco, contornos sólidos de 2px e pílulas. Profundidade vem de sobreposição e contraste de plano, nunca de sombra difusa, gradiente ou vidro. O movimento é de mola e tem função: o adesivo estoura e gira ao mudar de estado, o QR entra girando, o valor troca num deslize vertical.
+É um mundo calmo, de objeto real e de confiança. Os tons são neutros levemente esverdeados, a madeira aquece a metade de baixo da tela e o único sinal de cor é o teal do Pix. As superfícies são quase chapadas: o acrílico se lê pela borda clara e pelo contorno fino, não por vidro fosco nem por sombra. O reflexo polido corre só pela moldura, nunca por cima do QR.
 
-O tema escuro troca só a gaveta (preto e grafites); o palco permanece violeta nos dois temas, porque é a peça.
+No modo escuro, a parede e a madeira escurecem, o acrílico fica mais translúcido e a tinta vira quase branca. O adesivo não muda: continua branco com tinta quase preta, como um adesivo impresso de verdade.
 
 **Key Characteristics:**
-- Palco violeta chapado com formas rosa de vértice duro (disco, raio e cunha) sangrando pelas bordas.
-- Limão ácido reservado para a ação principal, o valor e o estado pronto.
-- Archivo variável: largo e pesadíssimo no display, largura normal nos campos.
-- Pílulas e contornos sólidos de 2px; nenhuma sombra de elevação.
-- QR sempre em cartão branco de 28px, em qualquer tema.
-- Adesivo estrela de 12 pontas girado 12° que diz o estado em palavras.
+- Cena dividida em parede clara (em cima) e balcão de madeira com friso de 4px (embaixo).
+- Plaquinha de acrílico com borda polida de 1.5px, contorno fino externo, brilho só no canto superior esquerdo e base mais larga que a placa.
+- Adesivo branco invariável com losango teal, "Pague com Pix", QR, nome e valor.
+- Figtree Variable pesada (850) no adesivo e nos títulos, e média (600 a 750) nos campos e botões.
+- Cantos generosos e macios (0.6 a 1.25rem) e chips em pílula.
+- Ação principal em tinta quase preta; o teal fica reservado ao sinal do Pix.
 
 ## Colors
 
-Paleta de pôster: um campo violeta saturado, um rosa-choque de forma, um limão ácido de ação, e preto e branco puros para tudo o mais.
+É uma paleta de caixa de loja: parede cinza-esverdeada, madeira clara, acrílico transparente, adesivo branco e um único teal do Pix.
 
 ### Primary
-- **Violeta Palco** (`stage-violet`): o fundo inteiro do palco e da peça exportada, `theme-color` do PWA, cor de foco no tema claro e cor do texto do adesivo "aguardando". Nunca vira fundo de gaveta nem de campo.
-- **Violeta Profundo** (`stage-violet-deep`): apenas hover do botão de ícone sobre o palco.
-
-### Secondary
-- **Rosa-Choque** (`shape-pink`): exclusivamente as formas geométricas do palco (disco no canto superior direito, raio na borda esquerda, cunha entrando pela direita), no app e no story. Não é cor de texto, botão ou estado.
-
-### Tertiary
-- **Limão Ácido** (`acid-lime`): botão primário "Copiar código Pix", a linha do valor, "PIX!" na marca, adesivo "PIX PRONTO", caixa de seleção marcada, seleção de texto e cor de foco no tema escuro.
-- **Limão Pressionado** (`acid-lime-press`): hover do botão primário.
+- **Teal Pix** (pix): o losango da marca no adesivo, o anel de foco, o cursor de texto e a seleção (a 30%). No hover da ação principal, entra em 14% na mistura com a tinta.
+- **Teal Pix Fundo** (pix-deep): o estado "ok" (nota "Chave válida", o "PIX!" da marca no cabeçalho) e a caixa de seleção marcada. No escuro, o estado ok passa para **Teal Noturno** (night-ok) e o foco para **Teal Claro** (night-focus).
 
 ### Neutral
-- **Preto Tinta** (`ink-black`): texto e contornos de 2px dos campos na gaveta clara, texto sobre limão, fundo da gaveta escura e fundo do dock móvel.
-- **Branco** (`stage-white`): texto sobre o palco, fundo da gaveta clara e dos campos, cartão do QR (sempre).
-- **Lavanda Palco** (`stage-lavender`): texto secundário sobre o palco ("Pix para", placeholder do nome, cidade no story).
-- **Tinta Suave / Tinta Tênue** (`ink-soft`, `ink-faint`): subtítulos, opções de segmento inativas, metadados, placeholders e o prefixo "R$" do campo de valor.
-- **Lilás Chip** (`chip-lilac`): fundo dos atalhos de valor e do aviso de privacidade no rodapé da gaveta.
-- **Linha Suave** (`rule-soft`): contorno de opções inativas, divisórias da seção "Mais opções", borda tracejada do seletor de arquivo e alça da gaveta.
-- **Hover de Campo** (`field-hover`): fundo do campo ao passar o cursor.
-- **Estados** (`ok-green`, `error-red`, `error-soft`): "Chave válida", mensagens de erro e fundo de campo inválido, botão "Zerar".
-- **Gaveta escura** (`dark-*`): o tema escuro remapeia campo, hover, tintas, linha, chip e estados para esses valores; a gaveta usa `ink-black` e o contorno dos campos vira branco.
+- **Parede Clara** (wall): o fundo da página e a `theme-color` do PWA.
+- **Madeira de Balcão** (counter) com **Friso de Madeira** (counter-edge): o tampo do balcão, onde ficam as ações e, no celular, o formulário. O friso é a borda superior de 4px e também a cor da barra de rolagem.
+- **Acrílico** (acrylic), **Borda Polida** (acrylic-edge) e **Contorno do Acrílico** (acrylic-line): o corpo translúcido, a borda clara de 1.5px e o contorno externo de 1px da plaquinha e da base.
+- **Adesivo** (sticker): o branco impresso dentro do acrílico. Nunca muda de tema.
+- **Tracejado do Adesivo** (sticker-dash): a borda tracejada da área de espera do QR.
+- **Etiqueta** (card): o cartão do formulário, os botões de contorno e o dock. Sobre o balcão claro, o cartão ganha 8% da madeira para não brilhar demais.
+- **Tinta** (ink): texto, a ação principal, o segmento selecionado e as bordas no hover.
+- **Grafite** (ink-soft) e **Grafite Claro** (ink-faint): rótulos, textos de apoio, contadores e placeholders. Sobre a madeira no celular, os dois escurecem um passo para manter o contraste.
+- **Filete** (rule): bordas de campos, segmentos, botões de contorno e separadores.
+- **Chip** (chip): o fundo dos atalhos de valor.
+- **Vermelho Erro** (error) sobre **Rosa Erro** (error-soft): campo inválido, sua nota e a remoção do logo.
+- **Noite** (night-*): os mesmos papéis no tema escuro.
 
 ### Named Rules
-**A Regra do Limão Reservado.** Limão ácido só marca a ação principal, o valor e o estado pronto. Se um segundo botão ficar limão, a hierarquia acabou.
+**The One Signal Rule.** O teal é o sinal do Pix: marca, foco e confirmação de que algo está válido ou pronto. Ele nunca é fundo de botão, de cartão ou de faixa.
 
-**A Regra do Rosa Mudo.** Rosa-choque é forma, não informação: nunca carrega texto, ícone ou estado.
+**The Printed Sticker Rule.** O adesivo é branco (#ffffff) com tinta quase preta nos dois temas, e o QR sempre fica sobre ele. Os tons de apoio dentro do adesivo são fixos, não seguem o tema.
 
-**A Regra do Palco Fixo.** O palco é violeta em qualquer tema; o tema escuro muda apenas a gaveta.
+**The Ink Action Rule.** A ação principal ("Copiar código Pix") é tinta cheia: quase preta no claro e quase branca no escuro.
 
 ## Typography
 
-**Display Font:** Archivo Variable, eixo de largura auto-hospedado via `@fontsource-variable/archivo/wdth` (com ui-sans-serif, system-ui)
-**Body Font:** Archivo Variable em largura normal (100%)
+**Display Font:** Figtree Variable (com ui-sans-serif, system-ui, sans-serif)
+**Body Font:** Figtree Variable (mesma família)
 
-**Character:** Uma única família em dois registros. No palco, Archivo esticado a 125% e peso 850 com entrelinha 0,92 soa como cartaz de story; na gaveta, a mesma família em largura normal é calma e legível.
+**Character:** Uma família só, geométrica e simpática. Pesada e apertada quando é o texto impresso no adesivo, média e legível quando é campo de formulário.
 
 ### Hierarchy
-- **Display** (850, largura 125%, `clamp(2.1rem, 8vw, 3.3rem)` que encolhe com o tamanho do nome até `clamp(1.6rem, 5.4vw, 2.35rem)`, entrelinha 0,92, −0,035em, `text-wrap: balance`): o nome de quem recebe e a marca "Faz o PIX!".
-- **Valor** (mesma voz display, algarismos tabulares, `clamp(3.1rem, 15vw, 6rem)` descendo até `clamp(2.1rem, 9.5vw, 4.2rem)` conforme o comprimento): a linha do valor em limão; sangra para baixo do adesivo em vez de quebrar.
-- **Headline** (800, largura 112%, 1.9rem; 2.2rem a partir de `sm`; −0,03em): título da gaveta "Monte sua cobrança".
-- **Title** (750, 0.95rem): texto dos botões e do botão de divulgação "Mais opções".
-- **Body** (550, 1rem nos campos; 0.95rem no texto de apoio): conteúdo dos campos e subtítulos. O campo de valor sobe para 1.75rem, 800, largura 112%, tabular.
-- **Label** (700, 0.85rem): rótulos de campo, opções de segmento, atalhos de valor.
-- **Meta** (600, 0.75rem, tabular): contadores de caracteres e "Opcional".
-- **Sticker** (800, largura 112%, cerca de 0.72rem, caixa alta, entrelinha 1,05): somente o texto do adesivo de estado.
+- **Display** (850, 2rem, algarismos tabulares): o valor em reais no adesivo. Troca de valor deslizando 0.4em com fade em 200ms.
+- **Headline** (850, 1.75rem até 2.1rem, lh 1.05, −0.02em, `text-wrap: balance`): o título do formulário. O nome da marca no cabeçalho usa o mesmo peso em 1.45rem.
+- **Title** (850, 1.08 a 1.1rem): "Pague com Pix" e o nome de quem recebe no adesivo.
+- **Body** (600, 1.05rem): o texto digitado nos campos. O parágrafo de introdução usa 500 em 1.02rem, e o valor digitado sobe para 800 em 1.6rem, tabular.
+- **Label** (700, 0.85rem): rótulos de campo e botões de texto. As notas usam 650 em 0.82rem, e os contadores 600 em 0.75rem, tabular.
+- **Button** (750, 0.98rem): botões, sem caixa alta. A ação principal usa 1.02rem, e os botões pequenos 0.85rem.
 
 ### Named Rules
-**A Regra das Duas Larguras.** Largura estendida (112% a 125%) pertence ao palco, ao título da gaveta e ao valor; campos, rótulos e texto corrido ficam em 100%.
+**The Printed Voice Rule.** Tudo que está impresso no adesivo, além dos títulos, usa 850 com −0.02em e entrelinha de 1.05. Campo e botão ficam entre 600 e 800.
 
-**A Regra do Número Tabular.** Todo valor em reais, atalho de valor e contador usa algarismos tabulares.
+**The Tabular Money Rule.** Todo valor em reais, contador e atalho de valor usa algarismos tabulares.
 
 ## Layout
 
-Mobile-first com duas superfícies empilhadas. No celular, o palco ocupa a primeira tela (margens de 20px, 32px a partir de `sm`), e a gaveta sobe 32px por cima da base do palco com cantos superiores de 32px e uma alça central de 44×5px. A partir de 1024px, a grade vira duas colunas `11fr / 9fr`: o palco fica fixo (`sticky`, altura total da viewport, margens de 48px) e a gaveta rola à direita com conteúdo limitado a `max-w-xl` (576px).
+É mobile-first. No celular, a ordem é: cabeçalho, a plaquinha centralizada na parede (largura máxima de 19.5rem), o balcão de madeira começando logo abaixo da base com as ações ("Copiar código Pix" e, abaixo, Enviar, PNG, SVG e Imprimir em grade de 3), e depois o formulário, que continua sobre a madeira. O cartão do formulário usa gap de 1.5rem entre os campos, e cada campo usa 0.5rem entre o rótulo e o controle.
 
-No palco, o conteúdo se organiza em coluna: marca e controles no topo, nome e valor, depois cartão do QR com as ações logo abaixo, numa coluna estreita de 19rem (16.5rem no desktop). O adesivo fica ancorado no canto superior direito do bloco de nome e reserva espaço à direita do texto.
+A partir de 1024px, a página vira uma grade de duas colunas dentro de 80rem (a da direita com até 28rem, gap de 3rem): o formulário fica à esquerda, na parede, e a cena da plaquinha fica fixa à direita com a altura da viewport. A plaquinha fica apoiada no balcão, que sangra até a borda direita da janela. No desktop, a área de espera do QR vira um quadrado.
 
-Ritmo da gaveta: 24px entre grupos de campo, 8px entre rótulo e campo, 8 a 10px entre ações empilhadas. Nome e cidade dividem uma linha a partir de `sm`.
-
-Quando o QR está pronto e as ações do palco saem da tela no celular, um dock em pílula preta aparece fixo a 12px das bordas, respeitando `env(safe-area-inset-bottom)`, com "Copiar código Pix" e um botão de voltar ao topo.
+No celular, depois que o QR fica pronto, um dock fixo no rodapé (0.75rem das bordas, com `safe-area-inset-bottom`) mantém "Copiar" e "Ver o QR Code" à mão. Ele entra por baixo com mola e some a partir de 1024px.
 
 ## Elevation & Depth
 
-Sistema plano. Não há sombra de elevação em lugar nenhum. A profundidade vem de planos sobrepostos: formas rosa atrás do conteúdo do palco (camada isolada, `z-index: -1`), cartão branco do QR sobre o violeta, gaveta branca ou preta subindo por cima do palco, e o dock preto sobre a gaveta com contorno violeta de 2px. A única sombra existente é o anel de foco dos campos.
+A profundidade vem da cena, não de sombras empilhadas. O que separa os planos é a mudança de material (parede, madeira, acrílico, adesivo), o friso de 4px do balcão e as bordas claras do acrílico. Há só três sombras, cada uma com papel físico.
 
 ### Shadow Vocabulary
-- **Anel de foco de campo** (`box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 22%, transparent)`): somente campos em foco, junto da borda trocada para a cor de foco.
+- **Adesivo colado** (`box-shadow: 0 1px 2px rgba(14, 21, 18, 0.12)`): a espessura mínima do adesivo sobre o acrílico.
+- **Dock flutuante** (`box-shadow: 0 8px 24px rgba(14, 21, 18, 0.16)`): o único elemento que flutua sobre o conteúdo.
+- **Anel de foco do campo** (`box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent)`): um halo teal junto da borda teal.
 
 ### Named Rules
-**A Regra do Chapado.** Sem gradiente, sem vidro, sem sombra difusa. Separação se faz com cor plena, contorno sólido ou sobreposição de plano.
+**The Frame-Only Gloss Rule.** O brilho polido (traço branco de 2px a 55%, só em cima e à esquerda) fica na moldura do acrílico, a 0.2rem da borda. Nada de reflexo, gradiente ou vidro fosco por cima do adesivo ou do QR.
 
 ## Shapes
 
-Duas linguagens convivem de propósito. Tudo que se toca é arredondado: pílulas (999px) para botões, segmentos, atalhos, chips e dock; campos com cantos de 16px; cartão do QR com 28px (56px no canvas de 1080px) e espaço reservado do QR com 20px e contorno tracejado. Tudo que decora o palco tem vértice duro: o raio e a cunha são `clip-path` poligonais e o adesivo é uma estrela de 12 pontas; o único decorativo curvo é o disco rosa.
-
-Contornos são sólidos e grossos: 2px nos campos, botões fantasma, segmentos e caixa de seleção; 1.5px nos controles pequenos do palco (chip de privacidade e botão de ícone). Tracejado de 2px sinaliza espaço vazio a preencher (slot do QR, seletor de arquivo).
+Os cantos são macios e em camadas concêntricas: o acrílico tem 1.1rem de raio, o brilho interno 0.95rem, o adesivo 0.6rem e a área de espera do QR 0.5rem. A base do display é mais larga que a placa (−0.6rem de cada lado), não tem borda em cima e arredonda só embaixo (0.7rem). Os cartões do formulário usam 1.25rem, o dock 1.2rem, os botões 0.9rem e os campos 0.8rem. Segmentos, atalhos de valor e o botão de ícone são pílulas. As bordas são finas e uniformes, de 1.5px. O tracejado indica espera ou área de soltar: 2px na espera do QR e 1.5px no seletor de logo. A marca do Pix é um quadrado de cantos 0.2em girado 45°.
 
 ## Components
 
 ### Buttons
-Pílulas firmes que afundam ao toque.
-- **Shape:** pílula (999px), altura mínima de 52px, contorno de 2px.
-- **Primary:** limão com texto preto, 750, 0.95rem, ícone de 20px à esquerda. Um por contexto: "Copiar código Pix".
-- **Hover / Focus:** hover escurece para limão pressionado; `:active` reduz a 0.97 em 140ms com `cubic-bezier(0.2, 0.9, 0.3, 1)`; foco com contorno de 3px na cor de foco e afastamento de 3px.
-- **Fantasma do palco:** contorno branco, texto branco, fundo transparente; hover inverte para fundo branco com texto violeta. Usado em "Baixar story", "Compartilhar" e "Editar dados".
-- **Pequeno:** 42px, 0.82rem, 700, em trio de colunas `1fr 1fr 1.45fr` para PNG, SVG e Imprimir.
-- **Desabilitado:** limão vira branco a 22% sobre o palco; fantasma cai para contorno a 30%.
-- **Botão de texto:** sublinhado de 2px com afastamento de 0.25em, 700, 0.82rem, para ações menores na gaveta.
+Os botões são sólidos e discretos, com peso de objeto de balcão.
+- **Shape:** raio de 0.9rem, altura mínima de 3.25rem e ícone Lucide à esquerda, com gap de 0.55rem.
+- **Principal:** tinta cheia, 3.6rem de altura e 1.02rem. No hover, a tinta recebe 14% de teal.
+- **Contorno:** fundo de etiqueta, filete de 1.5px e tinta. No hover, o filete vira tinta.
+- **Pequeno:** 2.75rem de altura, 0.85rem e padding de 0.75rem. É usado em Enviar, PNG, SVG e Imprimir.
+- **Press:** `scale(0.97)` em 140ms com `cubic-bezier(0.2, 0.9, 0.3, 1)`. Desabilitado fica com 40% de opacidade.
+- **Focus:** outline teal de 3px com afastamento de 3px em todo controle.
+- **Ícone:** círculo de 2.5rem com filete. É usado na troca de tema.
+- **Texto:** sublinhado de 1.5px com afastamento de 0.25em, 700 e 0.85rem.
 
 ### Chips
-- **Atalhos de valor:** pílula de 40px em lilás chip, 700, tabular; hover ganha contorno de 2px na cor de linha. "Zerar" é a variante transparente em vermelho de erro.
-- **Chip de privacidade:** pílula sobre o palco, contorno branco a 55% de 1.5px, 600, 0.75rem, ícone de 14px; oculto abaixo de `sm`.
-
-### Segmented Picker
-- **Style:** pílulas de 42px com contorno de 2px em linha suave e texto em tinta suave.
-- **State:** hover escurece contorno e texto; selecionada fica preenchida em tinta com texto na cor da gaveta (preta no claro, branca no escuro).
+- **Tipo de chave:** pílula com filete de 1.5px, 2.5rem de altura, 700 e 0.88rem, em grafite. A selecionada fica com tinta cheia.
+- **Atalho de valor (+10, +20…):** pílula em fundo chip, sem borda, 750 tabular. No hover ganha uma borda de tinta. "Zerar" é um botão de texto.
 
 ### Cards / Containers
-- **Cartão do QR:** branco puro em qualquer tema, cantos de 28px, 14px de respiro, legenda "Escaneie no app do seu banco" em 700 abaixo do código. Logo opcional em placa branca no centro.
-- **Espaço do QR:** antes de pronto, quadrado com tracejado branco a 60% e cantos de 20px, com o texto do que falta.
-- **Aviso de privacidade:** bloco em lilás chip, cantos de 16px, 20px de respiro, ícone de escudo.
-- **Mais opções:** divulgação delimitada por linhas de 2px em cima e embaixo, cabeçalho de 56px com seta que gira 180°.
+- **Corner Style:** 1.25rem.
+- **Background:** etiqueta (branca, com 8% de madeira sobre o balcão claro).
+- **Shadow Strategy:** nenhuma. O cartão se destaca pela cor sobre a madeira ou a parede.
+- **Border:** nenhuma. Divisões internas usam o filete.
+- **Internal Padding:** 1.25rem. A seção recolhível "Mais opções" usa padding vertical de 0.25rem e um cabeçalho de 3.5rem.
 
 ### Inputs / Fields
-- **Style:** 56px de altura, contorno sólido de 2px em tinta (branco no escuro), cantos de 16px, fundo de campo, 550 a 1rem.
-- **Focus:** borda passa à cor de foco (violeta no claro, limão no escuro) com anel de 4px a 22%.
-- **Error:** borda vermelha, fundo vermelho suave, nota com ícone de alerta; validação positiva com nota verde "Chave válida".
-- **Valor:** 68px, 1.75rem, 800, largura 112%, tabular, com prefixo "R$" em tinta tênue.
-- **Caixa de seleção:** 22px, cantos de 7px, contorno de 2px; marcada fica limão com check preto.
-- **Seletor de arquivo:** faixa tracejada de 2px, cantos de 16px, com ação interna preenchida em tinta e cantos de 12px.
+- **Style:** fundo de etiqueta, filete de 1.5px, raio de 0.8rem, 3.25rem de altura, texto 600 em 1.05rem. No hover, a borda mistura 45% de tinta.
+- **Focus:** borda teal com halo teal de 4px a 18%, sem outline.
+- **Error:** borda vermelha sobre fundo rosa, com nota vermelha e ícone de alerta. A nota de validade é teal fundo com check.
+- **Valor:** 3.75rem de altura, 800 em 1.6rem tabular, com o prefixo "R$" em grafite claro.
+- **Seletor de logo:** área tracejada de 1.5px com um botão interno de tinta cheia (raio de 0.6rem).
+- **Caixa de seleção:** quadrado de 1.4rem com raio de 0.4rem e borda de tinta. Marcada, fica em teal fundo com check branco.
 
 ### Navigation
-Aplicação de tela única: a navegação é o cabeçalho do palco (marca à esquerda; chip de privacidade e botão de ícone circular de 44px para alternar o tema à direita) e, no celular, o dock em pílula preta com contorno violeta de 2px que surge com mola quando as ações do palco rolam para fora da tela.
+Não há navegação: é uma tela única. O cabeçalho tem a marca à esquerda e, à direita, o selo "Fica no seu aparelho" (só no desktop) e o botão de tema. No celular, o dock cumpre o papel de barra inferior.
 
-### Adesivo de estado (assinatura)
-Estrela de 12 pontas por `clip-path`, 120px (102px no celular), girada 12°, texto em caixa alta que diz o estado em palavras. Aguardando: branco com texto violeta. Pronto: limão com texto preto, check e "PIX PRONTO". A troca entra com mola (`stiffness 320, damping 22`) partindo de escala 0.3 e −40°, e sai girando para +40°.
-
-### Peça do story (assinatura)
-Canvas 1080×1920 gerado no aparelho: fundo violeta, disco e formas rosa, marca com "PIX!" em limão, "Pix para" em lavanda seguido do nome em Archivo expandido 850, valor em limão, cartão branco do QR com cantos de 56px, legenda branca, cidade em caixa alta lavanda e o adesivo pronto girado 12°. Deve sempre reproduzir o palco, nunca um layout próprio.
+### Plaquinha de acrílico (assinatura)
+Um display com três camadas: o acrílico (padding de 0.75rem, borda polida e contorno externo), o adesivo branco centralizado e a base. O adesivo traz o losango teal com "Pague com Pix", o QR (ou a área tracejada "Falta …" com "O QR aparece aqui.", que leva ao campo que falta), o nome, o valor e uma linha de instrução. O QR entra descendo 14px com mola (rigidez 300, amortecimento 28). O logo opcional fica num quadrado branco no centro do QR. Com movimento reduzido, tudo aparece sem animação. A impressão e a arte exportada repetem o mesmo adesivo.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** manter o palco em violeta chapado (`stage-violet`) com formas rosa sangrando pelas bordas, nos dois temas e na exportação.
-- **Do** reservar limão ácido para a ação principal, o valor e o estado pronto.
-- **Do** usar Archivo estendido (112% a 125%, 800 a 850) para voz de cartaz e largura normal para campos e texto corrido.
-- **Do** desenhar controles como pílulas ou cantos de 16px com contorno sólido de 2px.
-- **Do** manter o QR em cartão branco de 28px, com contraste máximo, em qualquer tema.
-- **Do** usar mola (`stiffness 320, damping 22`) para entradas de estado e `cubic-bezier(0.16, 1, 0.3, 1)` em 220 a 260ms para deslizes e aberturas, sempre zerados com `prefers-reduced-motion`.
-- **Do** dizer o estado em palavras no adesivo, não só por cor.
+- **Do** monte a cena com os materiais do balcão: parede, madeira com friso de 4px, acrílico com borda polida e adesivo branco.
+- **Do** mantenha o adesivo branco (#ffffff) com tinta quase preta e o QR sobre ele em qualquer tema.
+- **Do** reserve o teal para a marca, o foco e os estados de validade ou prontidão.
+- **Do** use tinta cheia para a ação principal e filete de 1.5px para as ações secundárias.
+- **Do** use algarismos tabulares em todo valor e contador.
+- **Do** respeite movimento reduzido: mola e deslize viram troca instantânea.
 
 ### Don't:
-- **Don't** usar gradiente, vidro fosco ou sombra difusa em qualquer superfície.
-- **Don't** colocar o formulário num card branco de fintech flutuando sobre o palco; a gaveta é uma superfície de borda a borda.
-- **Don't** usar texturas de papel, recibo ou comprovante.
-- **Don't** usar rosa-choque em texto, botões ou estados.
-- **Don't** colocar um segundo botão limão no mesmo contexto.
-- **Don't** escurecer o palco ou o cartão do QR no tema escuro.
+- **Don't** coloque reflexo, gradiente ou vidro fosco sobre o adesivo ou o QR. O brilho fica só na moldura.
+- **Don't** use o teal como fundo de botão, cartão ou faixa.
+- **Don't** traga de volta o palco violeta, limão e rosa do story, o comprovante térmico nem a placa verde de rodovia com contornos grossos e amarelo de advertência.
+- **Don't** empilhe sombras para criar elevação. Fora o adesivo, o dock e o halo de foco, os planos se separam por material.
