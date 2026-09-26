@@ -84,6 +84,37 @@ function useStoredState<T>(key: string, initial: T) {
   return [value, setValue] as const;
 }
 
+/** Tema: sem escolha salva segue o do sistema; só o clique grava. */
+function useThemeMode() {
+  const [mode, setMode] = useState<ThemeMode>(() => {
+    try {
+      const raw = localStorage.getItem('fazopix.theme.v2');
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved === 'light' || saved === 'dark') return saved;
+      }
+    } catch {}
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => {
+      if (!localStorage.getItem('fazopix.theme.v2')) setMode(mq.matches ? 'dark' : 'light');
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  const choose = (next: ThemeMode) => {
+    try {
+      localStorage.setItem('fazopix.theme.v2', JSON.stringify(next));
+    } catch {}
+    setMode(next);
+  };
+  return [mode, choose] as const;
+}
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
@@ -242,7 +273,7 @@ export default function App() {
     logoScale: 1,
     logoVisible: true
   });
-  const [themeMode, setThemeMode] = useStoredState<ThemeMode>('fazopix.theme', 'light');
+  const [themeMode, setThemeMode] = useThemeMode();
   const [showMore, setShowMore] = useState(false);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState<'share' | null>(null);

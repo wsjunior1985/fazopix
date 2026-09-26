@@ -9,6 +9,17 @@
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <title>Faz o PIX!</title>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('fazopix.theme.v2');
+          var saved = raw ? JSON.parse(raw) : null;
+          var t = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = t;
+          document.documentElement.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
