@@ -551,7 +551,7 @@ export default function App() {
             type="button"
             onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
             className="icon-button"
-            aria-label={isDark ? 'Usar tema claro' : 'Usar tema escuro'}
+            aria-label={isDark ? 'Usar modo claro' : 'Usar modo escuro'}
           >
             {isDark ? <Sun className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}
           </button>
