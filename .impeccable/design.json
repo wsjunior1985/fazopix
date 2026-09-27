@@ -652,7 +652,7 @@
       {
         "name": "ambient-dark",
         "value": "0 1px 2px rgba(0, 0, 0, 0.3)",
-        "purpose": "Mesmo papel no tema escuro; profundidade vem das camadas tonais."
+        "purpose": "Mesmo papel no modo escuro; profundidade vem das camadas tonais."
       },
       {
         "name": "segment-selected",
@@ -807,14 +807,14 @@
   ],
   "narrative": {
     "northStar": "O Padrão da Categoria, Bem Acabado",
-    "overview": "**Creative North Star: \"O Padrão da Categoria, Bem Acabado\"**\n\nFaz o PIX! se parece com o que a pessoa já conhece do app do banco: fundo cinza-neutro, cartões brancos de canto generoso com sombra quase imperceptível, o QR no centro de um cartão \"Cobrar com Pix\", um valor grande editável e ações em pílula. A barra de acabamento são Mercado Pago, Nubank e PicPay. Não há conceito decorativo, cena ou metáfora: a confiança vem de parecer familiar e de cada detalhe estar resolvido (estados de foco, erro, validação, vazio, tema escuro).\n\nA densidade é de app de pagamento: uma coluna no celular, com o cartão da cobrança no topo e os dados de quem recebe abaixo; no desktop, dados à esquerda e cartão da cobrança fixo à direita. A cor é quase toda neutra; um único verde de marca aparece só onde há ação, foco, seleção ou confirmação. A tipografia é uma só família, Figtree, com pesos altos nos títulos e no valor e numerais tabulares em tudo que é número.\n\nO mundo anterior, \"Plaquinha de Balcão\" (plaquinha de acrílico sobre balcão de madeira, adesivo \"Pague com Pix\"), foi rejeitado pelo usuário por ser genérico, pouco profissional e atrasar o fluxo. Ele sobrevive aqui apenas como anti-referência, junto com story violeta, placa de rodovia, comprovante térmico, maquininha e passe de carteira.",
+    "overview": "**Creative North Star: \"O Padrão da Categoria, Bem Acabado\"**\n\nFaz o PIX! se parece com o que a pessoa já conhece do app do banco: fundo cinza-neutro, cartões brancos de canto generoso com sombra quase imperceptível, o QR no centro de um cartão \"Cobrar com Pix\", um valor grande editável e ações em pílula. A barra de acabamento são Mercado Pago, Nubank e PicPay. Não há conceito decorativo, cena ou metáfora: a confiança vem de parecer familiar e de cada detalhe estar resolvido (estados de foco, erro, validação, vazio, modo escuro).\n\nA densidade é de app de pagamento: uma coluna no celular, com o cartão da cobrança no topo e os dados de quem recebe abaixo; no desktop, dados à esquerda e cartão da cobrança fixo à direita. A cor é quase toda neutra; um único verde de marca aparece só onde há ação, foco, seleção ou confirmação. A tipografia é uma só família, Figtree, com pesos altos nos títulos e no valor e numerais tabulares em tudo que é número.\n\nO mundo anterior, \"Plaquinha de Balcão\" (plaquinha de acrílico sobre balcão de madeira, adesivo \"Pague com Pix\"), foi rejeitado pelo usuário por ser genérico, pouco profissional e atrasar o fluxo. Ele sobrevive aqui apenas como anti-referência, junto com story violeta, placa de rodovia, comprovante térmico, maquininha e passe de carteira.",
     "keyCharacteristics": [
       "Fundo neutro frio, cartões brancos, sombra ambiente leve.",
       "Um verde de marca, reservado a ação, foco, seleção e estado válido.",
       "Todo controle de ação em pílula; campos com canto médio; contêineres com canto de 20–24px.",
       "Figtree em pesos 600–850, numerais tabulares em valores e contadores.",
-      "QR sempre em papel branco, nos dois temas.",
-      "Tema escuro completo, com profundidade por camadas tonais."
+      "QR sempre em papel branco, nos dois modos.",
+      "Modo escuro completo, com profundidade por camadas tonais."
     ],
     "rules": [
       {
@@ -824,7 +824,7 @@
       },
       {
         "name": "A Regra do QR Sempre Branco",
-        "body": "O QR fica em papel branco (`qr-paper`) com borda fina de 1px na cor da Linha Fina clara, também no tema escuro. Um QR é lido por câmera e o escuro não pode tocá-lo.",
+        "body": "O QR fica em papel branco (`qr-paper`) com borda fina de 1px na cor da Linha Fina clara, também no modo escuro. Um QR é lido por câmera e o escuro não pode tocá-lo.",
         "section": "colors"
       },
       {
@@ -852,9 +852,9 @@
       "**Do** manter o fundo `page` (#f4f5f6) com cartões brancos de canto 1.25–1.5rem e a sombra ambiente.",
       "**Do** reservar o preenchimento verde sólido para uma única ação principal por contexto; secundárias em Verde Névoa.",
       "**Do** usar pílula para toda ação, canto 0.85rem para campos e numerais tabulares para valores e contadores.",
-      "**Do** manter o QR em papel branco com borda fina nos dois temas.",
+      "**Do** manter o QR em papel branco com borda fina nos dois modos.",
       "**Do** dar a todo estado um desenho: foco verde com halo, erro em vermelho com fundo rosado e ícone, válido com ✓ verde, vazio com tracejado e atalho para o campo.",
-      "**Do** definir cada novo token de cor nos dois temas, `:root` e `:root[data-theme='dark']`.",
+      "**Do** definir cada novo token de cor nos dois modos, `:root` e `:root[data-theme='dark']`.",
       "**Do** respeitar `prefers-reduced-motion`: transições caem para 1ms e as molas viram corte seco."
     ],
     "donts": [
