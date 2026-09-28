@@ -539,7 +539,8 @@ export default function App() {
   return (
     <div className="min-h-dvh lg:mx-auto lg:grid lg:max-w-[72rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:px-10">
       <header className="flex items-center justify-between gap-3 px-5 pb-1 pt-5 lg:col-span-2 lg:px-0 lg:pt-7">
-        <h1 className="brand whitespace-nowrap text-[1.35rem]">
+        <h1 className="brand inline-flex items-center gap-2 whitespace-nowrap text-[1.35rem]">
+          <img src="/icons/fazopix-logo.jpg" alt="" className="h-8 w-8 rounded-lg" />
           Faz o <span className="text-[var(--brand)]">PIX!</span>
         </h1>
         <div className="flex items-center gap-3">
