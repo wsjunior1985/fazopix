@@ -187,7 +187,7 @@ async function composeQrWithLogo(qrDataUrl: string, logoDataUrl: string | null, 
 
   if (logoDataUrl) {
     const logoImage = await loadImage(logoDataUrl);
-    const baseSize = canvas.width * 0.18 * clamp(logoScale, 0.7, 1.3);
+    const baseSize = canvas.width * 0.2 * clamp(logoScale, 0.7, 1.3);
     const size = Math.max(72, Math.round(baseSize));
     const x = Math.round((canvas.width - size) / 2);
     const y = Math.round((canvas.height - size) / 2);
@@ -588,7 +588,7 @@ export default function App() {
                     {showLogo ? (
                       <div
                         className="pointer-events-none absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white p-1"
-                        style={{ width: `${3 * logoScale}rem`, height: `${3 * logoScale}rem` }}
+                        style={{ width: `${3.33 * logoScale}rem`, height: `${3.33 * logoScale}rem` }}
                       >
                         <img src={logoDataUrl ?? ''} alt="" className="h-full w-full rounded-md object-contain" />
                       </div>
