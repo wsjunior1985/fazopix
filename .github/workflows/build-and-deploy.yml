@@ -8,6 +8,7 @@ on:
       - 'public/**'
       - 'Dockerfile'
       - '.dockerignore'
+      - 'nginx.conf'
       - 'index.html'
       - 'package.json'
       - 'package-lock.json'
