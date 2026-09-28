@@ -26,6 +26,7 @@ import { buildPixPayload, validatePixKey } from './lib/pix/payload';
 import { formatMoney, normalizeAmount } from './lib/pix/normalizers';
 import { PixKeyType } from './lib/pix/validators';
 import figtreeFontUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
+import LandingPage from './LandingPage';
 
 const schema = z.object({
   keyType: z.enum(['cpf', 'cnpj', 'phone', 'email', 'random']),
@@ -267,7 +268,7 @@ const KEY_TYPES: { id: FormValues['keyType']; label: string; placeholder: string
 
 const QUICK_AMOUNTS = [10, 20, 50, 100];
 
-export default function App() {
+function PixGenerator() {
   const [stored, setStored] = useStoredState<PersistedState>('fazopix.form', defaultValues);
   const [previewPrefs, setPreviewPrefs] = useStoredState<PreviewPrefs>('fazopix.preview-prefs', {
     logoScale: 1,
@@ -959,4 +960,14 @@ export default function App() {
       </AnimatePresence>
     </div>
   );
+}
+
+export default function App() {
+  const isAppRoute = window.location.pathname === '/app' || window.location.pathname.startsWith('/app/');
+
+  useEffect(() => {
+    document.title = isAppRoute ? 'Gerador de QR Code Pix | Faz o PIX!' : 'Faz o PIX! — QR Pix em poucos passos';
+  }, [isAppRoute]);
+
+  return isAppRoute ? <PixGenerator /> : <LandingPage />;
 }
