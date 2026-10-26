@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import '@fontsource-variable/figtree';
 import './styles.css';
+import { registerSW } from 'virtual:pwa-register';
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {});
+if (location.protocol !== 'file:') {
+  registerSW({
+    immediate: true,
+    onRegisteredSW(_url, registration) {
+      if (registration) setInterval(() => void registration.update(), 60 * 60 * 1000);
+    }
   });
 }
 

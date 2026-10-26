@@ -11,7 +11,12 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'icons/apple-touch-icon.png'],
+      workbox: {
+        ignoreURLParametersMatching: [/^v$/, /^utm_/, /^fbclid$/]
+      },
       manifest: {
+        id: '/app',
+        lang: 'pt-BR',
         name: 'Faz o PIX!',
         short_name: 'Faz o PIX!',
         description: 'Gerador de QR Code Pix estático offline-first.',
