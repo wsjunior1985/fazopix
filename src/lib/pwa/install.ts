@@ -5,6 +5,23 @@ type InstallEvent = Event & {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 };
 
+const DISMISS_KEY = 'fazopix.install.dismissed';
+const DISMISS_DAYS = 14;
+
+export function isDismissed(raw: string | null, now = Date.now()): boolean {
+  const at = Number(raw);
+  const age = now - at;
+  return Number.isFinite(at) && at > 0 && age >= 0 && age < DISMISS_DAYS * 86_400_000;
+}
+
+function readDismissed(): boolean {
+  try {
+    return isDismissed(localStorage.getItem(DISMISS_KEY));
+  } catch {
+    return false;
+  }
+}
+
 export type InstallMode = 'native' | 'ios' | 'none';
 
 export function isStandalone(): boolean {
@@ -25,6 +42,7 @@ export function isIosSafari(ua: string, maxTouchPoints: number): boolean {
 export function useInstall() {
   const [event, setEvent] = useState<InstallEvent | null>(null);
   const [installed, setInstalled] = useState(isStandalone);
+  const [dismissed, setDismissed] = useState(readDismissed);
 
   useEffect(() => {
     const onPrompt = (e: Event) => {
@@ -43,7 +61,16 @@ export function useInstall() {
     };
   }, []);
 
-  const mode: InstallMode = installed
+  const dismiss = useCallback(() => {
+    try {
+      localStorage.setItem(DISMISS_KEY, String(Date.now()));
+    } catch {
+      // Private mode: the dismissal just lasts until the next visit.
+    }
+    setDismissed(true);
+  }, []);
+
+  const mode: InstallMode = installed || dismissed
     ? 'none'
     : event
       ? 'native'
@@ -55,12 +82,13 @@ export function useInstall() {
     if (!event) return;
     try {
       await event.prompt();
-      await event.userChoice;
+      const { outcome } = await event.userChoice;
+      if (outcome === 'dismissed') dismiss();
     } catch {
       // The browser refused to reopen the prompt; fall through and hide the button.
     }
     setEvent(null);
-  }, [event]);
+  }, [event, dismiss]);
 
-  return { mode, install };
+  return { mode, install, dismiss };
 }

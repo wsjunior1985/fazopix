@@ -8,6 +8,7 @@
   color-scheme: light;
   --page: #f4f5f6;
   --surface: #ffffff;
+  --surface-solid: #ffffff;
   --field: #ffffff;
   --brand: #00806b;
   --brand-press: #006e5c;
@@ -16,7 +17,7 @@
   --on-brand: #ffffff;
   --ink: #16181b;
   --ink-soft: #5b6068;
-  --ink-faint: #6e737b;
+  --ink-faint: #666b73;
   --rule: #e3e5e8;
   --rule-strong: #b9bdc4;
   --chip: #f1f2f4;
@@ -25,12 +26,20 @@
   --error: #c4122f;
   --error-soft: #fdecef;
   --shadow: 0 1px 2px rgba(22, 24, 27, 0.04), 0 4px 16px rgba(22, 24, 27, 0.05);
+  --glass-blur: blur(20px) saturate(170%);
+  --glass-edge: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 8px 28px rgba(22, 60, 54, 0.1);
+  --ambient:
+    radial-gradient(60rem 38rem at 8% -8%, rgba(0, 128, 107, 0.2), transparent 62%),
+    radial-gradient(48rem 34rem at 100% 22%, rgba(56, 189, 168, 0.17), transparent 60%),
+    radial-gradient(52rem 36rem at 30% 108%, rgba(0, 128, 107, 0.14), transparent 62%);
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
   --page: #0f1113;
   --surface: #1a1d20;
+  --surface-solid: #2b3036;
   --field: #121416;
   --brand: #19c2a6;
   --brand-press: #14a78f;
@@ -48,6 +57,12 @@
   --error: #ff7088;
   --error-soft: #3a1a20;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --glass-edge: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 10px 32px rgba(0, 0, 0, 0.35);
+  --ambient:
+    radial-gradient(60rem 38rem at 8% -8%, rgba(25, 194, 166, 0.2), transparent 62%),
+    radial-gradient(48rem 34rem at 100% 24%, rgba(20, 120, 140, 0.22), transparent 60%),
+    radial-gradient(52rem 36rem at 30% 108%, rgba(25, 194, 166, 0.13), transparent 62%);
 }
 
 @layer base {
@@ -954,23 +969,45 @@ html {
   }
 }
 
+.install-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  color: var(--brand-ink);
+  background: var(--brand-soft);
+  box-shadow: var(--glass-shadow);
+}
+
 .install-button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  height: 2.5rem;
-  padding: 0 0.95rem;
+  height: 100%;
+  padding: 0 0.3rem 0 0.95rem;
   border: 0;
-  border-radius: 999px;
+  border-radius: 999px 0 0 999px;
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--brand-ink);
-  background: var(--brand-soft);
-  box-shadow: var(--shadow);
+  color: inherit;
+  background: transparent;
 }
 
+.install-dismiss {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  width: 2.75rem;
+  border: 0;
+  border-radius: 0 999px 999px 0;
+  color: var(--ink-soft);
+  background: transparent;
+}
+
+.install-dismiss:hover,
 .install-button:hover {
-  background: var(--chip);
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
 }
 
 .install-hint {
@@ -1017,4 +1054,76 @@ html {
   border-radius: 999px;
   color: var(--ink-soft);
   background: transparent;
+}
+
+/* ── Efeito vidro ────────────────────────────────────────────────────
+   Sem suporte a backdrop-filter (ou com "reduzir transparência") os tokens
+   ficam sólidos. Com suporte, as superfícies (--surface, --field, --chip,
+   --brand-soft) viram translúcidas e desfocam o brilho verde fixo atrás do
+   app. O QR e o botão principal ficam sempre sólidos (contraste e leitura). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--ambient);
+  pointer-events: none;
+}
+
+.landing-page {
+  background: transparent;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media (prefers-reduced-transparency: no-preference) {
+    :root {
+      --surface: color-mix(in srgb, #ffffff 68%, transparent);
+      --field: color-mix(in srgb, #ffffff 55%, transparent);
+      --chip: color-mix(in srgb, #e9ecef 55%, transparent);
+      --brand-soft: color-mix(in srgb, #d3f1ea 70%, transparent);
+    }
+
+    :root[data-theme='dark'] {
+      --surface: color-mix(in srgb, #1a1d20 58%, transparent);
+      --field: color-mix(in srgb, #0c0e10 45%, transparent);
+      --chip: color-mix(in srgb, #2b3036 55%, transparent);
+      --brand-soft: color-mix(in srgb, #1d4a41 60%, transparent);
+    }
+
+    .charge,
+    .card,
+    .landing-step,
+    .icon-button,
+    .install-pill,
+    .install-hint {
+      -webkit-backdrop-filter: var(--glass-blur);
+      backdrop-filter: var(--glass-blur);
+    }
+
+    .dock {
+      -webkit-backdrop-filter: blur(14px) saturate(170%);
+      backdrop-filter: blur(14px) saturate(170%);
+    }
+  }
+}
+
+/* Contêineres de repouso ganham fio de luz; o que flutua mantém sombra forte. */
+.charge,
+.card,
+.landing-step,
+.icon-button {
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+
+.dock,
+.install-hint {
+  border: 1px solid var(--glass-edge);
+}
+
+/* Opção ativa do segmentado e valor em foco precisam sair do trilho/cartão
+   translúcido: ficam sólidos. */
+.segmented-option[aria-checked='true'],
+.amount-hero:focus-within {
+  background: var(--surface-solid);
 }

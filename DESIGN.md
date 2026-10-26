@@ -1,6 +1,6 @@
 ---
 name: Faz o PIX!
-description: Gerador de QR Code Pix no padrão dos apps de pagamento, com fundo neutro, cartões brancos, QR central e um só verde de marca.
+description: Gerador de QR Code Pix no padrão dos apps de pagamento, com fundo neutro com brilho verde suave, cartões em vidro fosco, QR central e um só verde de marca.
 colors:
   brand: "#00806b"
   brand-press: "#006e5c"
@@ -221,7 +221,7 @@ A densidade é de app de pagamento: uma coluna no celular, com o cartão da cobr
 O mundo anterior, "Plaquinha de Balcão" (plaquinha de acrílico sobre balcão de madeira, adesivo "Pague com Pix"), foi rejeitado pelo usuário por ser genérico, pouco profissional e atrasar o fluxo. Ele sobrevive aqui apenas como anti-referência, junto com story violeta, placa de rodovia, comprovante térmico, maquininha e passe de carteira.
 
 **Key Characteristics:**
-- Fundo neutro frio, cartões brancos, sombra ambiente leve.
+- Fundo neutro frio com um brilho verde fixo atrás; cartões em vidro fosco (translúcidos com `backdrop-filter`), fio de luz de 1px e sombra suave. Sem suporte a blur ou com "reduzir transparência", as superfícies voltam a ser sólidas.
 - Um verde de marca, reservado a ação, foco, seleção e estado válido.
 - Todo controle de ação em pílula; campos com canto médio; contêineres com canto de 20–24px.
 - Figtree em pesos 600–850, numerais tabulares em valores e contadores.
@@ -241,7 +241,7 @@ Paleta neutra e fria com um único acento verde-petróleo; o escuro espelha cada
 
 ### Neutral
 - **Cinza Fundo de App** (`page`): fundo de página; também é a `theme-color` do PWA.
-- **Branco Cartão** (`surface`) e **Campo** (`field`): cartões, botão de ícone, dock, opção selecionada do segmentado; no escuro o campo (`dark-field`) fica mais fundo que o cartão.
+- **Branco Cartão** (`surface`, translúcido: 68% no claro, 58% no escuro; sólido em `surface-solid` para a opção ativa do segmentado e o valor em foco) e **Campo** (`field`): cartões, botão de ícone, dock, opção selecionada do segmentado; no escuro o campo (`dark-field`) fica mais fundo que o cartão.
 - **Grafite** (`ink`): texto principal e títulos.
 - **Grafite Médio** (`ink-soft`): subtítulos, rótulos de campo, resumo do recebedor, opções não selecionadas.
 - **Cinza Apoio** (`ink-faint`): placeholders, contadores (16/25), o "R$" do valor e subtítulo de "Mais opções".
@@ -374,3 +374,7 @@ Pílula branca fixa na base com sombra flutuante: "Copiar código" (principal, f
 - **Don't** usar sombras duras deslocadas, bordas grossas escuras ou sombra forte em superfícies em repouso.
 - **Don't** introduzir uma segunda família tipográfica.
 - **Don't** colocar sobretítulos (kickers) em caixa alta acima dos títulos; o título fala sozinho.
+
+## Efeito vidro (26/10/2026)
+
+Superfícies (`surface`, `field`, `chip`, `brand-soft`) são translúcidas via `color-mix` e os contêineres (cartões, cartão da cobrança, passos da landing, botão de ícone, dica de instalação) usam `backdrop-filter: blur(20px) saturate(170%)`; o dock usa 14px por ficar fixo sobre conteúdo que rola. O brilho é um `body::before` fixo com gradientes radiais em verde de marca. O QR (`qr-paper`) e o botão principal continuam sólidos. Isso substitui a leitura "cartões brancos" acima; a Regra do QR Sempre Branco segue valendo.
