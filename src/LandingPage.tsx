@@ -11,7 +11,7 @@ const steps = [
 function Brand() {
   return (
     <a className="landing-brand" href="/" aria-label="Faz o PIX! início">
-      <img src="/icons/fazopix-logo.jpg" alt="" />
+      <img src="/icons/fazopix-logo.webp" alt="" />
       <span>Faz o <strong>PIX!</strong></span>
     </a>
   );

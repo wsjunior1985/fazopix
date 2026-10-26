@@ -1,32 +1,28 @@
-// Renders app icons from the Canva-created Faz o PIX brand mark.
-import { chromium } from 'playwright';
-import { mkdirSync, readFileSync } from 'node:fs';
+// Renders app icons and the in-app logo from the Canva-created Faz o PIX brand mark.
+// Requires ImageMagick (`magick`). The 200px source has a white frame, so it is
+// cropped to the rounded square, masked, and laid over the brand green.
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
-const artwork = readFileSync(new URL('../public/icons/fazopix-logo.jpg', import.meta.url)).toString('base64');
+const GREEN = '#06605a';
+const source = new URL('./fazopix-logo-source.jpg', import.meta.url).pathname;
+const tmp = mkdtempSync(join(tmpdir(), 'fazopix-icons-'));
+const round = join(tmp, 'round.png');
+const full = join(tmp, 'full.png');
+const magick = (...args) => execFileSync('magick', args, { stdio: 'inherit' });
 
-function page(scale) {
-  return `<!doctype html><html><head><style>
-    html, body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; background: #f4f5f6; }
-    img { display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(${scale}); }
-  </style></head><body><img src="data:image/jpeg;base64,${artwork}" alt=""></body></html>`;
-}
+magick(source, '-crop', '190x190+5+5', '+repage', '-alpha', 'set',
+  '(', '+clone', '-alpha', 'transparent', '-fill', 'white', '-draw', 'roundrectangle 1,1 188,188 38,38', ')',
+  '-compose', 'DstIn', '-composite', round);
+magick('-size', '190x190', `xc:${GREEN}`, round, '-compose', 'over', '-composite', full);
 
-const targets = [
-  { path: 'public/icons/icon-192.png', size: 192, scale: 0.9 },
-  { path: 'public/icons/icon-512.png', size: 512, scale: 0.9 },
-  { path: 'public/icons/icon-512-maskable.png', size: 512, scale: 0.78 },
-  { path: 'public/icons/apple-touch-icon.png', size: 180, scale: 0.9 },
-  { path: 'public/favicon.png', size: 32, scale: 0.9 }
-];
-
-mkdirSync('public/icons', { recursive: true });
-const browser = await chromium.launch();
-for (const { path, size, scale } of targets) {
-  const context = await browser.newContext({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });
-  const tab = await context.newPage();
-  await tab.setContent(page(scale));
-  await tab.screenshot({ path });
-  await context.close();
-  console.log(`wrote ${path}`);
-}
-await browser.close();
+const resize = (src, size) => [src, '-filter', 'Lanczos', '-resize', `${size}x${size}`];
+magick(...resize(full, 180), '-alpha', 'off', '-depth', '8', '-strip', 'PNG24:public/icons/apple-touch-icon.png');
+magick(...resize(round, 192), '-depth', '8', '-strip', 'public/icons/icon-192.png');
+magick(...resize(round, 512), '-depth', '8', '-strip', 'public/icons/icon-512.png');
+magick(...resize(full, 400), '-background', GREEN, '-gravity', 'center', '-extent', '512x512', '-alpha', 'off', '-depth', '8', '-strip', 'PNG24:public/icons/icon-512-maskable.png');
+magick(...resize(round, 64), '-depth', '8', '-strip', 'public/favicon.png');
+magick(...resize(round, 128), '-quality', '90', 'public/icons/fazopix-logo.webp');
+console.log('icons written');
