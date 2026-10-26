@@ -27,6 +27,7 @@ import { formatMoney, normalizeAmount } from './lib/pix/normalizers';
 import { PixKeyType } from './lib/pix/validators';
 import figtreeFontUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import LandingPage from './LandingPage';
+import InstallButton from './components/InstallButton';
 
 const schema = z.object({
   keyType: z.enum(['cpf', 'cnpj', 'phone', 'email', 'random']),
@@ -545,6 +546,7 @@ function PixGenerator() {
           Faz o <span className="text-[var(--brand)]">PIX!</span>
         </h1>
         <div className="flex items-center gap-3">
+          <InstallButton />
           <span className="hidden items-center gap-1.5 text-[0.85rem] font-semibold text-[var(--ink-soft)] lg:inline-flex">
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Tudo gerado no seu aparelho

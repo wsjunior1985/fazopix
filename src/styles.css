@@ -953,3 +953,68 @@ html {
     animation-duration: 1ms !important;
   }
 }
+
+.install-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.5rem;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--brand-ink);
+  background: var(--brand-soft);
+  box-shadow: var(--shadow);
+}
+
+.install-button:hover {
+  background: var(--chip);
+}
+
+.install-hint {
+  position: fixed;
+  z-index: 50;
+  top: calc(4.75rem + env(safe-area-inset-top));
+  left: calc(1rem + env(safe-area-inset-left));
+  right: calc(1rem + env(safe-area-inset-right));
+  max-width: 22rem;
+  margin-left: auto;
+  padding: 1rem 2.5rem 1rem 1rem;
+  border-radius: 1.1rem;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 12px 36px rgba(22, 24, 27, 0.22);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.install-hint-title {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.install-hint ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.install-hint li + li {
+  margin-top: 0.35rem;
+}
+
+.install-hint-close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  background: transparent;
+}
