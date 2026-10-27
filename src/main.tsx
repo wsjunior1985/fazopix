@@ -4,6 +4,7 @@ import App from './App';
 import '@fontsource-variable/figtree';
 import './styles.css';
 import { registerSW } from 'virtual:pwa-register';
+import './lib/waldeapps-analytics';
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
