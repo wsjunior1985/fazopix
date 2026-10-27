@@ -28,6 +28,7 @@ import { PixKeyType } from './lib/pix/validators';
 import figtreeFontUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import LandingPage from './LandingPage';
 import InstallButton from './components/InstallButton';
+import { trackWaldeAppsFunnel } from './lib/waldeapps-analytics';
 
 const schema = z.object({
   keyType: z.enum(['cpf', 'cnpj', 'phone', 'email', 'random']),
@@ -366,6 +367,14 @@ function PixGenerator() {
   const qrDataUrl = useQrDataUrl(payload, showLogo);
   const ready = canGenerate && Boolean(qrDataUrl);
 
+  useEffect(() => {
+    if (ready) trackWaldeAppsFunnel('qr_ready', undefined, { once: true });
+  }, [ready]);
+
+  function trackQrUsed(acao: string) {
+    trackWaldeAppsFunnel('qr_used', { acao });
+  }
+
   const activeKeyMeta = KEY_TYPES.find((k) => k.id === values.keyType) || KEY_TYPES[0];
   const keyInvalid = Boolean(errors.key) || (keyValue.length > 0 && !validKey);
 
@@ -399,6 +408,7 @@ function PixGenerator() {
     if (!payload) return;
     try {
       await navigator.clipboard.writeText(payload);
+      trackQrUsed('copiar');
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2200);
     } catch {
@@ -418,6 +428,7 @@ function PixGenerator() {
         ? { title: 'Faz o PIX!', text, files: [file] }
         : { title: 'Faz o PIX!', text };
       await navigator.share(data);
+      trackQrUsed('compartilhar');
     } catch {
     } finally {
       setBusy(null);
@@ -427,6 +438,7 @@ function PixGenerator() {
   async function downloadPng() {
     if (!qrDataUrl) return;
     downloadDataUrl(await finalQr(), `pix-${slug(name)}.png`);
+    trackQrUsed('baixar_png');
   }
 
   async function downloadSvg() {
@@ -440,6 +452,7 @@ function PixGenerator() {
     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     downloadDataUrl(url, `pix-${slug(name)}.svg`);
+    trackQrUsed('baixar_svg');
     URL.revokeObjectURL(url);
   }
 
@@ -448,6 +461,7 @@ function PixGenerator() {
     const qr = await finalQr();
     const win = window.open('', '_blank', 'width=800,height=1000');
     if (!win) return;
+    trackQrUsed('imprimir');
     win.document.write(`
       <!doctype html>
       <html lang="pt-BR">

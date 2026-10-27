@@ -1,10 +1,9 @@
 // O painel e os apps usam infraestrutura própria; a coleta de métricas aponta para o endpoint oficial do WaldeApps.
 const WALDEAPPS_ENDPOINT = "https://waldeapps.systems/api/public/events";
+const WALDEAPPS_FUNNEL_ENDPOINT = "https://waldeapps.systems/api/public/funnel";
 const WALDEAPPS_INGEST_KEY = "0fa34561-c43c-4593-9181-2203fbb85e5e";
 const VISITOR_STORAGE_KEY = "wa_vid";
 const NAVIGATION_EVENT = "waldeapps:navigation";
-
-export {};
 
 declare global {
   interface Window {
@@ -105,3 +104,37 @@ function installWaldeAppsAnalytics() {
 }
 
 installWaldeAppsAnalytics();
+
+const funnelSentOnce = new Set<string>();
+
+/**
+ * Registra uma etapa do funil no painel do WaldeApps. Falha em silêncio: medição
+ * nunca pode travar a tela. Com `once`, a etapa vale uma vez por carregamento.
+ */
+export function trackWaldeAppsFunnel(
+  event: string,
+  props?: Record<string, string | number | boolean>,
+  options?: { once?: boolean },
+): void {
+  if (typeof window === "undefined") return;
+  if (options?.once) {
+    if (funnelSentOnce.has(event)) return;
+    funnelSentOnce.add(event);
+  }
+
+  fetch(WALDEAPPS_FUNNEL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-ingest-key": WALDEAPPS_INGEST_KEY,
+    },
+    body: JSON.stringify({
+      visitor: getVisitorId(),
+      event,
+      path: window.location.pathname,
+      props,
+      fingerprint: window.__waldeAppsFingerprint,
+    }),
+    keepalive: true,
+  }).catch(() => undefined);
+}
