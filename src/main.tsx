@@ -3,17 +3,15 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import '@fontsource-variable/figtree';
 import './styles.css';
-import { registerSW } from 'virtual:pwa-register';
 import './lib/waldeapps-analytics';
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-if (location.protocol !== 'file:') {
-  registerSW({
-    immediate: true,
-    onRegisteredSW(_url, registration) {
-      if (registration) setInterval(() => void registration.update(), 60 * 60 * 1000);
-    }
+if (import.meta.env.PROD && 'serviceWorker' in navigator && location.protocol !== 'file:') {
+  void navigator.serviceWorker.register('/sw.js').then((registration) => {
+    setInterval(() => void registration.update().catch(() => {}), 60 * 60 * 1000);
+  }).catch((error: unknown) => {
+    console.warn('Não foi possível registrar o app para uso offline.', error);
   });
 }
 
