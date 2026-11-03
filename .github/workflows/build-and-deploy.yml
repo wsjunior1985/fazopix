@@ -99,4 +99,6 @@ jobs:
             --data-binary "@$payload_file" \
             https://coolify.waldeapps.systems/webhooks/source/github/events/manual)"
           printf '%s\n' "$response"
-          printf '%s' "$response" | python3 -c 'import json,sys; payload=json.load(sys.stdin); assert payload and payload[0].get("status")=="success", payload'
+          # O auto-deploy do Coolify às vezes enfileira o commit antes deste webhook; nesse caso ele
+          # responde "skipped" com "already queued", o que também significa que o deploy vai rodar.
+          printf '%s' "$response" | python3 -c 'import json,sys; payload=json.load(sys.stdin); item=(payload or [{}])[0]; ok=item.get("status")=="success" or (item.get("status")=="skipped" and "already queued" in item.get("message","")); assert ok, payload'
